@@ -1,0 +1,331 @@
+<html><head>
+<title>DBToaster - Sample Queries</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">   
+
+
+</head> <body>
+<a name="pagetop"></a>
+<div class="overallpage">
+  <div class="pagebody">
+    <div class="logobox">
+        <a href="index.html" ><img src="dbtoaster-logo.gif" width="214" 
+                    height="100" alt="DBToaster"/></a>    </div>
+    <div class="navbar navbar-default">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="index.html" >Welcome to dbtoaster.org</a></li>
+              <li><a href="home_about.html" >Is DBToaster right for you?</a></li>
+              <li><a href="home_performance.html" >Performance</a></li>
+              <li><a href="home_features.html" >Features</a></li>
+              <li><a href="home_features.html#roadmap" ><small><i class="fa fa-caret-square-o-right"></i> Roadmap</small></a></li>
+              <li><a href="home_people.html" >The Team</a></li>
+              <li><a href="home_research.html" >For Researchers</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <!--?php if(!isset($now_building_distro)) { ?-->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Downloads <b class="caret"></b></a>
+            <!--?php } else { ?-->
+            <!--a href="#" class="dropdown-toggle" data-toggle="dropdown">License <b class="caret"></b></a-->
+            <!--?php } ?-->
+            <ul class="dropdown-menu">
+              <!--?php if(!isset($now_building_distro)) { ?-->
+              <li><a href="download.html" >Downloads</a></li>
+              <!--?php } ?-->
+              <li><a href="download.html#license" >License</a></li>
+              <li><a href="download.html#changelog" >Changelog</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+            <ul class="dropdown-menu">              
+              <li><a href="docs.html" >Installation</a></li>
+              <li><a href="docs_start.html" >Getting Started</a></li>
+              <li><a href="docs_architecture.html" >Architecture</a></li>
+              <li><a href="docs_compiler.html" >Command-Line Reference</a></li>
+              <li><a href="docs_compiler.html#options" ><small><i class="fa fa-caret-square-o-right"></i> Command-Line Options</small></a></li>
+              <li><a href="docs_compiler.html#languages" ><small><i class="fa fa-caret-square-o-right"></i> Supported Languages</small></a></li>
+              <li><a href="docs_compiler.html#opt_flags" ><small><i class="fa fa-caret-square-o-right"></i> Optimization Flags</small></a></li>
+              <li><a href="docs_sql.html" >DBToaster SQL Reference</a></li>
+              <li><a href="docs_stdlib.html" >DBToaster StdLib Reference</a></li>
+              <li><a href="docs_adaptors.html" >DBToaster Adaptors Reference</a></li>
+              <li><a href="docs_cpp.html" >C++ Code Generation</a></li>
+              <li><a href="docs_scala.html" >Scala Code Generation</a></li>
+              <li><a href="docs_java.html" >DBToaster in Java Programs</a></li>
+              <li><a href="docs_customadaptors.html" >Custom Adaptors</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="home_contact.html#inquiries" >Inquiries</a></li>
+
+              <li><a href="home_contact.html#mailing" >Mailing List</a></li>
+
+              <li><a href="bugs.html" >Bug Reports</a></li>
+
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="contentwrapper">
+      <div class="content">
+                <div class="titlebox">Sample Queries</div>
+<script type="text/javascript">
+window.onload = function() {
+  $( ".sbutton" ).on( "click", function() {
+    location.href='samples_'+ $( this ).attr("data-id") + '_' + $( this ).text() + '.html';
+  });
+};
+</script>
+
+<p>In this page, you will find a list of sample queries which we used DBToaster for generating IVM programs in both C++ and Scala. </p>
+
+<p><i>Note:</i> The generated IVM programs are not meant to be human readable, and are presented for giving you an impression of the kind of IVM programs generated for each query.</p>
+
+<h3>1. TPC-H queries</h3>
+<div class="sbutton dark center", data-id="tpch">tpch1</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch2</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch3</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch4</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch5</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch6</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch7</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch8</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch9</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch10</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch11</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch11a</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch11c</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch12</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch13</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch14</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch15</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch16</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch17</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch17a</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch18</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch18a</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch19</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch20</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch21</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch22</div>
+
+<div class="sbutton dark center", data-id="tpch">tpch22a</div>
+
+<h3>2. Finance queries</h3><div class="sbutton blue center", data-id="finance">axfinder</div>
+<div class="sbutton blue center", data-id="finance">brokerspread</div>
+<div class="sbutton blue center", data-id="finance">brokervariance</div>
+<div class="sbutton blue center", data-id="finance">pricespread</div>
+<div class="sbutton blue center", data-id="finance">vwap</div>
+
+<h3>3. Simple queries</h3><div class="sbutton red center", data-id="simple">inequality_selfjoin</div>
+<div class="sbutton red center", data-id="simple">invalid_schema_fn</div>
+<div class="sbutton red center", data-id="simple">m3k3unable2escalate</div>
+<div class="sbutton red center", data-id="simple">miraculous_minus</div>
+<div class="sbutton red center", data-id="simple">miraculous_minus2</div>
+<div class="sbutton red center", data-id="simple">r_aggcomparison</div>
+<div class="sbutton red center", data-id="simple">r_aggofnested</div>
+<div class="sbutton red center", data-id="simple">r_aggofnestedagg</div>
+<div class="sbutton red center", data-id="simple">r_agtb</div>
+<div class="sbutton red center", data-id="simple">r_agtbexists</div>
+<div class="sbutton red center", data-id="simple">r_avg</div>
+<div class="sbutton red center", data-id="simple">r_bigsumstar</div>
+<div class="sbutton red center", data-id="simple">r_btimesa</div>
+<div class="sbutton red center", data-id="simple">r_btimesacorrelated</div>
+<div class="sbutton red center", data-id="simple">r_count</div>
+<div class="sbutton red center", data-id="simple">r_count_of_one</div>
+<div class="sbutton red center", data-id="simple">r_count_of_one_prime</div>
+<div class="sbutton red center", data-id="simple">r_deepscoping</div>
+<div class="sbutton red center", data-id="simple">r_divb</div>
+<div class="sbutton red center", data-id="simple">r_existsnestedagg</div>
+<div class="sbutton red center", data-id="simple">r_gbasumb</div>
+<div class="sbutton red center", data-id="simple">r_gtealldynamic</div>
+<div class="sbutton red center", data-id="simple">r_gtesomedynamic</div>
+<div class="sbutton red center", data-id="simple">r_gtsomedynamic</div>
+<div class="sbutton red center", data-id="simple">r_impossibleineq</div>
+<div class="sbutton red center", data-id="simple">r_indynamic</div>
+<div class="sbutton red center", data-id="simple">r_ineqandeq</div>
+<div class="sbutton red center", data-id="simple">r_instatic</div>
+<div class="sbutton red center", data-id="simple">r_lift_of_count</div>
+<div class="sbutton red center", data-id="simple">r_ltallagg</div>
+<div class="sbutton red center", data-id="simple">r_ltallavg</div>
+<div class="sbutton red center", data-id="simple">r_ltallcorravg</div>
+<div class="sbutton red center", data-id="simple">r_ltalldynamic</div>
+<div class="sbutton red center", data-id="simple">r_multinest</div>
+<div class="sbutton red center", data-id="simple">r_multiors</div>
+<div class="sbutton red center", data-id="simple">r_natselfjoin</div>
+<div class="sbutton red center", data-id="simple">r_nogroupby</div>
+<div class="sbutton red center", data-id="simple">r_nonjoineq</div>
+<div class="sbutton red center", data-id="simple">r_possibleineq</div>
+<div class="sbutton red center", data-id="simple">r_possibleineqwitheq</div>
+<div class="sbutton red center", data-id="simple">r_selectstar</div>
+<div class="sbutton red center", data-id="simple">r_simplenest</div>
+<div class="sbutton red center", data-id="simple">r_smallstar</div>
+<div class="sbutton red center", data-id="simple">r_starofnested</div>
+<div class="sbutton red center", data-id="simple">r_starofnestedagg</div>
+<div class="sbutton red center", data-id="simple">r_sum_gb_all_out_of_aggregate</div>
+<div class="sbutton red center", data-id="simple">r_sum_gb_out_of_aggregate</div>
+<div class="sbutton red center", data-id="simple">r_sum_out_of_aggregate</div>
+<div class="sbutton red center", data-id="simple">r_sumadivsumb</div>
+<div class="sbutton red center", data-id="simple">r_sumdivgrp</div>
+<div class="sbutton red center", data-id="simple">r_sumnestedintarget</div>
+<div class="sbutton red center", data-id="simple">r_sumnestedintargetwitheq</div>
+<div class="sbutton red center", data-id="simple">r_sumoutsideofagg</div>
+<div class="sbutton red center", data-id="simple">r_sumstar</div>
+<div class="sbutton red center", data-id="simple">r_union</div>
+<div class="sbutton red center", data-id="simple">r_unique_counts_by_a</div>
+<div class="sbutton red center", data-id="simple">rr_ormyself</div>
+<div class="sbutton red center", data-id="simple">rs</div>
+<div class="sbutton red center", data-id="simple">rs_cmpnest</div>
+<div class="sbutton red center", data-id="simple">rs_column_mapping_1</div>
+<div class="sbutton red center", data-id="simple">rs_column_mapping_2</div>
+<div class="sbutton red center", data-id="simple">rs_column_mapping_3</div>
+<div class="sbutton red center", data-id="simple">rs_eqineq</div>
+<div class="sbutton red center", data-id="simple">rs_ineqonnestedagg</div>
+<div class="sbutton red center", data-id="simple">rs_inequality</div>
+<div class="sbutton red center", data-id="simple">rs_ineqwithnestedagg</div>
+<div class="sbutton red center", data-id="simple">rs_joinon</div>
+<div class="sbutton red center", data-id="simple">rs_joinwithnestedagg</div>
+<div class="sbutton red center", data-id="simple">rs_natjoin</div>
+<div class="sbutton red center", data-id="simple">rs_natjoinineq</div>
+<div class="sbutton red center", data-id="simple">rs_natjoinpartstar</div>
+<div class="sbutton red center", data-id="simple">rs_selectconstcmp</div>
+<div class="sbutton red center", data-id="simple">rs_selectpartstar</div>
+<div class="sbutton red center", data-id="simple">rs_selectstar</div>
+<div class="sbutton red center", data-id="simple">rs_simple</div>
+<div class="sbutton red center", data-id="simple">rs_stringjoin</div>
+<div class="sbutton red center", data-id="simple">rst</div>
+<div class="sbutton red center", data-id="simple">rstar</div>
+<div class="sbutton red center", data-id="simple">rtt_or_with_stars</div>
+<div class="sbutton red center", data-id="simple">singleton_renaming_conflict</div>
+<div class="sbutton red center", data-id="simple">ss_math</div>
+<div class="sbutton red center", data-id="simple">t_lifttype</div>
+
+<h3>4. Employee queries</h3><div class="sbutton light center", data-id="employee">query01</div>
+<div class="sbutton light center", data-id="employee">query01a</div>
+<div class="sbutton light center", data-id="employee">query02</div>
+<div class="sbutton light center", data-id="employee">query02a</div>
+<div class="sbutton light center", data-id="employee">query03</div>
+<div class="sbutton light center", data-id="employee">query03a</div>
+<div class="sbutton light center", data-id="employee">query04</div>
+<div class="sbutton light center", data-id="employee">query04a</div>
+<div class="sbutton light center", data-id="employee">query05</div>
+<div class="sbutton light center", data-id="employee">query06</div>
+<div class="sbutton light center", data-id="employee">query07</div>
+<div class="sbutton light center", data-id="employee">query08</div>
+<div class="sbutton light center", data-id="employee">query08a</div>
+<div class="sbutton light center", data-id="employee">query09</div>
+<div class="sbutton light center", data-id="employee">query09a</div>
+<div class="sbutton light center", data-id="employee">query10</div>
+<div class="sbutton light center", data-id="employee">query10a</div>
+<div class="sbutton light center", data-id="employee">query11b</div>
+<div class="sbutton light center", data-id="employee">query12a</div>
+<div class="sbutton light center", data-id="employee">query13</div>
+<div class="sbutton light center", data-id="employee">query14</div>
+<div class="sbutton light center", data-id="employee">query16</div>
+<div class="sbutton light center", data-id="employee">query16a</div>
+<div class="sbutton light center", data-id="employee">query17a</div>
+<div class="sbutton light center", data-id="employee">query22</div>
+<div class="sbutton light center", data-id="employee">query23a</div>
+<div class="sbutton light center", data-id="employee">query24a</div>
+<div class="sbutton light center", data-id="employee">query35c</div>
+<div class="sbutton light center", data-id="employee">query36c</div>
+<div class="sbutton light center", data-id="employee">query37</div>
+<div class="sbutton light center", data-id="employee">query38a</div>
+<div class="sbutton light center", data-id="employee">query39</div>
+<div class="sbutton light center", data-id="employee">query40</div>
+<div class="sbutton light center", data-id="employee">query45</div>
+<div class="sbutton light center", data-id="employee">query46</div>
+<div class="sbutton light center", data-id="employee">query47</div>
+<div class="sbutton light center", data-id="employee">query47a</div>
+<div class="sbutton light center", data-id="employee">query48</div>
+<div class="sbutton light center", data-id="employee">query49</div>
+<div class="sbutton light center", data-id="employee">query50</div>
+<div class="sbutton light center", data-id="employee">query51</div>
+<div class="sbutton light center", data-id="employee">query52a</div>
+<div class="sbutton light center", data-id="employee">query53a</div>
+<div class="sbutton light center", data-id="employee">query54</div>
+<div class="sbutton light center", data-id="employee">query55</div>
+<div class="sbutton light center", data-id="employee">query56a</div>
+<div class="sbutton light center", data-id="employee">query57a</div>
+<div class="sbutton light center", data-id="employee">query58a</div>
+<div class="sbutton light center", data-id="employee">query59</div>
+<div class="sbutton light center", data-id="employee">query60</div>
+<div class="sbutton light center", data-id="employee">query61</div>
+<div class="sbutton light center", data-id="employee">query62a</div>
+<div class="sbutton light center", data-id="employee">query63a</div>
+<div class="sbutton light center", data-id="employee">query64a</div>
+<div class="sbutton light center", data-id="employee">query65a</div>
+
+<h3>5. MDDB queries</h3><div class="sbutton green center", data-id="mddb">mddb1</div>
+<div class="sbutton green center", data-id="mddb">mddb2</div>
+
+<h3>6. Zeus queries</h3><div class="sbutton red center", data-id="zeus">11564068</div>
+<div class="sbutton red center", data-id="zeus">12811747</div>
+<div class="sbutton red center", data-id="zeus">37494577</div>
+<div class="sbutton red center", data-id="zeus">39765730</div>
+<div class="sbutton red center", data-id="zeus">48183500</div>
+<div class="sbutton red center", data-id="zeus">52548748</div>
+<div class="sbutton red center", data-id="zeus">59977251</div>
+<div class="sbutton red center", data-id="zeus">75453299</div>
+<div class="sbutton red center", data-id="zeus">94384934</div>
+<div class="sbutton red center", data-id="zeus">95497049</div>
+<div class="sbutton red center", data-id="zeus">96434723</div>
+
+              </div><!-- /content -->
+    </div><!-- /contentwrapper -->
+  </div><!-- /pagebody -->
+  <div class="footer">
+  <hr/>
+  <p>Copyright (c) 2009-2014, The DBToaster Consortium. All rights reserved.</p>
+  </div>
+</div><!-- /overallpage -->
+<div id="pageEndElem" style="padding: 0 20px;"></div>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"> </script>
+<script type="text/javascript" src="js/bootstrap.min.js"> </script>
+
+</body>
+</html>
