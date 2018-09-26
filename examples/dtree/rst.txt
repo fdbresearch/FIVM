@@ -1,0 +1,10 @@
+5 3
+0 A int -1 {} 0
+1 B float 0 {0} 0
+2 C int 0 {0} 0
+3 D float 2 {2} 0
+4 E float 2 {0,2} 0
+5 extra int 4 {0,2,4} 0
+R 1 A,B
+T 3 C,D
+S 5 A,C,E,extra
