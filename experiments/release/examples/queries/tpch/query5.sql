@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT n.name, SUM(l.extendedprice * (1 - l.discount)) AS revenue 
 FROM   customer c, orders o, lineitem l, supplier s, nation n, region r

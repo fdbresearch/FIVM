@@ -26,9 +26,9 @@
 24 nbbuslines double 0 {0} 0
 25 nbtrainstations double 24 {0,24} 0
 26 distancecitycentre double 25 {0,24,25} 0
-House 10 postcode,livingarea,price,nbbedrooms,nbbathrooms,kitchensize,house,flat,unknown,garden,parking
-Shop 15 postcode,openinghoursshop,pricerangeshop,sainsburys,tesco,ms
-Institution 17 postcode,typeeducation,sizeinstitution
-Restaurant 19 postcode,openinghoursrest,pricerangerest
-Demographics 23 postcode,averagesalary,crimesperyear,unemployment,nbhospitals
-Transport 26 postcode,nbbuslines,nbtrainstations,distancecitycentre
+HOUSE 10 postcode,livingarea,price,nbbedrooms,nbbathrooms,kitchensize,house,flat,unknown,garden,parking
+SHOP 15 postcode,openinghoursshop,pricerangeshop,sainsburys,tesco,ms
+INSTITUTION 17 postcode,typeeducation,sizeinstitution
+RESTAURANT 19 postcode,openinghoursrest,pricerangerest
+DEMOGRAPHICS 23 postcode,averagesalary,crimesperyear,unemployment,nbhospitals
+TRANSPORT 26 postcode,nbbuslines,nbtrainstations,distancecitycentre

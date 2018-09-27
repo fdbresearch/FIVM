@@ -61,7 +61,7 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
         case DTreeRelation(name, keys) =>
           assert(name == event.schema.name)
           event match {
-            case M3.EventBatchUpdate(schema) =>
+            case M3.EventBatchUpdate(_) =>
               M3.DeltaMapRefConst(name, keys.map(v => (v.name, v.tp)))
             case _: M3.EventInsert | _: M3.EventDelete =>
               sys.error("Single-tuple updates not supported yet")
@@ -89,7 +89,7 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
 
   private def generateQueries: List[M3.Query] =
     tree.map2(t =>
-      if (t.isRoot) Some(M3.Query(t.node.name, Optimizer.optimizeExpr(t.createDefExpr)))
+      if (t.isRoot) Some(M3.Query(t.node.name, t.createMapRef))
       else None
     ).flatten.toList
 

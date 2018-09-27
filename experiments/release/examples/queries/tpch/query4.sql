@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT o.orderpriority, COUNT(*) AS order_count
 FROM   orders o

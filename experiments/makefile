@@ -7,6 +7,7 @@ NUMBER_OF_RUNS ?= 1
 BATCH_SIZE ?= 1000
 DBTOASTER_FLAGS ?= -F HEURISTICS-DECOMPOSE-OVER-TABLES
 FLAGS ?=
+SRC_QUERIES_DIR ?= src/queries
 
 ####################
 # COFACTOR HOUSING
@@ -546,13 +547,13 @@ $(MCM_EXE_INCR): $(BINDIR)/% : $(BINDIR)/queries/%.hpp src/templates/mcm_templat
 ##########
 
 
-$(GENERATE_HPP_FROM_SQL): $(BINDIR)/queries/%.hpp : src/queries/%.sql
+$(GENERATE_HPP_FROM_SQL): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.sql
 	$(DBTOASTER) $(DBTOASTER_FLAGS) --batch -l vcpp -O3 -o $@ $<
 
-$(GENERATE_HPP_FROM_M3): $(BINDIR)/queries/%.hpp : src/queries/%.m3
+$(GENERATE_HPP_FROM_M3): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.m3
 	$(DBTOASTER) $(DBTOASTER_FLAGS) --batch -l vcpp -O3 -o $@ $<
 
-$(GENERATE_HPP_FROM_HPP): $(BINDIR)/queries/%.hpp : src/queries/%.hpp
+$(GENERATE_HPP_FROM_HPP): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.hpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
 	cp $< $@
 

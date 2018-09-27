@@ -2,7 +2,7 @@
    query, this is safe, because if total.volume == 0, then the numerator of the
    division is also guaranteed to be 0. */
 
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT  total.o_year,
         (SUM(CASE total.name WHEN 'BRAZIL' THEN total.volume ELSE 0 END) / 

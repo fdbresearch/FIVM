@@ -11,7 +11,7 @@ trait DTreeNode {
 
 case class DTreeVariable(name: String, tp: Type, keys: List[DTreeVariable]) extends DTreeNode
 case class DTreeRelation(name: String, keys: List[DTreeVariable]) extends DTreeNode {
-  val tp: Type = TypeInt
+  val tp: Type = TypeLong
 }
 
 object DTree {

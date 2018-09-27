@@ -2,7 +2,7 @@
    query, this is safe, because if the denominator equals 0, then the numerator 
    of the division is also guaranteed to be 0. */
 
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT (100.00 * SUM(CASE WHEN (p.type LIKE 'PROMO%') 
                      THEN l.extendedprice * (1 - l.discount) ELSE 0 END) / 

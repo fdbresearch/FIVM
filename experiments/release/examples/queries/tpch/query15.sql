@@ -1,7 +1,7 @@
 /* We change the query to be more "incrementality friendly". In order to avoid
    issues with floating points, we cast the keys to integers. */
 
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT s.suppkey, s.name, s.address, s.phone, r1.total_revenue as total_revenue
 FROM supplier s, 

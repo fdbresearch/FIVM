@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT SUM(l.extendedprice) / 7.0 AS avg_yearly
 FROM   lineitem l, part p

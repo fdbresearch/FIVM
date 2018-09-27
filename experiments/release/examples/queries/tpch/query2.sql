@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT s.acctbal, s.name, n.name, p.partkey, p.mfgr, s.address, s.phone, 
        s.comment

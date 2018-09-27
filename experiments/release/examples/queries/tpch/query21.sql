@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT  s.name, COUNT(*) AS numwait
 FROM    supplier s, lineitem l1, orders o, nation n

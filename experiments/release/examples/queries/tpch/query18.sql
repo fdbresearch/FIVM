@@ -1,4 +1,4 @@
-INCLUDE 'examples/queries/tpch/schemas.sql';
+INCLUDE './examples/queries/tpch/schemas.sql';
 
 SELECT c.name, c.custkey, o.orderkey, o.orderdate, o.totalprice, 
        sum(l.quantity) AS query18

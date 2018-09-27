@@ -1,9 +1,9 @@
 43 5
-0 locn int -1 {} 0
-1 dateid int 0 {0} 0
+0 locn long -1 {} 0
+1 dateid long 0 {0} 0
 2 ksn double 1 {0,1} 0
 3 inventoryunits double 2 {0,1,2} 0
-4 zip int 0 {0} 0
+4 zip long 0 {0} 0
 5 rgn_cd double 4 {0,4} 0
 6 clim_zn_nbr double 5 {0,4,5} 0
 7 tot_area_sq_ft double 6 {0,4,5,6} 0
@@ -17,33 +17,33 @@
 15 walmartdrivetime double 14 {0,4,5,6,7,8,9,10,11,12,13,14} 0 
 16 walmartsupercenterdistance double 15 {0,4,5,6,7,8,9,10,11,12,13,14,15} 0
 17 walmartsupercenterdrivetime double 16 {0,4,5,6,7,8,9,10,11,12,13,14,15,16} 0
-18 population int 4 {4} 1 
-19 white int 18 {4,18} 0
-20 asian int 19 {4,18,19} 0
-21 pacific int 20 {4,18,19,20} 0
-22 blackafrican int 21 {4,18,19,20,21} 0
+18 population long 4 {4} 1 
+19 white long 18 {4,18} 0
+20 asian long 19 {4,18,19} 0
+21 pacific long 20 {4,18,19,20} 0
+22 blackafrican long 21 {4,18,19,20,21} 0
 23 medianage double 22 {4,18,19,20,21,22} 0
-24 occupiedhouseunits int 23 {4,18,19,20,21,22,23} 0
-25 houseunits int 24 {4,18,19,20,21,22,23,24} 0
-26 families int 25 {4,18,19,20,21,22,23,24,25} 0
-27 households int 26 {4,18,19,20,21,22,23,24,25,26} 0
-28 husbwife int 27 {4,18,19,20,21,22,23,24,25,26,27} 0
-29 males int 28 {4,18,19,20,21,22,23,24,25,26,27,28} 0
-30 females int 29 {4,18,19,20,21,22,23,24,25,26,27,28,29} 0
-31 householdschildren int 30 {4,18,19,20,21,22,23,24,25,26,27,28,29,30} 0
-32 hispanic int 31 {4,18,19,20,21,22,23,24,25,26,27,28,29,30,31} 0
-33 subcategory int 2 {2} 1 
-34 category int 33 {2,33} 0 
-35 categoryCluster int 34 {2,33,34} 0
+24 occupiedhouseunits long 23 {4,18,19,20,21,22,23} 0
+25 houseunits long 24 {4,18,19,20,21,22,23,24} 0
+26 families long 25 {4,18,19,20,21,22,23,24,25} 0
+27 households long 26 {4,18,19,20,21,22,23,24,25,26} 0
+28 husbwife long 27 {4,18,19,20,21,22,23,24,25,26,27} 0
+29 males long 28 {4,18,19,20,21,22,23,24,25,26,27,28} 0
+30 females long 29 {4,18,19,20,21,22,23,24,25,26,27,28,29} 0
+31 householdschildren long 30 {4,18,19,20,21,22,23,24,25,26,27,28,29,30} 0
+32 hispanic long 31 {4,18,19,20,21,22,23,24,25,26,27,28,29,30,31} 0
+33 subcategory long 2 {2} 1 
+34 category long 33 {2,33} 0 
+35 categoryCluster long 34 {2,33,34} 0
 36 prize double 35 {2,33,34,35} 0 
-37 rain int 1 {0,1} 0
-38 snow int 37 {0,1,37} 0
-39 maxtemp int 38 {0,1,37,38} 0
-40 mintemp int 39 {0,1,37,38,39} 0
+37 rain long 1 {0,1} 0
+38 snow long 37 {0,1,37} 0
+39 maxtemp long 38 {0,1,37,38} 0
+40 mintemp long 39 {0,1,37,38,39} 0
 41 meanwind double 40 {0,1,37,38,39,40} 0
-42 thunder int 41 {0,1,37,38,39,40,41} 0
-Inventory 3 locn,dateid,ksn,inventoryunits  
-Location 17 locn,zip,rgn_cd,clim_zn_nbr,tot_area_sq_ft,sell_area_sq_ft,avghhi,supertargetdistance,supertargetdrivetime,targetdistance,targetdrivetime,walmartdistance,walmartdrivetime,walmartsupercenterdistance,walmartsupercenterdrivetime
-Census 32 zip,population,white,asian,pacific,blackafrican,medianage,occupiedhouseunits,houseunits,families,households,husbwife,males,females,householdschildren,hispanic
-Item 36 ksn,subcategory,category,categoryCluster,prize
-Weather 42 locn,dateid,rain,snow,maxtemp,mintemp,meanwind,thunder
+42 thunder long 41 {0,1,37,38,39,40,41} 0
+INVENTORY 3 locn,dateid,ksn,inventoryunits  
+LOCATION 17 locn,zip,rgn_cd,clim_zn_nbr,tot_area_sq_ft,sell_area_sq_ft,avghhi,supertargetdistance,supertargetdrivetime,targetdistance,targetdrivetime,walmartdistance,walmartdrivetime,walmartsupercenterdistance,walmartsupercenterdrivetime
+CENSUS 32 zip,population,white,asian,pacific,blackafrican,medianage,occupiedhouseunits,houseunits,families,households,husbwife,males,females,householdschildren,hispanic
+ITEM 36 ksn,subcategory,category,categoryCluster,prize
+WEATHER 42 locn,dateid,rain,snow,maxtemp,mintemp,meanwind,thunder

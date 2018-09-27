@@ -56,6 +56,13 @@ namespace dbtoaster {
     }
 
     template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const float & t)
+    {
+        ar << std::setprecision(7) << t;
+        return ar;
+    }
+
+    template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const double & t)
     {
         ar << std::setprecision(15) << t;
