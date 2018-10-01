@@ -31,13 +31,5 @@ object DTree {
 
     def getRelations: List[DTreeRelation] =
       dtree.collect { case r: DTreeRelation => r }.toList
-
-    def pushLifts(lifts: Set[SQL.Expr]): Tree[(DTreeNode, Set[SQL.Expr])] = {
-      dtree.map2[(DTreeNode, Set[SQL.Expr])] { tree =>
-        val nodeVars = tree.getVariables.toSet
-        val childVars = tree.children.flatMap(_.getVariables).toSet
-        (tree.node, lifts.filter(l => !l.isCovered(childVars) && l.isCovered(nodeVars)))
-      }
-    }
   }
 }

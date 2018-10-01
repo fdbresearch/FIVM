@@ -80,7 +80,9 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
   }
 
   def generateM3: M3.System =
-    M3.System(typeDefs, sources, generateMaps, generateQueries, generateTriggers)
+    Optimizer.optimize(
+      M3.System(typeDefs, sources, generateMaps, generateQueries, generateTriggers)
+    )
 
   private def generateMaps: List[M3.MapDef] =
     tree.map2(t =>
@@ -98,10 +100,7 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
       M3.Trigger(M3.EventReady,
         tree.map2(t =>
           if (t.isStatic(streams) && t.materialize_?(streams))
-            Some(M3.TriggerStmt(
-              t.createMapRef, Optimizer.optimizeExpr(t.createDefExpr),
-              M3.OpSet, None
-            ))
+            Some(M3.TriggerStmt(t.createMapRef, t.createDefExpr, M3.OpSet, None))
           else None
         ).flatten.toList
       )
@@ -114,10 +113,7 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
     M3.Trigger(e,
       tree.map2(t =>
         if (!t.isStatic(e.schema.name) && t.materialize_?(streams))
-          Some(M3.TriggerStmt(
-            t.createMapRef, Optimizer.optimizeExpr(t.createDeltaExpr(e)),
-            M3.OpAdd, None
-          ))
+          Some(M3.TriggerStmt(t.createMapRef, t.createDeltaExpr(e), M3.OpAdd, None))
         else None
       ).flatten.toList
     )

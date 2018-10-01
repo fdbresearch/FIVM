@@ -58,7 +58,7 @@ case class Adaptor(name: String, options: Map[String, String]) extends Tree {
 
 // ------ Custom type definitions
 case class TypeDefinition(name: String, path: String) {
-  override def toString = "CREATE TYPE " + name + " FROM FILE " + path + ";"
+  override def toString = "CREATE TYPE " + name + " FROM FILE '" + path + "';"
 }
 
 // ------ Expression locality types

@@ -10,28 +10,45 @@ object Optimizer {
     M3.System(m3.typeDefs, m3.sources, m3.maps ++ newMaps.flatten, m3.queries, newTriggers)
   }
 
-  def optimizeTrigger(t: M3.Trigger): (M3.Trigger, List[M3.MapDef]) = {
+  private def optimizeTrigger(t: M3.Trigger): (M3.Trigger, List[M3.MapDef]) = {
     def optimizeStmts(stmts: List[M3.Statement], maps: List[M3.MapDef])
         : (List[M3.Statement], List[M3.MapDef]) = {
-      val (optStmts, newMap) = optCSE(stmts.map(optimizeStatement))
+      val (optStmts, newMap) = optCSE(stmts)
       if (stmts == optStmts) (stmts, maps)
       else optimizeStmts(optStmts, maps ++ newMap)
     }
     val (stmts, newMaps) = optimizeStmts(t.stmts, Nil)
-    (M3.Trigger(t.event, stmts), newMaps)
+    (M3.Trigger(t.event, stmts.map(optimizeStatement)), newMaps)
   }
 
-  def optimizeStatement(s: M3.Statement): M3.Statement = s match {
+  private def optimizeStatement(s: M3.Statement): M3.Statement = s match {
     case M3.TriggerStmt(t, e, op, ie) =>
       M3.TriggerStmt(t, optimizeExpr(e), op, ie.map(optimizeExpr))
     case M3.IfStmt(cond, thenBlk, elseBlk) =>
       M3.IfStmt(cond, thenBlk.map(optimizeStatement), elseBlk.map(optimizeStatement))
   }
+  
+  def optimizeExpr(e: M3.Expr): M3.Expr = e.replace {
+    case M3.AggSum(ks, e1) => optimizeExpr(e1) match {
+      case M3.AggSum(_, e2) => M3.AggSum(ks, e2)    // Unnest AggSums
 
-  def optimizeExpr(e: M3.Expr): M3.Expr = optFlattenAggregates(e)
+      case M3.Mul(M3.AggSum(ks2, e2), r) =>
+        // Find product terms covered by ks2
+        val (covered, rest) = prodList(r).partition { t =>
+          val (in, out) = t.schema
+          (in ++ out).toSet.subsetOf(ks2.toSet)
+        }
+        val subterms = (prodList(e2) ++ covered).reduceRight(M3.Mul)
+        if (rest.isEmpty) M3.AggSum(ks, subterms)
+        else M3.AggSum(ks, (M3.AggSum(ks2, subterms) :: rest).reduceRight(M3.Mul))
 
-  private def optFlattenAggregates(e: M3.Expr): M3.Expr = e.replace {
-    case M3.AggSum(ks, M3.AggSum(_, se)) => optFlattenAggregates(M3.AggSum(ks, se))
+      case e2 => M3.AggSum(ks, e2)
+    }
+  }
+
+  private def prodList(e: M3.Expr): List[M3.Expr] = e match {
+    case M3.Mul(l, r) => prodList(l) ++ prodList(r)
+    case _ => List(e)
   }
 
   // CSE across statements, works with AggSums only
@@ -82,12 +99,18 @@ object Optimizer {
       isMapRefInStatement(s)
     }
 
+    def appearsIn(src: M3.AggSum, dst: M3.Expr): Boolean =
+      dst.collect { case m: M3.AggSum => List(m == src || appearsIn(src, m.e))}.exists(identity)
+
+    def sortFn(e1: (M3.AggSum, Int), e2: (M3.AggSum, Int)): Boolean =
+      !(e1._2 < e2._2 || (e1._2 == e2._2 && appearsIn(e1._1, e2._1)))
+
     // Find candidates, ranked them by # of occurrences, replace top expression if > 1
     val candidates = findAggregates(ss)
-    val ranked = candidates.groupBy(identity).mapValues(_.size).toList.sortBy(-_._2)
+    val ranked = candidates.groupBy(identity).mapValues(_.size).toList.sortWith(sortFn)
     ranked match {
       case (a, occurrences) :: _ if occurrences > 1 =>
-        val tmpMapDef = M3.MapDef(Utils.fresh("TMP_SUM"), a.tp, a.keys, a)
+        val tmpMapDef = M3.MapDef(Utils.fresh("TMP_SUM"), a.tp, a.keys, optimizeExpr(a))
         val tmpMapRef = M3.MapRef(tmpMapDef.name, tmpMapDef.tp, tmpMapDef.keys, isTemp = true)
 
         // Replace expression 'a' by tmpMapRef

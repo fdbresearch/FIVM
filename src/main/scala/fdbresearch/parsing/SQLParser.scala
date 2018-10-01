@@ -14,7 +14,7 @@ class SQLParser extends Parser with (String => SQL.System) {
       "JOIN", "NATURAL", "ON") // reduce this list by conditional accepts
 
   lexical.delimiters ++=
-    List("+", "-", "*", "/", "%", "=", "<>", "!=", "<", "<=", ">=", ">")
+    List("+", "-", "*", "/", "%", "=", "<>", "!=", "<", "<=", ">=", ">", "[", "]", ":")
 
   lazy val field: Parser[Field] =
     opt(ident <~ ".") ~ (ident | "*") ^^ {

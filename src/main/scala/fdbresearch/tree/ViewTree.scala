@@ -1,7 +1,7 @@
 package fdbresearch.tree
 
-import fdbresearch.core.{Type, TypeChar}
-import fdbresearch.core.{M3, SQL}
+import fdbresearch.core.{M3, SQL, Type, TypeChar}
+import fdbresearch.util.Utils
 
 case class View(name: String, tp: Type, freeVars: List[DTreeVariable], link: Tree[DTreeNode], liftFn: List[M3.Expr] = Nil) {
   override def toString: String = name + "[" + freeVars.map(_.name).mkString(", ") + "]" +
@@ -82,8 +82,8 @@ object ViewTree {
       val viewFreeVars = nodeFreeVars.map(variableMap.apply).toList
 
       // Construct view name
-      val relations = tree.getRelations.map(_.name).mkString
-      val viewName = "V_" + tree.node.name + "_" + relations
+      val relations = tree.getRelations.map(_.name.head).mkString
+      val viewName = Utils.fresh("V_" + tree.node.name + "_" + relations)
 
       val viewType =
         if (children.isEmpty) tree.node.tp    // Relation
