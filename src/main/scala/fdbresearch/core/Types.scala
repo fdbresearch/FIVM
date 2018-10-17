@@ -85,15 +85,17 @@ case object TypeString extends Type {
   override def toString = "string"
 }
 
-case class TypeCustom(name: String, path: String) extends Type {
+case class TypeCustom(typeDef: TypeDefinition, param: Option[Int]) extends Type {
   def resolve(b: Type): TypeCustom = b match {
     case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
-    case b: TypeCustom if this == b => this
+    case b: TypeCustom if typeDef == b.typeDef && param.isEmpty && b.param.isEmpty => this
+    case b: TypeCustom if typeDef == b.typeDef && param.nonEmpty && b.param.nonEmpty =>
+      TypeCustom(typeDef, Some(param.get + b.param.get))
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
-
-  override def toString = name
+  override def toString = typeDef.name + param.map("(" + _ + ")").mkString
 }
+
 
 object Type {
   def resolve(tp1: Type, tp2: Type): Type =

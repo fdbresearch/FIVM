@@ -59,24 +59,24 @@ function run_cofactor_housing() {
     echo "-----------------------------------------"
     echo "SCALE: ${scale}"
 
-    run "bin/cofactor/housing/Cofactor_Housing_DF-EVAL" 4 "" "--no-output"
-    run "bin/cofactor/housing/Cofactor_Housing_DBT-EVAL" 1 "" "--no-output"
-    run "bin/cofactor/housing/Cofactor_Housing_PIVOT-EVAL" 4 "" "--no-output"
+    # run "bin/cofactor/housing/Cofactor_Housing_DF-EVAL" 4 "" "--no-output"
+    # run "bin/cofactor/housing/Cofactor_Housing_DBT-EVAL" 1 "" "--no-output"
+    # run "bin/cofactor/housing/Cofactor_Housing_PIVOT-EVAL" 4 "" "--no-output"
 
     # for bs in 100 1000 10000 100000
     for bs in 1000
     do 
       run "bin/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
 
-      run "bin/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
 
-      run "bin/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_DBT-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
     done
   done
 }
@@ -183,14 +183,14 @@ function run_sum_housing() {
     echo "-----------------------------------------"
     echo "SCALE: ${scale}"
 
-    run "bin/sum/housing/Sum_Housing_DF-EVAL" 4 "" "--no-output"
-    run "bin/sum/housing/Sum_Housing_DBT-EVAL" 4 "" "--no-output"
+    # run "bin/sum/housing/Sum_Housing_DF-EVAL" 4 "" "--no-output"
+    # run "bin/sum/housing/Sum_Housing_DBT-EVAL" 4 "" "--no-output"
 
     # for bs in 100 1000 10000 100000
     for bs in 1000
     do 
       run "bin/sum/housing/Sum_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      run "bin/sum/housing/Sum_Housing_DF-INCR_REEVAL_ALL_${bs}" 4 "" "--no-output" ${bs}
+      # run "bin/sum/housing/Sum_Housing_DF-INCR_REEVAL_ALL_${bs}" 4 "" "--no-output" ${bs}
       run "bin/sum/housing/Sum_Housing_DBT-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
     done
   done
@@ -395,17 +395,17 @@ function run_mcm_octave() {
 make clean
 rm -f *.heap
 
-run_cofactor_housing
-run_cofactor_retailer
-run_cofactor_twitter
-run_cofactor_tpch
+ run_cofactor_housing
+# run_cofactor_retailer
+# run_cofactor_twitter
+# run_cofactor_tpch
 
-run_sum_housing
-run_sum_retailer
-run_sum_tpch
+# run_sum_housing
+# run_sum_retailer
+# run_sum_tpch
 
-run_fulljoin_housing
-run_fulljoin_retailer
+# run_fulljoin_housing
+# run_fulljoin_retailer
 
-run_mcm_dbtoaster
-run_mcm_octave
+# run_mcm_dbtoaster
+# run_mcm_octave

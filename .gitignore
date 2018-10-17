@@ -1,1 +1,5 @@
 .DS_Store
+experiments/bin
+experiments/target
+project/target
+target

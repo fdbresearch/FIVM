@@ -74,8 +74,9 @@ class Parser extends StandardTokenParsers {
 
   // ------------ Custom type definition
   lazy val customType: Parser[TypeCustom] =
-    acceptIf(x => typeMap.contains(x.chars))("No such type '" + _.chars + "'") ^^ {
-      i => TypeCustom(i.chars, typeMap(i.chars).path)
+    acceptIf(x => typeMap.contains(x.chars))("No such type '" + _.chars + "'") ~
+      opt("(" ~> intLit <~ ")") ^^ {
+        case i ~ p => TypeCustom(typeMap(i.chars), p.map(_.toInt))
     }
 
   private val typeMap = collection.mutable.Map[String, TypeDefinition]()

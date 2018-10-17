@@ -94,8 +94,10 @@ class SQLParser extends Parser with (String => SQL.System) {
     | field
     | "(" ~> expr <~ ")"
     | "(" ~> query <~ ")" ^^ Nested
+    | floatLit ^^ { Const(_, TypeFloat) }
     | doubleLit ^^ { Const(_, TypeDouble) }
     | longLit ^^ { Const(_, TypeLong) }
+    | intLit ^^ { Const(_, TypeInt) }
     | stringLit ^^ { Const(_, TypeString) }
     | failure("SQL expression")
     )

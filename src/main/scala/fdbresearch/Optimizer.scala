@@ -27,24 +27,28 @@ object Optimizer {
     case M3.IfStmt(cond, thenBlk, elseBlk) =>
       M3.IfStmt(cond, thenBlk.map(optimizeStatement), elseBlk.map(optimizeStatement))
   }
-  
+
   def optimizeExpr(e: M3.Expr): M3.Expr = e.replace {
     case M3.AggSum(ks, e1) => optimizeExpr(e1) match {
       case M3.AggSum(_, e2) => M3.AggSum(ks, e2)    // Unnest AggSums
 
-      case M3.Mul(M3.AggSum(ks2, e2), r) =>
-        // Find product terms covered by ks2
-        val (covered, rest) = prodList(r).partition { t =>
-          val (in, out) = t.schema
-          (in ++ out).toSet.subsetOf(ks2.toSet)
-        }
-        val subterms = (prodList(e2) ++ covered).reduceRight(M3.Mul)
-        if (rest.isEmpty) M3.AggSum(ks, subterms)
-        else M3.AggSum(ks, (M3.AggSum(ks2, subterms) :: rest).reduceRight(M3.Mul))
+//      case M3.Mul(M3.AggSum(ks2, e2), r) =>
+//        // Find product terms covered by ks2 and without maps in r
+//        val (covered, rest) = prodList(r).partition { t =>
+//          val (in, out) = t.schema
+//          (in ++ out).toSet.subsetOf(ks2.toSet) &&     // singleton
+//            !findMapsInExpr(t).exists(_.keys.nonEmpty) // no maps (expensive lookups)
+//        }
+//        val subterms = (prodList(e2) ++ covered).reduceRight(M3.Mul)
+//        if (rest.isEmpty) M3.AggSum(ks, subterms)
+//        else M3.AggSum(ks, (M3.AggSum(ks2, subterms) :: rest).reduceRight(M3.Mul))
 
       case e2 => M3.AggSum(ks, e2)
     }
   }
+
+  private def findMapsInExpr(e: M3.Expr): List[M3.MapRef] =
+    e.collect { case m: M3.MapRef => List(m) }
 
   private def prodList(e: M3.Expr): List[M3.Expr] = e match {
     case M3.Mul(l, r) => prodList(l) ++ prodList(r)

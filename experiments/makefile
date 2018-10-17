@@ -7,7 +7,6 @@ NUMBER_OF_RUNS ?= 1
 BATCH_SIZE ?= 1000
 DBTOASTER_FLAGS ?= -F HEURISTICS-DECOMPOSE-OVER-TABLES
 FLAGS ?=
-SRC_QUERIES_DIR ?= src/queries
 
 ####################
 # COFACTOR HOUSING
@@ -18,6 +17,7 @@ COFACTOR_HOUSING_SOURCE_EVAL = \
 	# cofactor/housing/Cofactor_Housing_DBT-EVAL.sql
 	
 COFACTOR_HOUSING_SOURCE_INCR = \
+	cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED.m3 \
 	cofactor/housing/Cofactor_Housing_DF-INCR_ALL.hpp \
 	cofactor/housing/Cofactor_Housing_PIVOT-INCR_ALL.m3
 	# cofactor/housing/Cofactor_Housing_DBT-INCR_ALL.sql	
@@ -45,6 +45,9 @@ COFACTOR_RETAILER_SOURCE_EVAL = \
 	# cofactor/retailer/Cofactor_Retailer_DBT-EVAL.sql
 
 COFACTOR_RETAILER_SOURCE_INCR = \
+	cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED.m3 \
+	cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED.m3 \
+	cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED_2.m3 \
 	cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL.hpp \
 	cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY.hpp \
 	cofactor/retailer/Cofactor_Retailer_PIVOT-INCR_ALL.m3 \
@@ -547,13 +550,13 @@ $(MCM_EXE_INCR): $(BINDIR)/% : $(BINDIR)/queries/%.hpp src/templates/mcm_templat
 ##########
 
 
-$(GENERATE_HPP_FROM_SQL): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.sql
+$(GENERATE_HPP_FROM_SQL): $(BINDIR)/queries/%.hpp : src/queries/%.sql
 	$(DBTOASTER) $(DBTOASTER_FLAGS) --batch -l vcpp -O3 -o $@ $<
 
-$(GENERATE_HPP_FROM_M3): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.m3
+$(GENERATE_HPP_FROM_M3): $(BINDIR)/queries/%.hpp : src/queries/%.m3
 	$(DBTOASTER) $(DBTOASTER_FLAGS) --batch -l vcpp -O3 -o $@ $<
 
-$(GENERATE_HPP_FROM_HPP): $(BINDIR)/queries/%.hpp : $(SRC_QUERIES_DIR)/%.hpp
+$(GENERATE_HPP_FROM_HPP): $(BINDIR)/queries/%.hpp : src/queries/%.hpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
 	cp $< $@
 
