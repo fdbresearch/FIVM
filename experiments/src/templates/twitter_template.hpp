@@ -18,7 +18,7 @@ const string filename = "higgs-social_network.tbl";
 
 namespace dbtoaster 
 {
-    class data_t;
+    struct data_t;
 
     // ASSUMPTION: All twitterX datasets have equal size
 

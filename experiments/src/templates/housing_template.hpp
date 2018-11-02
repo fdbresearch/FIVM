@@ -17,7 +17,7 @@ const string dataset = "";
 
 namespace dbtoaster 
 {
-    class data_t;    
+    struct data_t;    
 
     #if defined(RELATION_HOUSE_STATIC)
         std::vector<HOUSE_entry> house;

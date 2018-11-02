@@ -17,7 +17,7 @@ const string dataset = "";
 
 namespace dbtoaster 
 {
-    class data_t;    
+    struct data_t;    
 
     #if defined(RELATION_INVENTORY_STATIC)
         std::vector<INVENTORY_entry> inventory;

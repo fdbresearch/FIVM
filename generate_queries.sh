@@ -10,4 +10,7 @@ sbt "
 ;run examples/sql/relational/retailer_ALL.sql examples/dtree/retailer.txt -o experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_ALL_GENERATED.m3
 ;run examples/sql/relational/retailer_INVENTORY.sql examples/dtree/retailer.txt -o experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED.m3
 ;run examples/sql/relational/housing_ALL.sql examples/dtree/housing.txt -o experiments/src/queries/full_join/housing/Relational_Housing_DF-INCR_ALL_GENERATED.m3
+;run examples/sql/factorized/retailer_ALL.sql examples/dtree/retailer.txt -o experiments/src/queries/full_join/retailer/Factorized_Retailer_DF-INCR_ALL_GENERATED.m3
+;run examples/sql/factorized/retailer_INVENTORY.sql examples/dtree/retailer.txt -o experiments/src/queries/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_GENERATED.m3
+;run examples/sql/factorized/housing_ALL.sql examples/dtree/housing.txt -o experiments/src/queries/full_join/housing/Factorized_Housing_DF-INCR_ALL_GENERATED.m3
 "

@@ -16,7 +16,7 @@ const string dataset = "";
 
 namespace dbtoaster 
 {
-    class data_t;    
+    struct data_t;    
 
     #if defined(RELATION_LINEITEM_STATIC)
         std::vector<LINEITEM_entry> lineitem;

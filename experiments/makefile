@@ -288,6 +288,7 @@ FULL_HOUSING_SOURCE_EVAL = \
 	
 FULL_HOUSING_SOURCE_INCR = \
 	full_join/housing/Relational_Housing_DF-INCR_ALL_GENERATED.m3 \
+	full_join/housing/Factorized_Housing_DF-INCR_ALL_GENERATED.m3 \
 	full_join/housing/Relational_Housing_DF-INCR_ALL.hpp \
 	full_join/housing/Factorized_Housing_DF-INCR_ALL.hpp \
 	full_join/housing/Factorized_Housing_DF-REEVAL_ALL.hpp
@@ -313,6 +314,8 @@ FULL_RETAILER_SOURCE_EVAL =
 FULL_RETAILER_SOURCE_INCR = \
 	full_join/retailer/Relational_Retailer_DF-INCR_ALL_GENERATED.m3 \
 	full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED.m3 \
+	full_join/retailer/Factorized_Retailer_DF-INCR_ALL_GENERATED.m3 \
+	full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_GENERATED.m3 \
 	full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED.hpp \
 	full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED.hpp \
 	full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY.hpp \
