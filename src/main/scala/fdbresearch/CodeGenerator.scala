@@ -34,7 +34,7 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
         case _: DTreeVariable => tree.children match {
           case Nil => sys.error("Variable as a leaf node")
           case cl =>
-            (cl.map(_.createExpr) ++ tree.node.liftFn).reduceRight(M3.Mul)
+            (cl.map(_.createExpr) ++ tree.node.liftFn).reduceLeft(M3.Mul)
         }
         case DTreeRelation(name, keys) =>
           M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
@@ -51,13 +51,14 @@ class CodeGenerator(tree: Tree[View], typeDefs: List[TypeDefinition], sources: L
     def createDeltaExpr(event: M3.EventTrigger): M3.Expr = {
       val childJoin = tree.node.link.node match {
         case _: DTreeVariable =>
-          val (delta, rest) = tree.children.partition(!_.isStatic(event.schema.name))
-          delta match {
+          tree.children.filter(!_.isStatic(event.schema.name)) match {
             case hd :: Nil =>
-              (hd.createDeltaExpr(event) ::
-                (rest.map(_.createExpr) ++ tree.node.liftFn)).reduceRight(M3.Mul)
+              ( hd.createDeltaExpr(event) ::
+                (hd.rightSiblings ++ hd.leftSiblings.reverse).map(_.createExpr) ++
+                  tree.node.liftFn).reduceLeft(M3.Mul)
             case _ => sys.error("# of delta paths not 1")
           }
+
         case DTreeRelation(name, keys) =>
           assert(name == event.schema.name)
           event match {

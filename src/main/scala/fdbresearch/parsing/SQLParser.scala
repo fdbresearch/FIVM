@@ -76,7 +76,7 @@ class SQLParser extends Parser with (String => SQL.System) {
       ) ~ ("(" ~> rep1sep(expr, ",") <~ ")") ^^ {
         case n ~ as => Apply(n.toLowerCase, TypeString, as)
       }
-    | ("[" ~> ident <~ ":") ~ (tpe <~ "]") ~ ("(" ~> repsep(expr,",") <~ ")") ^^ {
+    | ("[" ~> func <~ ":") ~ (tpe <~ "]") ~ ("(" ~> repsep(expr,",") <~ ")") ^^ {
         case n ~ t ~ as => Apply(n.toLowerCase, t, as)
       }
     | "CASE" ~> rep1(("WHEN" ~> cond) ~ ("THEN" ~> expr)) ~

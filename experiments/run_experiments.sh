@@ -297,7 +297,7 @@ function run_sum_tpch() {
 ####################
 function run_fulljoin_housing() {
   # for scale in {1..20}
-  for scale in 20
+  for scale in 4
   do
     if [[ "$unamestr" == 'Linux' ]]; then
        sed -i "s/datasets\/housing-.*-normalised/datasets\/housing-${scale}-normalised/g" src/templates/housing_template.hpp 
@@ -308,23 +308,23 @@ function run_fulljoin_housing() {
     echo "-----------------------------------------"
     echo "SCALE: ${scale}"
 
-    run "bin/full_join/housing/Relational_Housing_DF-EVAL" 4 "" "--no-output"
-    run "bin/full_join/housing/Factorized_Housing_DF-EVAL" 4 "" "--no-output"
+    # run "bin/full_join/housing/Relational_Housing_DF-EVAL" 4 "" "--no-output"
+    # run "bin/full_join/housing/Factorized_Housing_DF-EVAL" 4 "" "--no-output"
 
     # for bs in 100 1000 10000 100000
     for bs in 1000
     do 
       run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 4 "" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 4 "" "--no-output" ${bs}
 
-      run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
 
-      run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
-      run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
+      # run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
     done
   done
 }
@@ -395,7 +395,7 @@ function run_mcm_octave() {
 make clean
 rm -f *.heap
 
- run_cofactor_housing
+ # run_cofactor_housing
 # run_cofactor_retailer
 # run_cofactor_twitter
 # run_cofactor_tpch
@@ -404,7 +404,7 @@ rm -f *.heap
 # run_sum_retailer
 # run_sum_tpch
 
-# run_fulljoin_housing
+run_fulljoin_housing
 # run_fulljoin_retailer
 
 # run_mcm_dbtoaster

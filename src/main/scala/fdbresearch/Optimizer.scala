@@ -103,15 +103,17 @@ object Optimizer {
       isMapRefInStatement(s)
     }
 
-    def appearsIn(src: M3.AggSum, dst: M3.Expr): Boolean =
-      dst.collect { case m: M3.AggSum => List(m == src || appearsIn(src, m.e))}.exists(identity)
-
-    def sortFn(e1: (M3.AggSum, Int), e2: (M3.AggSum, Int)): Boolean =
-      !(e1._2 < e2._2 || (e1._2 == e2._2 && appearsIn(e1._1, e2._1)))
+//    def sortFn(e1: (M3.AggSum, Int), e2: (M3.AggSum, Int)): Boolean = {
+//      def appearsIn(src: M3.AggSum, dst: M3.Expr): Boolean =
+//        dst.collect {
+//          case m: M3.AggSum => List(m == src || appearsIn(src, m.e))
+//        }.exists(identity)
+//      (e1._2 > e2._2) || (e1._2 == e2._2 && appearsIn(e2._1, e1._1))
+//    }
 
     // Find candidates, ranked them by # of occurrences, replace top expression if > 1
     val candidates = findAggregates(ss)
-    val ranked = candidates.groupBy(identity).mapValues(_.size).toList.sortWith(sortFn)
+    val ranked = candidates.groupBy(identity).mapValues(_.size).toList.sortWith(_._2 > _._2)
     ranked match {
       case (a, occurrences) :: _ if occurrences > 1 =>
         val tmpMapDef = M3.MapDef(Utils.fresh("TMP_SUM"), a.tp, a.keys, optimizeExpr(a))

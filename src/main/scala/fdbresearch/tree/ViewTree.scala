@@ -1,6 +1,6 @@
 package fdbresearch.tree
 
-import fdbresearch.core.{M3, SQL, Type, TypeChar}
+import fdbresearch.core.{M3, SQL, Type, TypeChar, TypeInt}
 import fdbresearch.util.Utils
 
 case class View(name: String, tp: Type, freeVars: List[DTreeVariable], link: Tree[DTreeNode], liftFn: List[M3.Expr] = Nil) {
@@ -62,12 +62,20 @@ object ViewTree {
       case _ => sys.error("Not supported SUM expression: " + e)
     }
 
+    def extendWithIndex(idx: Int, e: M3.Expr) =
+      e.replace {
+        case M3.Apply(f, tp, as) =>
+          M3.Apply(f, tp, M3.Const(TypeInt, idx.toString) :: as)
+      }
+
     // Build view tree from dtree
     dtree.map2WithPostChildren[View] { (tree, children) =>
       // Compute lift functions at current node
       val treeVars = tree.getVariables.toSet
       val childVars = tree.children.flatMap(_.getVariables).toSet
-      val nodeLifts = lifts.filter(l => !l.isCovered(childVars) && l.isCovered(treeVars)).map(sqlToM3)
+      val nodeLifts = lifts.filter(l =>
+        !l.isCovered(childVars) && l.isCovered(treeVars)
+      ).map(s => extendWithIndex(tree.variablePreorderIndex, sqlToM3(s)))
 
       // Lifts can introduce new free variables
       val otherLifts = lifts.filter(!_.isCovered(treeVars))

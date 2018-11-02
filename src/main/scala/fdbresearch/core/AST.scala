@@ -56,9 +56,27 @@ case class Adaptor(name: String, options: Map[String, String]) extends Tree {
     else " (" + options.map { case (k, v) => k + " := '" + v + "'" }.mkString(", ") + ")" )
 }
 
-// ------ Custom type definitions
-case class TypeDefinition(name: String, path: String) {
-  override def toString = "CREATE TYPE " + name + " FROM FILE '" + path + "';"
+// ------ Custom generic type definitions
+abstract sealed class ParameterType
+case object StaticParameter extends ParameterType {
+  override def toString = "static"
+}
+case object DynamicSumParameter extends ParameterType {
+  override def toString = "dynamic_sum"
+}
+case object DynamicPrioritizedConcatParameter extends ParameterType {
+  override def toString = "dynamic_concat"
+}
+case object DynamicPrioritizedMinParameter extends ParameterType {
+  override def toString = "dynamic_min"
+}
+
+case class TypeDefinition(name: String, file: SourceFile, schema: List[ParameterType]) {
+  override def toString =
+    if (schema.isEmpty) s"CREATE TYPE $name FROM $file;"
+    else s"""CREATE TYPE $name
+            |  FROM $file
+            |  WITH PARAMETER SCHEMA (${schema.mkString(", ")});""".stripMargin
 }
 
 // ------ Expression locality types
@@ -383,8 +401,8 @@ object M3 {
 
   // Lifting operator ('Let name=e in ...' semantics)
   case class Lift(name: String, e: Expr) extends Expr {
-    val tp = TypeChar
-    val locality = e.locality
+    val tp: Type = TypeChar
+    val locality: Option[LocalityType] = e.locality
     override def toString = "(" + name + " ^= " + e + ")"
     def toDecoratedString = "(" + name + " ^= " + e.toDecoratedString + ")" + ": " + tp
   }
@@ -392,7 +410,7 @@ object M3 {
   // Map reference of a table
   case class MapRefConst(name: String, keys: List[(String, Type)],
                          locality: Option[LocalityType] = Some(LocalExp)) extends Expr {
-    val tp = TypeLong
+    val tp: Type = TypeLong
     override def toString = name + "(" + keys.map(_._1).mkString(", ") + ")"
     def toDecoratedString = name + "(" + keys.map(k => k._1 + ": " + k._2).mkString(", ") + "): " + tp
   }
@@ -400,15 +418,15 @@ object M3 {
   // Map reference of a delta update
   case class DeltaMapRefConst(name: String, keys: List[(String, Type)],
                               locality: Option[LocalityType] = Some(LocalExp)) extends Expr {
-    val tp = TypeLong
+    val tp: Type = TypeLong
     override def toString = "(DELTA " + name + ")(" + keys.map(_._1).mkString(", ") + ")"
     def toDecoratedString = "(DELTA " + name + ")(" + keys.map(k => k._1 + ": " + k._2).mkString(", ") + "): " + tp
   }
 
   // Sum aggregate
   case class AggSum(keys: List[(String, Type)], e: Expr) extends Expr {
-    val tp = e.tp
-    val locality = e.locality match {
+    val tp: Type = e.tp
+    val locality: Option[LocalityType] = e.locality match {
       case l @ Some(DistByKeyExp(pk)) =>
         val expVars = (e.schema._1 ++ keys).toSet
         if (pk.forall(expVars.contains)) l else Some(DistRandomExp)
@@ -422,17 +440,17 @@ object M3 {
 
   // Multiplication operator
   case class Mul(l: Expr, r: Expr) extends Expr {
-    val tp = Type.resolve(l.tp, r.tp)
-    val locality = (l.locality, r.locality) match {
+    val tp: Type = Type.resolve(l.tp, r.tp)
+    val locality: Option[LocalityType] = (l.locality, r.locality) match {
       case (Some(LocalExp), Some(LocalExp)) => Some(LocalExp)
       case (Some(DistByKeyExp(a)), Some(DistRandomExp))
-        if (a == Nil) => Some(DistRandomExp)
+        if a == Nil => Some(DistRandomExp)
       case (Some(DistRandomExp), Some(DistByKeyExp(b)))
-        if (b == Nil) => Some(DistRandomExp)
+        if b == Nil => Some(DistRandomExp)
       case (Some(DistByKeyExp(a)), Some(DistByKeyExp(b)))
-        if (a == b || b == Nil) => Some(DistByKeyExp(a))
+        if a == b || b == Nil => Some(DistByKeyExp(a))
       case (Some(DistByKeyExp(a)), Some(DistByKeyExp(b)))
-        if (a == Nil) => Some(DistByKeyExp(b))
+        if a == Nil => Some(DistByKeyExp(b))
       case (Some(a), None) => Some(a)
       case (None, Some(b)) => Some(b)
       case (None, None) => None
@@ -444,12 +462,12 @@ object M3 {
 
   // Union operator
   case class Add(l: Expr, r: Expr) extends Expr {
-    val tp = Type.resolve(l.tp, r.tp)
-    val locality = (l.locality, r.locality) match {
+    val tp: Type = Type.resolve(l.tp, r.tp)
+    val locality: Option[LocalityType] = (l.locality, r.locality) match {
       case (Some(LocalExp), Some(LocalExp)) => Some(LocalExp)
       case (Some(DistRandomExp), Some(DistRandomExp)) => Some(DistRandomExp)
       case (Some(DistByKeyExp(a)), Some(DistByKeyExp(b)))
-        if (a == b) => Some(DistByKeyExp(a))
+        if a == b => Some(DistByKeyExp(a))
       case (Some(a), None) => Some(a)
       case (None, Some(b)) => Some(b)
       case (None, None) => None
@@ -461,8 +479,8 @@ object M3 {
 
   // Exists operator - returns 0 or 1 (checks if there is at least one tuple)
   case class Exists(e: Expr) extends Expr {
-    val tp = TypeChar
-    val locality = e.locality
+    val tp: Type = TypeChar
+    val locality: Option[LocalityType] = e.locality
     override def toString = "EXISTS(" + e + ")"
     def toDecoratedString = "EXISTS(" + e.toDecoratedString + "): " + tp
   }
@@ -476,7 +494,7 @@ object M3 {
 
   // Comparison, returns 0 or 1
   case class Cmp(l: Expr, r: Expr, op: OpCmp) extends Expr {
-    val tp = TypeChar
+    val tp: Type = TypeChar
     val locality: Option[LocalityType] = None
     override def toString = "{" + l + " " + op + " " + r + "}"
     def toDecoratedString = "{" + l.toDecoratedString + " " + op + " " + r.toDecoratedString + "}: " + tp
@@ -484,7 +502,7 @@ object M3 {
 
   // OR comparison with a given expr list, returns 0 or 1
   case class CmpOrList(l: Expr, r: List[Expr]) extends Expr {
-    val tp = TypeChar
+    val tp: Type = TypeChar
     val locality: Option[LocalityType] = None
     override def toString = "{" + l + " IN [" + r.mkString(", ") + "]}"
     def toDecoratedString = "{" + l.toDecoratedString + " IN [" + r.map(_.toDecoratedString).mkString(", ") + "]}: " + tp
@@ -492,8 +510,8 @@ object M3 {
 
   // Distributed operation - repartion by key
   case class Repartition(ks: List[(String, Type)], e: Expr) extends Expr {
-    val tp = e.tp
-    val locality = Some(DistByKeyExp(ks))
+    val tp: Type = e.tp
+    val locality: Option[LocalityType] = Some(DistByKeyExp(ks))
     override def toString =
       "Repartition([" + ks.map(_._1).mkString(", ") + "],\n" + ind(e.toString) + "\n)"
     def toDecoratedString =
@@ -502,8 +520,8 @@ object M3 {
 
   // Distributed operation - gather on master
   case class Gather(e: Expr) extends Expr {
-    val tp = e.tp
-    val locality = Some(LocalExp)
+    val tp: Type = e.tp
+    val locality: Option[LocalityType] = Some(LocalExp)
     override def toString = "Gather(" + e + ")"
     def toDecoratedString = "Gather(" + e.toDecoratedString + "): " + tp
   }
@@ -599,7 +617,7 @@ object SQL {
   case class TableJoin(t1: Table, t2: Table, j: Join, c: Option[Cond]) extends Table {
     // empty condition = natural join
     override def toString = t1 + "\n  " + (j match {
-      case JoinInner => if (c == None) "NATURAL JOIN" else "JOIN"
+      case JoinInner => if (c.isEmpty) "NATURAL JOIN" else "JOIN"
       case JoinLeft  => "LEFT JOIN"
       case JoinRight => "RIGHT JOIN"
       case JoinFull  => "FULL JOIN"

@@ -14,7 +14,14 @@ class Tree[A](val node: A, private var _parent: Option[Tree[A]],
 
   def isRoot: Boolean = parent.isEmpty
 
-  val depth: Int = parent.map(_.depth + 1).getOrElse(0)
+  def leftSiblings: List[Tree[A]] =
+    parent.map(_.children.takeWhile(_ != this)).getOrElse(Nil)
+
+  def rightSiblings: List[Tree[A]] =
+    parent.map(_.children.dropWhile(_ != this).tail).getOrElse(Nil)
+
+  // Number of nodes including itself
+  val treeSize: Int = children.map(_.treeSize).sum + 1
 
   override def toString: String = node.toString + "{" + isRoot + "}" + (children match {
     case Nil => ""

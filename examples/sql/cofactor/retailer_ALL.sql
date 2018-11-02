@@ -1,5 +1,6 @@
 CREATE TYPE RingCofactor
-FROM FILE 'ring_cofactor.hpp';
+FROM FILE 'ring_cofactor.hpp'
+WITH PARAMETER SCHEMA (static, dynamic_sum);
 
 CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
 FROM FILE './datasets/sears/Inventory_toy2.tbl' LINE DELIMITED CSV(delimiter := '|');
@@ -17,62 +18,61 @@ CREATE STREAM WEATHER(locn long, dateid long, rain long, snow long, maxtemp long
 FROM FILE './datasets/sears/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 SELECT SUM(
-    [lift: RingCofactor(1)](0, locn) *
-    [lift: RingCofactor(1)](1, dateid) *
-    [lift: RingCofactor(1)](2, ksn) *
-    [lift: RingCofactor(1)](3, zip) *
-    [lift: RingCofactor(1)](4, inventoryunits) *
-    [lift: RingCofactor(1)](5, rgn_cd) *
-    [lift: RingCofactor(1)](6, clim_zn_nbr) *
-    [lift: RingCofactor(1)](7, tot_area_sq_ft) *
-    [lift: RingCofactor(1)](8, sell_area_sq_ft) *
-    [lift: RingCofactor(1)](9, avghhi) *
-    [lift: RingCofactor(1)](10, supertargetdistance) *
-    [lift: RingCofactor(1)](11, supertargetdrivetime) *
-    [lift: RingCofactor(1)](12, targetdistance) *
-    [lift: RingCofactor(1)](13, targetdrivetime) *
-    [lift: RingCofactor(1)](14, walmartdistance) *
-    [lift: RingCofactor(1)](15, walmartdrivetime) *
-    [lift: RingCofactor(1)](16, walmartsupercenterdistance) *
-    [lift: RingCofactor(1)](17, walmartsupercenterdrivetime) *
-    [lift: RingCofactor(1)](18, population) *
-    [lift: RingCofactor(1)](19, white) *
-    [lift: RingCofactor(1)](20, asian) *
-    [lift: RingCofactor(1)](21, pacific) *
-    [lift: RingCofactor(1)](22, blackafrican) *
-    [lift: RingCofactor(1)](23, medianage) *
-    [lift: RingCofactor(1)](24, occupiedhouseunits) *
-    [lift: RingCofactor(1)](25, houseunits) *
-    [lift: RingCofactor(1)](26, families) *
-    [lift: RingCofactor(1)](27, households) *
-    [lift: RingCofactor(1)](28, husbwife) *
-    [lift: RingCofactor(1)](29, males) *
-    [lift: RingCofactor(1)](30, females) *
-    [lift: RingCofactor(1)](31, householdschildren) *
-    [lift: RingCofactor(1)](32, hispanic) *
-    [lift: RingCofactor(1)](33, subcategory) *
-    [lift: RingCofactor(1)](34, category) *
-    [lift: RingCofactor(1)](35, categoryCluster) *
-    [lift: RingCofactor(1)](36, prize) *
-    [lift: RingCofactor(1)](37, rain) *
-    [lift: RingCofactor(1)](38, snow) *
-    [lift: RingCofactor(1)](39, maxtemp) *
-    [lift: RingCofactor(1)](40, mintemp) *
-    [lift: RingCofactor(1)](41, meanwind) *
-    [lift: RingCofactor(1)](42, thunder)
+    [lift: RingCofactor<double,1>](locn) *
+    [lift: RingCofactor<double,1>](dateid) *
+    [lift: RingCofactor<double,1>](ksn) *
+    [lift: RingCofactor<double,1>](inventoryunits) *
+    [lift: RingCofactor<double,1>](subcategory) *
+    [lift: RingCofactor<double,1>](category) *
+    [lift: RingCofactor<double,1>](categoryCluster) *
+    [lift: RingCofactor<double,1>](prize) *
+    [lift: RingCofactor<double,1>](rain) *
+    [lift: RingCofactor<double,1>](snow) *
+    [lift: RingCofactor<double,1>](maxtemp) *
+    [lift: RingCofactor<double,1>](mintemp) *
+    [lift: RingCofactor<double,1>](meanwind) *
+    [lift: RingCofactor<double,1>](thunder) *    
+    [lift: RingCofactor<double,1>](zip) *
+    [lift: RingCofactor<double,1>](rgn_cd) *
+    [lift: RingCofactor<double,1>](clim_zn_nbr) *
+    [lift: RingCofactor<double,1>](tot_area_sq_ft) *
+    [lift: RingCofactor<double,1>](sell_area_sq_ft) *
+    [lift: RingCofactor<double,1>](avghhi) *
+    [lift: RingCofactor<double,1>](supertargetdistance) *
+    [lift: RingCofactor<double,1>](supertargetdrivetime) *
+    [lift: RingCofactor<double,1>](targetdistance) *
+    [lift: RingCofactor<double,1>](targetdrivetime) *
+    [lift: RingCofactor<double,1>](walmartdistance) *
+    [lift: RingCofactor<double,1>](walmartdrivetime) *
+    [lift: RingCofactor<double,1>](walmartsupercenterdistance) *
+    [lift: RingCofactor<double,1>](walmartsupercenterdrivetime) *
+    [lift: RingCofactor<double,1>](population) *
+    [lift: RingCofactor<double,1>](white) *
+    [lift: RingCofactor<double,1>](asian) *
+    [lift: RingCofactor<double,1>](pacific) *
+    [lift: RingCofactor<double,1>](blackafrican) *
+    [lift: RingCofactor<double,1>](medianage) *
+    [lift: RingCofactor<double,1>](occupiedhouseunits) *
+    [lift: RingCofactor<double,1>](houseunits) *
+    [lift: RingCofactor<double,1>](families) *
+    [lift: RingCofactor<double,1>](households) *
+    [lift: RingCofactor<double,1>](husbwife) *
+    [lift: RingCofactor<double,1>](males) *
+    [lift: RingCofactor<double,1>](females) *
+    [lift: RingCofactor<double,1>](householdschildren) *
+    [lift: RingCofactor<double,1>](hispanic)
 )
 FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
 
-
 -- SELECT SUM(
---     [lift: RingCofactor(1)](0, locn) *
---     [lift: RingCofactor(1)](1, dateid) *
---     [lift: RingCofactor(1)](2, ksn) *
---     [lift: RingCofactor(1)](3, zip) *
---     [lift: RingCofactor(1)](4, inventoryunits) *
---     [lift: RingCofactor(13)](5, rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
---     [lift: RingCofactor(15)](18, population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic) *
---     [lift: RingCofactor(4)](33, subcategory, category, categoryCluster, prize) *
---     [lift: RingCofactor(6)](37, rain, snow, maxtemp, mintemp, meanwind, thunder)
+--     [lift: RingCofactor<double,1>](locn) *
+--     [lift: RingCofactor<double,1>](dateid) *
+--     [lift: RingCofactor<double,1>](ksn) *
+--     [lift: RingCofactor<double,1>](inventoryunits) *
+--     [lift: RingCofactor<double,4>](subcategory, category, categoryCluster, prize) *
+--     [lift: RingCofactor<double,6>](rain, snow, maxtemp, mintemp, meanwind, thunder) *
+--     [lift: RingCofactor<double,1>](zip) *
+--     [lift: RingCofactor<double,13>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
+--     [lift: RingCofactor<double,15>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
 -- )
 -- FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;

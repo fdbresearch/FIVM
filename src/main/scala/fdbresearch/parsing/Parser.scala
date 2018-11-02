@@ -69,21 +69,47 @@ class Parser extends StandardTokenParsers {
     | "float" ^^^ TypeFloat
     | ("decimal" | "double") ^^^ TypeDouble
     | "date" ^^^ TypeDate
-    | customType
+    | genericType
     )
 
-  // ------------ Custom type definition
-  lazy val customType: Parser[TypeCustom] =
-    acceptIf(x => typeMap.contains(x.chars))("No such type '" + _.chars + "'") ~
-      opt("(" ~> intLit <~ ")") ^^ {
-        case i ~ p => TypeCustom(typeMap(i.chars), p.map(_.toInt))
+  // ------------ Generic type definition
+  lazy val genericParam: Parser[GenericParameter] =
+    (  intLit ^^ { i => ConstParameter(i.toInt) }
+    |  tpe ^^ { t => PrimitiveTypeParameter(t) }
+    |  "[" ~> (intLit <~ ",") ~ rep1sep(genericParam, ",") <~ "]" ^^ {
+          case p ~ l => PrioritizedParameterList(p.toInt, l)
+       }
+    )
+
+  lazy val genericType: Parser[TypeGeneric] =
+    acceptIf (x => typeMap.contains(x.chars)) (x => "No such type '" + x.chars + "'") ~
+      opt("<" ~> repsep(genericParam, ",") <~ ">") ^^ {
+      case i ~ p => TypeGeneric(typeMap(i.chars), p.getOrElse(Nil))
     }
 
   private val typeMap = collection.mutable.Map[String, TypeDefinition]()
 
+  lazy val parameterType: Parser[ParameterType] =
+    ( "static" ^^^ StaticParameter
+    | "dynamic_sum" ^^^ DynamicSumParameter
+    | "dynamic_concat" ^^^ DynamicPrioritizedConcatParameter
+    | "dynamic_min" ^^^ DynamicPrioritizedMinParameter
+    )
+
   lazy val typeDef: Parser[TypeDefinition] =
-    "CREATE" ~> "TYPE" ~> ident ~ ("FROM" ~> "FILE" ~> stringLit) <~ ";" ^^ {
-      case i ~ f => val td = TypeDefinition(i, f); typeMap += ((i, td)); td
+    "CREATE" ~> "TYPE" ~> ident ~ ("FROM" ~> sourceIn) ~
+      opt("WITH" ~> "PARAMETER" ~> "SCHEMA" ~> "(" ~> repsep(parameterType, ",") <~ ")") <~ ";" ^^ {
+        case i ~ f ~ p =>
+          val td = TypeDefinition(i, f, p.getOrElse(Nil))
+          typeMap += ((i, td))
+          td
+    }
+
+  // ------------ Function name
+  lazy val func: Parser[String] =
+    ident ~ opt("<" ~> repsep(intLit, ",") <~ ">") ^^ {
+      case n ~ Some(ps) => n + "<" + ps.mkString(", ") + ">"
+      case n ~ None => n
     }
 
   // ------------ Source declaration

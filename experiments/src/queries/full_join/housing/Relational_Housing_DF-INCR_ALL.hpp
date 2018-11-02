@@ -375,7 +375,7 @@ namespace dbtoaster {
   struct PAYLOAD_POSTCODE_mapkey012345678910_idxfn {
     FORCE_INLINE static size_t hash(const PAYLOAD_POSTCODE& e) {
       size_t h = 0;
-      hash_combine(h, e.postcode);      
+      // hash_combine(h, e.postcode);      
       // hash_combine(h, e.h2);
       // hash_combine(h, e.h3);
       // hash_combine(h, e.h4);
@@ -386,6 +386,33 @@ namespace dbtoaster {
       // hash_combine(h, e.h9);
       // hash_combine(h, e.h10);
       // hash_combine(h, e.h11);
+hash_combine(h, e.postcode);
+hash_combine(h, e.h2);
+hash_combine(h, e.h3);
+hash_combine(h, e.h4);
+hash_combine(h, e.h5);
+hash_combine(h, e.h6);
+hash_combine(h, e.h7);
+hash_combine(h, e.h8);
+hash_combine(h, e.h9);
+hash_combine(h, e.h10);
+hash_combine(h, e.h11);
+hash_combine(h, e.s2);
+hash_combine(h, e.s3);
+hash_combine(h, e.s4);
+hash_combine(h, e.s5);
+hash_combine(h, e.s6);
+hash_combine(h, e.i2);
+hash_combine(h, e.i3);
+hash_combine(h, e.r2);
+hash_combine(h, e.r3);
+hash_combine(h, e.d2);
+hash_combine(h, e.d3);
+hash_combine(h, e.d4);
+hash_combine(h, e.d5);
+hash_combine(h, e.t2);
+hash_combine(h, e.t3);
+hash_combine(h, e.t4);      
       return h;
     }
     FORCE_INLINE static bool equals(const PAYLOAD_POSTCODE& x, const PAYLOAD_POSTCODE& y) {

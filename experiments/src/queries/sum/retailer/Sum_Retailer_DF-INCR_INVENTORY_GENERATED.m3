@@ -20,7 +20,13 @@ CREATE TABLE WEATHER (locn long, dateid long, rain long, snow long, maxtemp long
 --------------------- MAPS ----------------------
 DECLARE MAP V_locn_IIWLC1(double)[][] :=
   AggSum([],
-    (INVENTORY(locn, dateid, ksn, inventoryunits) * (inventoryunits * (inventoryunits * (V_subcategory_I1(long)[][ksn]<Local> * (V_rain_W1(long)[][locn, dateid]<Local> * V_zip_LC1(long)[][locn]<Local>)))))
+    (AggSum([locn],
+      (AggSum([locn, dateid],
+        (AggSum([locn, dateid, ksn],
+          ((INVENTORY(locn, dateid, ksn, inventoryunits) * inventoryunits) * inventoryunits)
+        ) * V_subcategory_I1(long)[][ksn]<Local>)
+      ) * V_rain_W1(long)[][locn, dateid]<Local>)
+    ) * V_zip_LC1(long)[][locn]<Local>)
   );
 
 DECLARE MAP V_subcategory_I1(long)[][ksn: double] :=
@@ -35,7 +41,9 @@ DECLARE MAP V_rain_W1(long)[][locn: long, dateid: long] :=
 
 DECLARE MAP V_zip_LC1(long)[][locn: long] :=
   AggSum([locn],
-    (LOCATION(locn, zip, rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) * AggSum([zip],
+    (AggSum([locn, zip],
+      LOCATION(locn, zip, rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime)
+    ) * AggSum([zip],
       CENSUS(zip, population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
     ))
   );
@@ -46,7 +54,13 @@ DECLARE QUERY V_locn_IIWLC1 := V_locn_IIWLC1(double)[][]<Local>;
 ------------------- TRIGGERS --------------------
 ON BATCH UPDATE OF INVENTORY {
   V_locn_IIWLC1(double)[][]<Local>  +=  AggSum([],
-    ((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * (inventoryunits * (inventoryunits * (V_subcategory_I1(long)[][ksn]<Local> * (V_rain_W1(long)[][locn, dateid]<Local> * V_zip_LC1(long)[][locn]<Local>)))))
+    (AggSum([locn],
+      (AggSum([locn, dateid],
+        (AggSum([locn, dateid, ksn],
+          (((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * inventoryunits) * inventoryunits)
+        ) * V_subcategory_I1(long)[][ksn]<Local>)
+      ) * V_rain_W1(long)[][locn, dateid]<Local>)
+    ) * V_zip_LC1(long)[][locn]<Local>)
   );
 }
 
@@ -58,7 +72,9 @@ ON SYSTEM READY {
     WEATHER(locn, dateid, rain, snow, maxtemp, mintemp, meanwind, thunder)
   );
   V_zip_LC1(long)[][locn]<Local>  :=  AggSum([locn],
-    (LOCATION(locn, zip, rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) * AggSum([zip],
+    (AggSum([locn, zip],
+      LOCATION(locn, zip, rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime)
+    ) * AggSum([zip],
       CENSUS(zip, population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
     ))
   );

@@ -129,7 +129,29 @@ namespace dbtoaster {
         str[length] = 0;
         t = STRING_TYPE(str, length);
         delete[] str;
-    }      
+    }
+
+    // Define a type which holds an unsigned integer value 
+    template<std::size_t> struct int_{};
+
+    template <typename Archive, class Tuple, size_t Pos>
+    Archive& print_tuple(Archive& ar, const Tuple& t, int_<Pos> ) {
+      ar << std::get< std::tuple_size<Tuple>::value - Pos>(t) << ", ";
+      return print_tuple(ar, t, int_<Pos - 1>());
+    }
+
+    template <typename Archive, class Tuple>
+    Archive& print_tuple(Archive& ar, const Tuple& t, int_<1> ) {
+      return ar << std::get<std::tuple_size<Tuple>::value - 1>(t);
+    }
+
+    template <typename Archive, class... Args>
+    Archive& operator<<(Archive& ar, const std::tuple<Args...>& t) {
+      ar << '('; 
+      print_tuple(ar, t, int_<sizeof...(Args)>()); 
+      return ar << ')';
+    }
+
 }
 
 #endif /* DBTOASTER_SERIALIZATION_HPP */

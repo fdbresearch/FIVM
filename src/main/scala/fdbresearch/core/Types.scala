@@ -1,5 +1,7 @@
 package fdbresearch.core
 
+import com.sun.corba.se.impl.io
+
 /**
   * Basic data types supported by F-IVM and M3
   *
@@ -58,7 +60,7 @@ case object TypeFloat extends Type {
 }
 
 case object TypeDouble extends Type {
-  def resolve(b: Type): TypeDouble.type = b match {
+  def resolve(b: Type): Type = b match {
     case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -77,7 +79,7 @@ case object TypeDate extends Type {
 }
 
 case object TypeString extends Type {
-  def resolve(b: Type): TypeString.type = b match {
+  def resolve(b: Type): Type = b match {
     case TypeString => this
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -85,17 +87,53 @@ case object TypeString extends Type {
   override def toString = "string"
 }
 
-case class TypeCustom(typeDef: TypeDefinition, param: Option[Int]) extends Type {
-  def resolve(b: Type): TypeCustom = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
-    case b: TypeCustom if typeDef == b.typeDef && param.isEmpty && b.param.isEmpty => this
-    case b: TypeCustom if typeDef == b.typeDef && param.nonEmpty && b.param.nonEmpty =>
-      TypeCustom(typeDef, Some(param.get + b.param.get))
-    case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
-  }
-  override def toString = typeDef.name + param.map("(" + _ + ")").mkString
+sealed trait GenericParameter
+case class ConstParameter(c: Integer) extends GenericParameter {
+  override def toString = c.toString
+}
+case class PrimitiveTypeParameter(tp: Type) extends GenericParameter {
+  override def toString = tp.toString
+}
+case class PrioritizedParameterList(priority: Integer,
+                                    params: List[GenericParameter]) extends GenericParameter {
+  override def toString = "[" + (priority :: params).mkString(", ") + "]"
 }
 
+case class TypeGeneric(typeDef: TypeDefinition,
+                       params: List[GenericParameter]) extends Type {
+
+  assert(params.size == typeDef.schema.size,
+    "Wrong number of generic parameters")
+
+  private def resolveParam(a: GenericParameter,
+                           b: GenericParameter,
+                           tp: ParameterType): GenericParameter =
+    (tp, a, b) match {
+      case (StaticParameter, p1, p2) if p1 == p2 => p1
+      case (DynamicSumParameter,
+            ConstParameter(c1),
+            ConstParameter(c2)) => ConstParameter(c1 + c2)
+      case (DynamicPrioritizedConcatParameter,
+            PrioritizedParameterList(o1, p1),
+            PrioritizedParameterList(o2, p2)) if o1 < o2 => PrioritizedParameterList(o1, p1 ++ p2)
+      case (DynamicPrioritizedMinParameter,
+            PrioritizedParameterList(o1, _),
+            PrioritizedParameterList(o2, _)) if o1 < o2 => a
+      case _ =>
+        throw TypeMismatchException("Parameter type mismatch (" + a + ", " + b + ")")
+    }
+
+  def resolve(b: Type): Type = b match {
+    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
+    case b: TypeGeneric if typeDef == b.typeDef =>
+      TypeGeneric(typeDef, (params, b.params, typeDef.schema).zipped.map(resolveParam))
+    case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
+  }
+
+  override def toString =
+    if (params.isEmpty) typeDef.name
+    else typeDef.name + "<" + params.mkString(", ") + ">"
+}
 
 object Type {
   def resolve(tp1: Type, tp2: Type): Type =

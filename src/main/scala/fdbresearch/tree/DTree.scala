@@ -31,5 +31,12 @@ object DTree {
 
     def getRelations: List[DTreeRelation] =
       dtree.collect { case r: DTreeRelation => r }.toList
+
+    // Index in pre-order depth-first search
+    def variablePreorderIndex: Int =
+      dtree.parent.map(p =>
+        p.variablePreorderIndex +
+          dtree.leftSiblings.map(_.getVariables.size).sum + 1
+      ).getOrElse(0)
   }
 }

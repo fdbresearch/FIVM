@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const string dataPath = "datasets/housing-20-normalised";
+const string dataPath = "datasets/housing-4-normalised";
 const string dataset = "";
 
 namespace dbtoaster 

@@ -7,25 +7,25 @@
 using namespace dbtoaster;
 
 template <typename T, size_t SZ>
-struct CofactorGeneric {
+struct RingCofactor {
     static constexpr size_t MSZ = (SZ + 1) * SZ / 2;
     static constexpr size_t ZERO_IDX = 0xffffffff;
-    static const CofactorGeneric<T, SZ> zero;
+    static const RingCofactor<T, SZ> zero;
    
     size_t idx;
     int count;
     T sums[SZ];
     T cofactors[MSZ];
 
-    explicit CofactorGeneric() : idx(ZERO_IDX), count(0) {
+    explicit RingCofactor() : idx(ZERO_IDX), count(0) {
         memset(sums, 0, SZ * sizeof(T));
         memset(cofactors, 0, MSZ * sizeof(T));
     }
 
-    explicit CofactorGeneric(size_t idx_) : idx(idx_), count(0) { }
+    explicit RingCofactor(size_t idx_) : idx(idx_), count(0) { }
     
     template <typename... Args>
-    explicit CofactorGeneric(size_t idx_, Args&&... args) : idx(idx_), count(1), sums{ args... } {
+    explicit RingCofactor(size_t idx_, Args&&... args) : idx(idx_), count(1), sums{ args... } {
         static_assert(SZ == sizeof...(args), "Incompatible array sizes");
         T* out = cofactors;
         for (size_t i = 0; i < SZ; i++)
@@ -33,7 +33,14 @@ struct CofactorGeneric {
                 *out++ = sums[i] * sums[j];
     }
 
-    CofactorGeneric& operator+=(const CofactorGeneric& other) {
+    inline bool operator==(const RingCofactor& other) const {
+        return idx == other.idx;        // shallow test
+    }
+
+    inline bool isZero() const { return idx == ZERO_IDX; }
+
+    RingCofactor& operator+=(const RingCofactor& other) {
+        if (other.isZero()) return *this;
         assert(idx == ZERO_IDX || idx == other.idx);
         idx &= other.idx;
         count += other.count;
@@ -44,26 +51,17 @@ struct CofactorGeneric {
         return *this;
     }
 
-    bool operator==(const CofactorGeneric& other) const {
-        return idx == other.idx;
-    }
-
-    bool operator!=(const CofactorGeneric& other) const {
-        return idx != other.idx;
-    }
-
-    bool isZero() const { return idx == ZERO_IDX; }
-
     template <size_t SZ2>
-    CofactorGeneric<T, SZ + SZ2> operator*(const CofactorGeneric<T, SZ2>& other) const {
-        if (isZero() || other.isZero()) return CofactorGeneric<T, SZ + SZ2>::zero;
+    RingCofactor<T, SZ + SZ2> operator*(const RingCofactor<T, SZ2>& other) const {
+        if (isZero() || other.isZero()) return RingCofactor<T, SZ + SZ2>::zero;
         if (other.idx > idx) return other.multiply(*this);
         return this->multiply(other);
     }
 
     template <size_t SZ2>
-    CofactorGeneric<T, SZ + SZ2> multiply(const CofactorGeneric<T, SZ2>& other) const {
-        CofactorGeneric<T, SZ + SZ2> r(other.idx);
+    RingCofactor<T, SZ + SZ2> multiply(const RingCofactor<T, SZ2>& other) const {
+        assert((other.idx + SZ2) == idx);
+        RingCofactor<T, SZ + SZ2> r(other.idx);
         r.count = other.count * count;
         
         T* out = r.sums;
@@ -92,13 +90,13 @@ struct CofactorGeneric {
         return r;
     }
 
-    CofactorGeneric operator*(long int alpha) const {        
+    RingCofactor operator*(long int alpha) const {        
         if (alpha == 1L) return *this;
         return multiply(alpha); 
     }
 
-    CofactorGeneric multiply(long int alpha) const {
-        CofactorGeneric<T, SZ> r(idx);
+    RingCofactor multiply(long int alpha) const {
+        RingCofactor<T, SZ> r(idx);
         r.count = alpha * count;
         for (size_t i = 0; i < SZ; i++) 
             r.sums[i] = alpha * sums[i];
@@ -108,7 +106,7 @@ struct CofactorGeneric {
     }
 
     void clear() {
-        idx = 0;
+        idx = ZERO_IDX;
         count = 0;
         memset(sums, 0, SZ * sizeof(T));
         memset(cofactors, 0, MSZ * sizeof(T));
@@ -128,10 +126,10 @@ struct CofactorGeneric {
 };
 
 template <typename T, size_t SZ>
-const CofactorGeneric<T, SZ> CofactorGeneric<T, SZ>::zero = CofactorGeneric<T, SZ>();
+const RingCofactor<T, SZ> RingCofactor<T, SZ>::zero = RingCofactor<T, SZ>();
 
 template <typename T, size_t SZ>
-CofactorGeneric<T, SZ> operator*(long int alpha, const CofactorGeneric<T, SZ>& c) {
+RingCofactor<T, SZ> operator*(long int alpha, const RingCofactor<T, SZ>& c) {
     if (alpha == 1L) return c;
     return c.multiply(alpha);
 }
@@ -140,27 +138,8 @@ template <typename T>
 FORCE_INLINE DOUBLE_TYPE convert(T x) { return x; }
 
 template <typename... Args>
-CofactorGeneric<DOUBLE_TYPE, sizeof...(Args)> Ulift(size_t idx, Args&&... args) {
-    return CofactorGeneric<DOUBLE_TYPE, sizeof...(args)>(idx, convert(args)...);
+RingCofactor<DOUBLE_TYPE, sizeof...(Args)> Ulift(size_t idx, Args&&... args) {
+    return RingCofactor<DOUBLE_TYPE, sizeof...(args)>(idx, convert(args)...);
 }
-
-typedef CofactorGeneric<DOUBLE_TYPE, 1> RingCofactor1;
-typedef CofactorGeneric<DOUBLE_TYPE, 2> RingCofactor2;
-typedef CofactorGeneric<DOUBLE_TYPE, 3> RingCofactor3;
-typedef CofactorGeneric<DOUBLE_TYPE, 4> RingCofactor4;
-typedef CofactorGeneric<DOUBLE_TYPE, 5> RingCofactor5;
-typedef CofactorGeneric<DOUBLE_TYPE, 6> RingCofactor6;
-typedef CofactorGeneric<DOUBLE_TYPE, 7> RingCofactor7;
-typedef CofactorGeneric<DOUBLE_TYPE, 8> RingCofactor8;
-typedef CofactorGeneric<DOUBLE_TYPE, 9> RingCofactor9;
-typedef CofactorGeneric<DOUBLE_TYPE, 10> RingCofactor10;
-typedef CofactorGeneric<DOUBLE_TYPE, 11> RingCofactor11;
-typedef CofactorGeneric<DOUBLE_TYPE, 12> RingCofactor12;
-typedef CofactorGeneric<DOUBLE_TYPE, 13> RingCofactor13;
-typedef CofactorGeneric<DOUBLE_TYPE, 14> RingCofactor14;
-typedef CofactorGeneric<DOUBLE_TYPE, 15> RingCofactor15;
-typedef CofactorGeneric<DOUBLE_TYPE, 27> RingCofactor27;
-typedef CofactorGeneric<DOUBLE_TYPE, 29> RingCofactor29;
-typedef CofactorGeneric<DOUBLE_TYPE, 43> RingCofactor43;
 
 #endif /* RINGCOFACTOR_HPP */

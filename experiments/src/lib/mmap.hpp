@@ -10,7 +10,6 @@
 #include "hash.hpp"
 #include "pool.hpp"
 #include "serialization.hpp"
-// #include "ring_cofactor_lazy.hpp"
 
 namespace dbtoaster {
 
@@ -637,19 +636,6 @@ class MultiHashMap {
         }
     }
 
-    // template <typename R, typename S>
-    // FORCE_INLINE void add(T& k, Aggregator<R, S>& agg) {
-    //     HASH_RES_t h = primary_index->computeHash(k);
-    //     T* elem = primary_index->get(k, h);
-    //     if (elem != nullptr) { 
-    //         elem->__av += agg; 
-    //     }
-    //     else {
-    //         k.__av = agg;
-    //         insert(k, h);
-    //     }
-    // }
-
     FORCE_INLINE void addOrDelOnZero(T& k, const V& v) {
         if (v == ZeroValue<V>::zero) { return; }
 
@@ -664,20 +650,6 @@ class MultiHashMap {
             insert(k, h);
         }
     }
-    
-    // template <typename R, typename S>
-    // FORCE_INLINE void addOrDelOnZero(T& k, Aggregator<R, S>& agg) {
-    //     HASH_RES_t h = primary_index->computeHash(k);
-    //     T* elem = primary_index->get(k, h);
-    //     if (elem != nullptr) {
-    //         elem->__av += agg;
-    //         if (elem->__av == ZeroValue<V>::zero) { del(elem, h); }
-    //     }
-    //     else {
-    //         k.__av = agg;
-    //         insert(k, h);
-    //     }
-    // }
 
     FORCE_INLINE void addOrDelOnZero(T& k, V&& v) {
         if (v == ZeroValue<V>::zero) { return; }
@@ -688,7 +660,7 @@ class MultiHashMap {
             elem->__av += std::move(v);
             if (elem->__av == ZeroValue<V>::zero) { del(elem, h); }
         }
-        else {     
+        else {
             k.__av = std::move(v);
             insert(k, h);
         }        
