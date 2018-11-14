@@ -3,7 +3,11 @@ package fdbresearch.tree
 import fdbresearch.core.{M3, SQL, Type, TypeChar, TypeInt}
 import fdbresearch.util.Utils
 
-case class View(name: String, tp: Type, freeVars: List[DTreeVariable], link: Tree[DTreeNode], liftFn: List[M3.Expr] = Nil) {
+case class View( name: String,
+                 tp: Type,
+                 freeVars: List[DTreeVariable],
+                 link: Tree[DTreeNode],
+                 liftFn: List[M3.Expr] ) {
   override def toString: String = name + "[" + freeVars.map(_.name).mkString(", ") + "]" +
     "(Type: " + tp +
     (if (liftFn.nonEmpty) ", Lift: " + liftFn.mkString(" * ") else "") + ")"
@@ -12,23 +16,8 @@ case class View(name: String, tp: Type, freeVars: List[DTreeVariable], link: Tre
 object ViewTree {
   import DTree._
 
-  implicit class ViewTreeImp(vtree: Tree[View]) {
-
-    def getRelations: List[DTreeRelation] = vtree.node.link.getRelations
-
-    def isStatic(stream: String): Boolean = isStatic(Set(stream))
-
-    def isStatic(streams: Set[String]): Boolean =
-      vtree.getRelations.forall(r => !streams.contains(r.name))
-
-    def materialize_?(streams: Set[String]): Boolean =
-      // materialize if root or there is affected sibling
-      vtree.isRoot ||
-        vtree.parent.exists(_.children.exists(c =>
-          c != vtree && c.getRelations.map(_.name).toSet.intersect(streams).nonEmpty))
-
-    def materializedViews(streams: Set[String]): List[Tree[View]] =
-      vtree.map2 { t => if (t.materialize_?(streams)) Some(t) else None }.flatten.toList
+  implicit class ViewTreeImp(tree: Tree[View]) {
+    def getRelations: List[DTreeRelation] = tree.node.link.getRelations
   }
 
   // DTree => ViewTree
