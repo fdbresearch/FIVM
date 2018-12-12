@@ -18,7 +18,7 @@ class SQLParser extends Parser with (String => SQL.System) {
 
   lazy val field: Parser[Field] =
     opt(ident <~ ".") ~ (ident | "*") ^^ {
-      case t ~ n => Field(n, t)
+      case t ~ n => Field(n, t, null)
     }
 
   // ------------ Expressions
@@ -76,7 +76,7 @@ class SQLParser extends Parser with (String => SQL.System) {
       ) ~ ("(" ~> rep1sep(expr, ",") <~ ")") ^^ {
         case n ~ as => Apply(n.toLowerCase, TypeString, as)
       }
-    | ("[" ~> func <~ ":") ~ (tpe <~ "]") ~ ("(" ~> repsep(expr,",") <~ ")") ^^ {
+    | ("[" ~> funcName <~ ":") ~ (tpe <~ "]") ~ ("(" ~> repsep(expr,",") <~ ")") ^^ {
         case n ~ t ~ as => Apply(n.toLowerCase, t, as)
       }
     | "CASE" ~> rep1(("WHEN" ~> cond) ~ ("THEN" ~> expr)) ~

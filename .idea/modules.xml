@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/F-IVM.iml" filepath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fivm-build.iml" filepath="$PROJECT_DIR$/.idea/modules/fivm-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/F-IVM-build.iml" filepath="$PROJECT_DIR$/.idea/modules/F-IVM-build.iml" />
     </modules>
   </component>
 </project>

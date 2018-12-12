@@ -61,7 +61,8 @@ class Parser extends StandardTokenParsers {
 
   // ------------ Types
   lazy val tpe: Parser[Type] = (
-    ("string" | ("char" | "varchar") ~> "(" ~> numericLit <~ ")") ^^^ TypeString
+      "char" ~> "(" ~> "1" ~> ")" ^^^ TypeChar
+    | ( "string" | ("char" | "varchar") ~> "(" ~> numericLit <~ ")") ^^^ TypeString
     | "char" ^^^ TypeChar
     | "short" ^^^ TypeShort
     | "int" ^^^ TypeInt
@@ -106,11 +107,7 @@ class Parser extends StandardTokenParsers {
     }
 
   // ------------ Function name
-  lazy val func: Parser[String] =
-    ident ~ opt("<" ~> repsep(intLit, ",") <~ ">") ^^ {
-      case n ~ Some(ps) => n + "<" + ps.mkString(", ") + ">"
-      case n ~ None => n
-    }
+  lazy val funcName: Parser[String] = ident
 
   // ------------ Source declaration
   lazy val source: Parser[Source] =

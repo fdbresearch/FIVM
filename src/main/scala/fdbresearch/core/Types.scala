@@ -1,7 +1,5 @@
 package fdbresearch.core
 
-import com.sun.corba.se.impl.io
-
 /**
   * Basic data types supported by F-IVM and M3
   *
@@ -116,6 +114,9 @@ case class TypeGeneric(typeDef: TypeDefinition,
       case (DynamicPrioritizedConcatParameter,
             PrioritizedParameterList(o1, p1),
             PrioritizedParameterList(o2, p2)) if o1 < o2 => PrioritizedParameterList(o1, p1 ++ p2)
+      case (DynamicPrioritizedMinParameter,
+            ConstParameter(o1),
+            ConstParameter(o2)) if o1 < o2 => a
       case (DynamicPrioritizedMinParameter,
             PrioritizedParameterList(o1, _),
             PrioritizedParameterList(o2, _)) if o1 < o2 => a

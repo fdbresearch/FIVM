@@ -2,38 +2,107 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48b3e1b0-47b1-4ef7-b20b-77f9817b29e5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/FDB_join_time.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/House.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/Institution.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/Restaurant.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/Shop.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/Transport.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/cached-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/cached-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/cofactor-cached.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-2-normalised-glmnet-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-P-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-P-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-R-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-ReFact-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-ReFact-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-ReFact-twoPass-parameters-housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-ReFact-twoPass-performance-housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-fdb-rdb-times.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-fstar-join-times.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-fstar-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-fstar-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-glmnet-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-glmnet-R-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-glmnet.R" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-script.R" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised-variables.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-3-normalised.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/schema" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/tree-fstar.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-3-normalised/twopass-variables.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/Demographics.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/FDB_join_time.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/House.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/Institution.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/Restaurant.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/Shop.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/Transport.tbl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/cached-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/cached-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/cofactor-cached.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-2-normalised-glmnet-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-P-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-P-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-R-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-ReFact-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-ReFact-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-ReFact-twoPass-parameters-housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-ReFact-twoPass-performance-housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-fdb-rdb-times.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-fstar-join-times.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-fstar-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-fstar-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-glmnet-R-parameters.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-glmnet-R-performance.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-glmnet.R" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-script.R" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised-variables.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-4-normalised.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/housing-tree.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/schema" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/tree-fstar.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/datasets/housing-4-normalised/twopass-variables.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/accumulator.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/a.out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized_map.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_aggregator.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_hashkey.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_inlined_mmap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_mixed_vector_map.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_vector.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/fivm-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/F-IVM-build.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/housing_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/sql/cofactor/housing_ALL.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/retailer_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/sql/cofactor/retailer_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/retailer_INVENTORY.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/sql/cofactor/retailer_INVENTORY.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster_frontend" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster_frontend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/run_experiments.sh" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/run_experiments.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/hash.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/hash.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/lib/mmap.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/mmap.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring_cofactor.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/ring_cofactor.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/serialization.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/serialization.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring_factorized.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/ring_factorized.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring_relation.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/ring_relation.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/lib/types.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/types.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED.m3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/full_join/housing/Relational_Housing_DF-INCR_ALL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/housing/Relational_Housing_DF-INCR_ALL.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/sum/housing/Sum_Housing_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/sum/housing/Sum_Housing_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/sum/retailer/Sum_Retailer_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/sum/retailer/Sum_Retailer_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/sum/retailer/Sum_Retailer_DF-INCR_INVENTORY_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/sum/retailer/Sum_Retailer_DF-INCR_INVENTORY_GENERATED.m3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/housing_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/templates/housing_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_queries.sh" beforeDir="false" afterPath="$PROJECT_DIR$/generate_queries.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,82 +119,25 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-253550723">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="10" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.13" value="2" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="sbt" value="1" />
-          <entry key="scala" value="28" />
-          <entry key="txt" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Scala" value="28" />
-          <entry key="sbt" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="scala" value="13372" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Scala" value="13372" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="72" column="7" selection-start-line="72" selection-start-column="7" selection-end-line="72" selection-end-column="7" />
+            <state relative-caret-position="-1594">
+              <caret line="596" selection-start-line="596" selection-end-line="596" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="88" selection-start-line="88" selection-end-line="88" />
+            <state relative-caret-position="475">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <folding>
+                <element signature="e#21#87#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,20 +145,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+            <state relative-caret-position="1032">
+              <caret line="76" column="33" selection-start-line="76" selection-start-column="33" selection-end-line="76" selection-end-column="33" />
               <folding>
-                <element signature="e#21#83#0" expanded="true" />
+                <element signature="e#21#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="399">
+              <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="931">
+              <caret line="49" column="29" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -154,19 +175,37 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="89" column="29" selection-start-line="89" selection-start-column="29" selection-end-line="89" selection-end-column="29" />
+            <state relative-caret-position="19">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
+            <state relative-caret-position="191">
+              <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="60" column="38" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="39" column="68" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
               <folding>
-                <element signature="e#21#50#0" expanded="true" />
+                <element signature="e#26#51#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -176,27 +215,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>TypeInt</find>
-      <find>&quot;SUM</find>
-      <find>stringli</find>
-      <find>CREAT</find>
-      <find>TYPE</find>
-      <find>ss AggSum(</find>
-      <find>push</find>
-      <find>pushLifts</find>
-      <find>Optimi</find>
       <find>optimize</find>
       <find>reduce</find>
-      <find>Appl</find>
       <find>TypeDefinition</find>
       <find>prodLi</find>
-      <find>liftFn</find>
       <find>replace</find>
       <find>Type</find>
-      <find>func</find>
-      <find>Apply</find>
       <find>intLit</find>
       <find>ident</find>
+      <find>matero</find>
+      <find>isMaterialized</find>
+      <find>materia</find>
+      <find>apply</find>
+      <find>func</find>
+      <find>Appl</find>
+      <find>Apply(</find>
+      <find>Apply</find>
+      <find>funcName</find>
+      <find>dynamic</find>
+      <find>join</find>
+      <find>liftFn</find>
+      <find>lifts</find>
+      <find>disj</find>
+      <find>Field</find>
+      <find>Relation</find>
+      <find>Som(</find>
+      <find>Field(</find>
+      <find>LocalityType</find>
+      <find>getFreeVars</find>
+      <find>def replace</find>
+      <find>lift</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main/scala/fdbresearch</dir>
@@ -208,25 +256,35 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/DTreeNode.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/ast/SQL.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/ast/AST.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/ast/Common.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Common.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/M3.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQL.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/TypeChecker.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="438" />
-    <option name="y" value="23" />
-    <option name="width" value="1405" />
-    <option name="height" value="1123" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="17" />
+    <option name="y" value="34" />
+    <option name="width" value="1844" />
+    <option name="height" value="1157" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -287,16 +345,11 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="fdbresearch" type="462c0819:PsiDirectoryNode" />
-              <item name="parsing" type="462c0819:PsiDirectoryNode" />
+              <item name="tree" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="F-IVM" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FIVM" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="fdbresearch" type="462c0819:PsiDirectoryNode" />
-              <item name="tree" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -308,9 +361,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.37471265" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
@@ -324,6 +377,26 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="fdbresearch.Main" />
+      <module name="F-IVM" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fdbresearch.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
     <option name="availableProjects">
@@ -342,7 +415,7 @@
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
-                <option name="name" value="fivm-build [file:/Users/milllic/Documents/repo/FIVM/]" />
+                <option name="name" value="F-IVM-build" />
                 <option name="path" value="$PROJECT_DIR$/project" />
               </ExternalProjectPojo>
             </list>
@@ -372,16 +445,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="438" y="23" width="1405" height="1123" extended-state="0" />
+    <frame x="0" y="23" width="1876" height="1177" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.120322816" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15921482" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.12328767" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.122292995" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3299363" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -389,9 +462,9 @@
       <window_info anchor="bottom" id="sbt-shell-toolwindow" order="7" weight="0.3299363" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3299539" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3299363" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.3299539" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.4156682" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.23821656" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -399,30 +472,41 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="right" id="sbt" order="5" />
       <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven" order="7" />
     </layout>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21423331" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.122292995" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3299363" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="7" weight="0.3299363" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3299363" />
+      <window_info anchor="bottom" id="Build" order="11" weight="0.3299539" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.23821656" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="sbt" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven" order="7" />
+    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/util/Utils.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="36" column="70" selection-start-line="36" selection-start-column="70" selection-end-line="36" selection-end-column="70" />
         </state>
       </provider>
     </entry>
@@ -433,75 +517,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala">
+    <entry file="file://$PROJECT_DIR$/experiments/src/lib/hash.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="40" column="3" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+        <state relative-caret-position="626">
+          <caret line="130" column="7" lean-forward="true" selection-start-line="130" selection-start-column="7" selection-end-line="130" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/src/lib/ring_relation.hpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiments/src/templates/cofactor_value.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="70" column="16" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+        <state relative-caret-position="244">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
           <folding>
-            <element signature="e#21#83#0" expanded="true" />
+            <element signature="e#21#72#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="89" column="29" selection-start-line="89" selection-start-column="29" selection-end-line="89" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="72" column="7" selection-start-line="72" selection-start-column="7" selection-end-line="72" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
+        <state relative-caret-position="2052">
           <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
           <folding>
             <element signature="e#21#50#0" expanded="true" />
@@ -509,10 +561,118 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/DTreeParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="40" column="26" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/DTreeNode.scala" />
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/M3.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQL.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" selection-start-line="4" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1594">
+          <caret line="596" selection-start-line="596" selection-end-line="596" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/TypeChecker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="60" column="42" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="931">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        <state relative-caret-position="191">
+          <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="60" column="38" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="39" column="68" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+          <folding>
+            <element signature="e#26#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1032">
+          <caret line="76" column="33" selection-start-line="76" selection-start-column="33" selection-end-line="76" selection-end-column="33" />
+          <folding>
+            <element signature="e#21#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="e#21#87#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -525,7 +685,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
               </list>
             </option>
           </splitter-proportions>
@@ -537,7 +697,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
               </list>
             </option>
           </splitter-proportions>
@@ -549,7 +709,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
               </list>
             </option>
           </splitter-proportions>
@@ -561,7 +721,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
               </list>
             </option>
           </splitter-proportions>
@@ -573,7 +733,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
                 <option value="0.6" />
               </list>
             </option>
@@ -582,11 +742,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>sbt: com.github.scopt:scopt_2.12:3.7.0:jar</last-edited>
+          <last-edited>sbt: org.scala-lang:scala-library:2.12.6:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.37471265" />
               </list>
             </option>
           </splitter-proportions>

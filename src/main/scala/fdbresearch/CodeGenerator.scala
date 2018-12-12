@@ -1,7 +1,7 @@
 package fdbresearch
 
-import fdbresearch.core.{LocalExp, M3, Source, TypeDefinition}
-import fdbresearch.tree.{DTreeRelation, DTreeVariable, Tree, View}
+import fdbresearch.core._
+import fdbresearch.tree.{Tree, View, DTreeVariable, DTreeRelation}
 
 class CodeGenerator( tree: Tree[View],
                      typeDefs: List[TypeDefinition],
@@ -53,7 +53,7 @@ class CodeGenerator( tree: Tree[View],
         case _: DTreeVariable => tree.children match {
           case Nil => sys.error("Variable as a leaf node")
           case cl =>
-            (cl.map(_.createExpr) ++ tree.node.liftFn).reduceLeft(M3.Mul)
+            (cl.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul)
         }
         case DTreeRelation(name, keys) =>
           M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
@@ -74,7 +74,7 @@ class CodeGenerator( tree: Tree[View],
             case hd :: Nil =>
               ( hd.createDeltaExpr(event) ::
                 (hd.rightSiblings ++ hd.leftSiblings.reverse).map(_.createExpr) ++
-                  tree.node.liftFn).reduceLeft(M3.Mul)
+                  tree.node.terms).reduceLeft(M3.Mul)
             case _ => sys.error("# of delta paths not 1")
           }
 

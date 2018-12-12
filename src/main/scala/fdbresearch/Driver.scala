@@ -1,7 +1,7 @@
 package fdbresearch
 
-import fdbresearch.tree.{DTreeNode, Tree, ViewTree}
-import fdbresearch.core.SQL
+import fdbresearch.tree.{DTreeNode, DTreeRelation, Tree, ViewTree}
+import fdbresearch.core.{SQL, SQLToM3Compiler, Source}
 import fdbresearch.parsing.M3Parser
 
 class Driver {
@@ -9,73 +9,45 @@ class Driver {
   import fdbresearch.tree.DTree._
 
   /**
-    * Supported SQL format:
-    * ----------------------
-    * SELECT c1, ..., ck, SUM(f1 * ... * fl)
-    * FROM R1 NATURAL JOIN ... NATURAL JOIN RN
-    * GROUP BY c1, ..., ck
-    *
-    * where fi is an (arbitrary) function over attributes.
+    * Check if all SQL sources have consistent schemas with DTree relations
     */
-  // TODO: Add syntax check for admissible SQL queries
-  private def getSelectQuery(sql: SQL.System): SQL.Select = sql.queries match {
-    case (s @ SQL.Select(false, _, _, None, _, None)) :: Nil => s
-    case _ => sys.error("Unsupported SQL query")
-  }
-
-  private def getFreeVars(query: SQL.Select): Set[String] = query match {
-    case SQL.Select(false, _, _, None, gb, None) =>
-      gb.map(_.fs.map(_.n).toSet).getOrElse(Set.empty)
-    case _ => sys.error("Unsupported SQL select statement")
-  }
-
-  private def liftProdList(expr: SQL.Expr): List[SQL.Expr] = expr match {
-    case SQL.Mul(l, r) => liftProdList(l) ++ liftProdList(r)
-    case _ => List(expr)
-  }
-
-  private def getSumProductExpressions(query: SQL.Select): List[SQL.Expr] = query match {
-    case SQL.Select(false, cs, _, None, _, None) =>
-      cs.filter {
-        case SQL.Agg(_, SQL.OpSum) => true
-        case _ => false
-      }
-      match {
-        case SQL.Agg(f, SQL.OpSum) :: Nil => liftProdList(f)
-        case _ => sys.error("# of SUM aggregates must be 1.")
-      }
-    case _ => sys.error("Unsupported SQL select statement")
-  }
-
-  private def checkSchemas(sql: SQL.System, dtree: Tree[DTreeNode]): Unit = {
-    // All SQL sources must have consistent schemas with dtree relations
-    val relationMap = dtree.getRelations.map { r =>
+  private def checkSchemas(sqlSources: List[Source], relations: List[DTreeRelation]): Unit = {
+    val rm = relations.map { r =>
       r.name -> r.keys.map(v => (v.name, v.tp)).toSet
     }.toMap
-    assert(sql.sources.forall { s =>
-      s.schema.fields.toSet == relationMap(s.schema.name)
-    }, "Inconsistent schemas of input sources in SQL and dtree files\n" +
-      sql.sources.flatMap { s =>
-        val fields1 = s.schema.fields.toSet
-        val fields2 = relationMap(s.schema.name)
-        fields1.diff(fields2).union(fields2.diff(fields1))
-      }.mkString("\n")
-    )
+    val diff = sqlSources.flatMap { s =>
+      val f1 = s.schema.fields.toSet
+      val f2 = rm(s.schema.name)
+      f1.diff(f2).union(f2.diff(f1))
+    }
+    assert(diff.isEmpty, "Inconsistent schemas in SQL and DTree files:\n" + diff.mkString("\n"))
+  }
+
+  /**
+    * Resolve missing types in SQL system
+    */
+  private def resolveTypes(s: SQL.System): SQL.System = {
+    val vm = s.sources.flatMap(_.schema.fields.map(x => x._1 -> x._2)).toMap
+    s.replace {
+      case SQL.Field(n, t, tp) =>
+        assert(tp == null || tp == vm(n))
+        SQL.Field(n, t, vm(n))
+    }.asInstanceOf[SQL.System]
   }
 
   def compile(sql: SQL.System, dtree: Tree[DTreeNode],
               batchUpdates: Boolean, factorizedOutput: Boolean): String = {
-    checkSchemas(sql, dtree)
+
+    checkSchemas(sql.sources, dtree.getRelations)
 
     Main.logger.debug("CHECK SCHEMAS: OK")
 
-    val select = getSelectQuery(sql)
-    val freeVars = getFreeVars(select)
-    val terms = getSumProductExpressions(select)
+    val typedSQL = resolveTypes(sql)
+    val (terms, _, gb) = SQLToM3Compiler.compile(typedSQL)
 
     Main.logger.debug("BUILDING VIEW TREE:")
 
-    val viewtree = ViewTree(dtree, freeVars, terms)
+    val viewtree = ViewTree(dtree, gb.toSet, terms)
 
     Main.logger.debug("\n\nVIEW TREE:\n" + viewtree)
 

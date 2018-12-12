@@ -72,8 +72,9 @@ class M3Parser extends Parser with (String => M3.System) {
     | ("[" ~> "/" ~> ":" ~> tpe <~ "]") ~ ("(" ~> expr <~ ")") ^^ {
         case t ~ e => Apply("/", t, List(e))
       }
-    | ("[" ~> func <~ ":") ~ (tpe <~ "]") ~ ("(" ~> repsep(expr,",") <~ ")") ^^ {
-        case n ~ t ~ as => Apply(n, t, as)
+    | "[" ~> funcName ~ opt("<" ~> repsep(intLit | ident, ",") <~ ">") ~
+      (":" ~> tpe <~ "]") ~ ("(" ~> repsep(expr, ",") <~ ")") ^^ {
+        case n ~ tas ~ t ~ as => Apply(n, t, as, tas)
       }
     | "DATE" ~> "(" ~> expr <~ ")" ^^ {
         e => Apply("date", TypeDate, List(e))

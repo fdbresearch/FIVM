@@ -3,7 +3,7 @@ package fdbresearch.core
 import fdbresearch.util.Utils.ind
 
 /**
-  * Defines basic types AST nodes for M3 and SQL
+  * Defines basic AST nodes
   */
 sealed abstract class Tree    // Generic AST node
 
@@ -56,6 +56,18 @@ case class Adaptor(name: String, options: Map[String, String]) extends Tree {
     else " (" + options.map { case (k, v) => k + " := '" + v + "'" }.mkString(", ") + ")" )
 }
 
+// ------ Expression locality types
+abstract sealed class LocalityType extends Tree
+case object LocalExp extends LocalityType {
+  override def toString = "<Local>"
+}
+case object DistRandomExp extends LocalityType {
+  override def toString = "<DistRandom>"
+}
+case class DistByKeyExp(pkeys: List[(String, Type)]) extends LocalityType {
+  override def toString = "<DistByKey(" + pkeys.map(_._1).mkString(", ") + ")>"
+}
+
 // ------ Custom generic type definitions
 abstract sealed class ParameterType
 case object StaticParameter extends ParameterType {
@@ -78,19 +90,6 @@ case class TypeDefinition(name: String, file: SourceFile, schema: List[Parameter
             |  FROM $file
             |  WITH PARAMETER SCHEMA (${schema.mkString(", ")});""".stripMargin
 }
-
-// ------ Expression locality types
-abstract sealed class LocalityType extends Tree
-case object LocalExp extends LocalityType {
-  override def toString = "<Local>"
-}
-case object DistRandomExp extends LocalityType {
-  override def toString = "<DistRandom>"
-}
-case class DistByKeyExp(pkeys: List[(String, Type)]) extends LocalityType {
-  override def toString = "<DistByKey(" + pkeys.map(_._1).mkString(", ") + ")>"
-}
-
 
 // -----------------------------------------------------------------------------
 // M3 language
@@ -213,10 +212,10 @@ object M3 {
         case Cmp(l, r, op) => l.collect(f) ++ r.collect(f)
         case CmpOrList(l, r) => l.collect(f) ++ r.flatMap(_.collect(f))
         case Exists(e) => e.collect(f)
-        case Lift(n, e) => e.collect(f)
-        case AggSum(ks, e) => e.collect(f)
-        case Apply(fn, tp, as) => as.flatMap(_.collect(f))
-        case Repartition(ks, e) => e.collect(f)
+        case Lift(_, e) => e.collect(f)
+        case AggSum(_, e) => e.collect(f)
+        case Apply(_, _, as, _) => as.flatMap(_.collect(f))
+        case Repartition(_, e) => e.collect(f)
         case Gather(e) => e.collect(f)
         case _ => List()
       })
@@ -230,7 +229,7 @@ object M3 {
         case Exists(e) => Exists(e.replace(f))
         case Lift(n, e) => Lift(n, e.replace(f))
         case AggSum(ks, e) => AggSum(ks, e.replace(f))
-        case Apply(fn, tp, as) => Apply(fn, tp, as.map(_.replace(f)))
+        case Apply(fn, tp, as, tas) => Apply(fn, tp, as.map(_.replace(f)), tas)
         case Repartition(ks, e) => Repartition(ks, e.replace(f))
         case Gather(e) => Gather(e.replace(f))
         case _ => ex
@@ -278,7 +277,7 @@ object M3 {
         case DeltaMapRefConst(_, ks, _) => (List(), ks)
         case Cmp(l, r, _) => (union(l.schema._1, r.schema._1), List())
         case CmpOrList(l, _) => (l.schema._1, List())
-        case Apply(_, _, as) =>
+        case Apply(_, _, as, _) =>
           val (ivs, ovs) = as.map(_.schema).unzip
           (ivs.flatten.distinct, ovs.flatten.distinct)
         case Mul(el, er) =>
@@ -324,8 +323,8 @@ object M3 {
           if (v1 == v2) empty else None
         case (a @ Ref(n1, tp1), b @ Ref(n2, tp2)) =>
           Some(Map((n1, tp1) -> (n2, tp2)))
-        case (Apply(fn1, _, as1), Apply(fn2, _, as2)) =>
-          if (fn1 != fn2 || as1.length != as2.length) None
+        case (Apply(fn1, _, as1, tas1), Apply(fn2, _, as2, tas2)) =>
+          if (fn1 != fn2 || as1.length != as2.length || tas1 != tas2) None
           else as1.zip(as2).foldLeft (empty) {
             case (fmap, (a, b)) => merge(fmap, a.cmp(b)) }
         case (MapRef(n1, tp1, ks1, tmp1, loc1), MapRef(n2, tp2, ks2, tmp2, loc2)) =>
@@ -486,10 +485,13 @@ object M3 {
   }
 
   // Function application
-  case class Apply(fun: String, tp: Type, args: List[Expr]) extends Expr {
+  case class Apply(fun: String, tp: Type, args: List[Expr], targs: Option[List[String]] = None) extends Expr {
     val locality: Option[LocalityType] = None
-    override def toString = "[" + fun + ": " + tp + "](" + args.mkString(", ") + ")"
-    def toDecoratedString = "[" + fun + ": " + tp + "](" + args.map(_.toDecoratedString).mkString(", ") + ")"
+    def templateArgs: String = targs.map(l => "<" + l.mkString(", ") + ">").mkString
+    override def toString =
+      "[" + fun + templateArgs + ": " + tp + "](" + args.mkString(", ") + ")"
+    def toDecoratedString =
+      "[" + fun + templateArgs + ": " + tp + "](" + args.map(_.toDecoratedString).mkString(", ") + ")"
   }
 
   // Comparison, returns 0 or 1
@@ -527,10 +529,74 @@ object M3 {
   }
 }
 
+
 // -----------------------------------------------------------------------------
 // SQL (http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt)
 
-sealed abstract class SQL // see ddbt.frontend.Parsers
+sealed abstract class SQL {
+
+  def replace[A](f: PartialFunction[SQL, SQL]): SQL =
+    f.applyOrElse(this, (x: SQL) => x match {
+      case SQL.Lst(es) => SQL.Lst(es.map(_.replace(f).asInstanceOf[SQL.Expr]))
+      case SQL.Union(q1, q2, all) => SQL.Union(q1.replace(f).asInstanceOf[SQL.Query],
+        q2.replace(f).asInstanceOf[SQL.Query], all)
+      case SQL.Inter(q1, q2) => SQL.Inter(q1.replace(f).asInstanceOf[SQL.Query],
+        q2.replace(f).asInstanceOf[SQL.Query])
+      case SQL.Select(dist, cs, ts, wh, gb, ob) => SQL.Select(dist, cs.map(_.replace(f).asInstanceOf[SQL.Expr]),
+        ts.map(_.replace(f).asInstanceOf[SQL.Table]),
+        wh.map(_.replace(f).asInstanceOf[SQL.Cond]),
+        gb.map(_.replace(f).asInstanceOf[SQL.GroupBy]),
+        ob.map(_.replace(f).asInstanceOf[SQL.OrderBy]))
+
+      case SQL.TableQuery(q) => SQL.TableQuery(q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.TableNamed(_) => x
+      case SQL.TableAlias(t1, n) => SQL.TableAlias(t1.replace(f).asInstanceOf[SQL.Table], n)
+      case SQL.TableJoin(t1, t2, j, c) => SQL.TableJoin(t1.replace(f).asInstanceOf[SQL.Table],
+        t2.replace(f).asInstanceOf[SQL.Table],
+        j, c.map(_.replace(f).asInstanceOf[SQL.Cond]))
+
+      case SQL.Alias(e, n) => SQL.Alias(e.replace(f).asInstanceOf[SQL.Expr], n)
+      case SQL.Field(_, _, _) | SQL.Const(_, _) => x
+      case SQL.Apply(f1, tp, as) => SQL.Apply(f1, tp, as.map(_.replace(f).asInstanceOf[SQL.Expr]))
+      case SQL.Nested(q) => SQL.Nested(q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.Case(ce, d) => SQL.Case(ce.map(x =>
+        (x._1.replace(f).asInstanceOf[SQL.Cond],
+          x._2.replace(f).asInstanceOf[SQL.Expr])),
+        d.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Add(l, r) => SQL.Add(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Sub(l, r) => SQL.Sub(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Mul(l, r) => SQL.Mul(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Div(l, r) => SQL.Div(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Mod(l, r) => SQL.Mod(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr])
+      case SQL.Agg(e1, o) => SQL.Agg(e1.replace(f).asInstanceOf[SQL.Expr], o)
+      case SQL.All(q) => SQL.All(q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.Som(q) => SQL.Som(q.replace(f).asInstanceOf[SQL.Query])
+
+      case SQL.And(l, r) => SQL.And(l.replace(f).asInstanceOf[SQL.Cond],
+        r.replace(f).asInstanceOf[SQL.Cond])
+      case SQL.Or(l, r) => SQL.Or(l.replace(f).asInstanceOf[SQL.Cond],
+        r.replace(f).asInstanceOf[SQL.Cond])
+      case SQL.Exists(q) => SQL.Exists(q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.In(e, q) => SQL.In(e.replace(f).asInstanceOf[SQL.Expr],
+        q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.Not(c2) => SQL.Not(c2.replace(f).asInstanceOf[SQL.Cond])
+      case SQL.Like(l, p) => SQL.Like(l.replace(f).asInstanceOf[SQL.Expr], p)
+      case SQL.Cmp(l, r, op) => SQL.Cmp(l.replace(f).asInstanceOf[SQL.Expr],
+        r.replace(f).asInstanceOf[SQL.Expr], op)
+
+      case SQL.GroupBy(fs, cond) => SQL.GroupBy(fs.map(_.replace(f).asInstanceOf[SQL.Field]),
+        cond.map(_.replace(f).asInstanceOf[SQL.Cond]))
+      case SQL.OrderBy(cs) => SQL.OrderBy(cs.map(c => (c._1.replace(f).asInstanceOf[SQL.Field], c._2)))
+
+      case SQL.System(td, ss, qq) => SQL.System(td, ss, qq.map(_.replace(f).asInstanceOf[SQL.Query]))
+      case _ => x
+    })
+}
 
 object SQL {
 
@@ -647,7 +713,7 @@ object SQL {
     override def toString = e + " AS " + n
   }
 
-  case class Field(n: String, t: Option[String]) extends Expr {
+  case class Field(n: String, t: Option[String], tp: Type) extends Expr {
     override def toString = t.map(_ + "." + n).getOrElse(n)
   }
 
@@ -709,7 +775,7 @@ object SQL {
   }
 
   // ---------- Conditions
-  sealed abstract class Cond
+  sealed abstract class Cond extends SQL
 
   case class And(l: Cond, r: Cond) extends Cond {
     override def toString = "(" + l + " AND " + r + ")"
