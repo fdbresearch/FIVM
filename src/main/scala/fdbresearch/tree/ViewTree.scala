@@ -49,14 +49,9 @@ object ViewTree {
       // Compute terms at current node
       val treeVars = tree.getVariables.toSet
       val childVars = tree.children.flatMap(_.getVariables).toSet
-      val nodeId = tree.variablePreorderIndex
       val nodeTerms = terms.filter(l =>
         !l.isCovered(childVars) && l.isCovered(treeVars)
-      ).map(_.replace {
-        // Extend node functions with index
-        case M3.Apply(f, tp, as, tas) =>
-          M3.Apply(f, tp, as, Some(nodeId.toString :: tas.getOrElse(Nil)))
-      })
+      )
 
       // Terms can introduce new free variables
       val otherTerms = terms.filter(!_.isCovered(treeVars))

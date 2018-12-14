@@ -3,11 +3,10 @@ package fdbresearch
 import fdbresearch.core._
 import fdbresearch.tree.{Tree, View, DTreeVariable, DTreeRelation}
 
-class CodeGenerator( tree: Tree[View],
-                     typeDefs: List[TypeDefinition],
-                     sources: List[Source],
-                     batchUpdates: Boolean,
-                     factorizedOutput: Boolean ) {
+class CodeGenerator(tree: Tree[View],
+                    typeDefs: List[TypeDefinition],
+                    sources: List[Source],
+                    batchUpdates: Boolean) {
 
   import fdbresearch.tree.ViewTree._
 
@@ -30,7 +29,7 @@ class CodeGenerator( tree: Tree[View],
 
     private def isMaterialized(streams: Set[String]): Boolean =
       // materialize if root or there is affected sibling
-      factorizedOutput || tree.isRoot ||
+      tree.isRoot || Type.isDistributed(tree.node.tp) ||
           tree.parent.exists(_.children.exists(c =>
             c != tree && c.getRelations.map(_.name).toSet.intersect(streams).nonEmpty))
 
@@ -83,16 +82,25 @@ class CodeGenerator( tree: Tree[View],
           event match {
             case M3.EventBatchUpdate(_) =>
               M3.DeltaMapRefConst(name, keys.map(v => (v.name, v.tp)))
-            case _: M3.EventInsert | _: M3.EventDelete =>
-              sys.error("Single-tuple updates not supported yet")
+            case M3.EventInsert(_) =>
+              M3.Const(TypeLong, "1L")
+            case M3.EventDelete(_) =>
+              M3.Const(TypeLong, "-1L")
             case M3.EventReady =>
               sys.error("No delta trigger for SystemReady")
           }
       }
 
+      val scope = event match {
+        case M3.EventInsert(s) => s.fields.map(_._1).toSet
+        case M3.EventDelete(s) => s.fields.map(_._1).toSet
+        case _ => Set[String]()
+      }
+
       val marginalizedVars =
         tree.children.flatMap(_.node.freeVars).toSet
           .diff(tree.node.freeVars.toSet)
+          .filterNot(v => scope.contains(v.name))
 
       if (marginalizedVars.isEmpty) childJoin
       else M3.AggSum(tree.node.freeVars.map(v => (v.name, v.tp)), childJoin)
@@ -109,7 +117,8 @@ class CodeGenerator( tree: Tree[View],
 
   private def generateQueries: List[M3.Query] =
     tree.map2(t =>
-      if (factorizedOutput || t.isRoot) Some(M3.Query(t.node.name, t.createMapRef))
+      if (t.isRoot || Type.isDistributed(t.node.tp))
+        Some(M3.Query(t.node.name, t.createMapRef))
       else None
     ).flatten.toList
 

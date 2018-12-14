@@ -83,12 +83,15 @@ case object DynamicPrioritizedMinParameter extends ParameterType {
   override def toString = "dynamic_min"
 }
 
-case class TypeDefinition(name: String, file: SourceFile, schema: List[ParameterType]) {
+case class TypeDefinition(name: String, file: SourceFile,
+                          schema: List[ParameterType], isDistributed: Boolean) {
   override def toString =
-    if (schema.isEmpty) s"CREATE TYPE $name FROM $file;"
-    else s"""CREATE TYPE $name
-            |  FROM $file
-            |  WITH PARAMETER SCHEMA (${schema.mkString(", ")});""".stripMargin
+    if (schema.isEmpty)
+      s"CREATE ${if (isDistributed) "DISTRIBUTED" else ""} TYPE $name FROM $file;"
+    else
+      s"""CREATE ${if (isDistributed) "DISTRIBUTED" else ""} TYPE $name
+         |FROM $file
+         |WITH PARAMETER SCHEMA (${schema.mkString(", ")});""".stripMargin
 }
 
 // -----------------------------------------------------------------------------
@@ -557,7 +560,7 @@ sealed abstract class SQL {
 
       case SQL.Alias(e, n) => SQL.Alias(e.replace(f).asInstanceOf[SQL.Expr], n)
       case SQL.Field(_, _, _) | SQL.Const(_, _) => x
-      case SQL.Apply(f1, tp, as) => SQL.Apply(f1, tp, as.map(_.replace(f).asInstanceOf[SQL.Expr]))
+      case SQL.Apply(f1, tp, as, tas) => SQL.Apply(f1, tp, as.map(_.replace(f).asInstanceOf[SQL.Expr]), tas)
       case SQL.Nested(q) => SQL.Nested(q.replace(f).asInstanceOf[SQL.Query])
       case SQL.Case(ce, d) => SQL.Case(ce.map(x =>
         (x._1.replace(f).asInstanceOf[SQL.Cond],
@@ -696,7 +699,7 @@ object SQL {
     def collect[T](f: PartialFunction[Expr, List[T]]): List[T] =
       f.applyOrElse(this, (ex: Expr) => ex match {
         case Alias(e, _) => e.collect(f)
-        case Apply(_, _, as) => as.flatMap(_.collect(f))
+        case Apply(_, _, as, _) => as.flatMap(_.collect(f))
         case Case(ce, d) => ce.flatMap(_._2.collect(f)) ++ d.collect(f)
         case Add(l, r) => l.collect(f) ++ r.collect(f)
         case Sub(l, r) => l.collect(f) ++ r.collect(f)
@@ -721,8 +724,9 @@ object SQL {
     override def toString = if (tp == TypeString) "'" + v + "'" else v
   }
 
-  case class Apply(fun: String, tp: Type, args: List[Expr]) extends Expr {
-    override def toString = fun + "(" + args.mkString(", ") + ")"
+  case class Apply(fun: String, tp: Type, args: List[Expr], targs: Option[List[String]] = None) extends Expr {
+    def templateArgs = targs.map(l => "<" + l.mkString(", ") + ">").mkString
+    override def toString = fun + templateArgs + "(" + args.mkString(", ") + ")"
   }
 
   case class Nested(q: Query) extends Expr {

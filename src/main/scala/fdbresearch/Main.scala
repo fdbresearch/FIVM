@@ -9,11 +9,10 @@ object Main extends App {
 
   val logger = LoggerFactory.getLogger("fdbresearch.fivm")
 
-  case class Config( inputSQL: String = "",
-                     inputDTree: String = "",
-                     batchUpdates: Boolean = true,
-                     outputM3: Option[String] = None,
-                     factorizedOutput: Boolean = false)
+  case class Config(inputSQL: String = "",
+                    inputDTree: String = "",
+                    batchUpdates: Boolean = true,
+                    outputM3: Option[String] = None)
 
   val parser = new scopt.OptionParser[Config]("sbt run") {
     override def showUsageOnError = true
@@ -35,9 +34,6 @@ object Main extends App {
     opt[Unit]("single").action((_, c) =>
       c.copy(batchUpdates = false)).text("Generate single-tuple update triggers")
 
-    opt[Unit]("factorized").action((_, c) =>
-      c.copy(factorizedOutput = true)).text("Generate factorized output maps")
-
     help("help").text("prints this usage text")
   }
 
@@ -53,9 +49,7 @@ object Main extends App {
 
       logger.debug("DTREE FILE: " + dtree.toString)
 
-      val output = new Driver().compile(
-        sql, dtree, config.batchUpdates, config.factorizedOutput
-      )
+      val output = new Driver().compile(sql, dtree, config.batchUpdates)
       config.outputM3 match {
         case Some(file) => new java.io.PrintWriter(file) {
           write(output); close()

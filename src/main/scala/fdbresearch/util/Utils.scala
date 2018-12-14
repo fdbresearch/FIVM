@@ -18,6 +18,4 @@ object Utils {
     val i = "  " * n
     i + s.replaceAll("\n? *$", "").replaceAll("\n", "\n" + i)
   }
-
-  def delta(name: String): String = "DELTA_" + name
 }

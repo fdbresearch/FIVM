@@ -20,7 +20,7 @@ object SQLToM3Compiler {
   private def typeOf(e: SQL.Expr): Type = e match {
     case SQL.Field(_, _, tp) => tp
     case SQL.Const(_, tp) => tp
-    case SQL.Apply(_, tp, _) => tp
+    case SQL.Apply(_, tp, _, _) => tp
     case SQL.Add(l, r) => Type.resolve(typeOf(l), typeOf(r))
     case SQL.Sub(l, r) => Type.resolve(typeOf(l), typeOf(r))
     case SQL.Mul(l, r) => Type.resolve(typeOf(l), typeOf(r))
@@ -32,7 +32,7 @@ object SQLToM3Compiler {
   private def compile(e: SQL.Expr): M3.Expr = e match {
     case SQL.Field(n, _, tp) if n != "*" => M3.Ref(n, tp)
     case SQL.Const(v, tp) => M3.Const(tp, v)
-    case SQL.Apply(f, tp, as) => M3.Apply(f, tp, as.map(compile))
+    case SQL.Apply(f, tp, as, tas) => M3.Apply(f, tp, as.map(compile), tas)
     case SQL.Add(l, r) => M3.Add(compile(l), compile(r))
     case SQL.Sub(l, r) => M3.Add(compile(l), M3.Mul(M3.Const(TypeChar, "-1"), compile(r)))
     case SQL.Mul(l, r) => M3.Mul(compile(l), compile(r))

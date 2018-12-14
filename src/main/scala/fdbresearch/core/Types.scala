@@ -97,8 +97,8 @@ case class PrioritizedParameterList(priority: Integer,
   override def toString = "[" + (priority :: params).mkString(", ") + "]"
 }
 
-case class TypeGeneric(typeDef: TypeDefinition,
-                       params: List[GenericParameter]) extends Type {
+case class TypeCustom(typeDef: TypeDefinition,
+                      params: List[GenericParameter]) extends Type {
 
   assert(params.size == typeDef.schema.size,
     "Wrong number of generic parameters")
@@ -126,8 +126,8 @@ case class TypeGeneric(typeDef: TypeDefinition,
 
   def resolve(b: Type): Type = b match {
     case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
-    case b: TypeGeneric if typeDef == b.typeDef =>
-      TypeGeneric(typeDef, (params, b.params, typeDef.schema).zipped.map(resolveParam))
+    case b: TypeCustom if typeDef == b.typeDef =>
+      TypeCustom(typeDef, (params, b.params, typeDef.schema).zipped.map(resolveParam))
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
 
@@ -146,6 +146,11 @@ object Type {
         sys.error("Problem resolving types: " + tp1 + " and " + tp2)
       }
     }
+
+  def isDistributed(tp: Type): Boolean = tp match {
+    case TypeCustom(TypeDefinition(_, _, _, true), _) => true
+    case _ => false
+  }
 }
 
 final case class TypeMismatchException(private val msg: String = "",

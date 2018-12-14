@@ -82,10 +82,10 @@ class Parser extends StandardTokenParsers {
        }
     )
 
-  lazy val genericType: Parser[TypeGeneric] =
+  lazy val genericType: Parser[TypeCustom] =
     acceptIf (x => typeMap.contains(x.chars)) (x => "No such type '" + x.chars + "'") ~
       opt("<" ~> repsep(genericParam, ",") <~ ">") ^^ {
-      case i ~ p => TypeGeneric(typeMap(i.chars), p.getOrElse(Nil))
+      case i ~ p => TypeCustom(typeMap(i.chars), p.getOrElse(Nil))
     }
 
   private val typeMap = collection.mutable.Map[String, TypeDefinition]()
@@ -98,10 +98,10 @@ class Parser extends StandardTokenParsers {
     )
 
   lazy val typeDef: Parser[TypeDefinition] =
-    "CREATE" ~> "TYPE" ~> ident ~ ("FROM" ~> sourceIn) ~
+    ("CREATE" ~> opt("DISTRIBUTED") <~ "TYPE") ~ ident ~ ("FROM" ~> sourceIn) ~
       opt("WITH" ~> "PARAMETER" ~> "SCHEMA" ~> "(" ~> repsep(parameterType, ",") <~ ")") <~ ";" ^^ {
-        case i ~ f ~ p =>
-          val td = TypeDefinition(i, f, p.getOrElse(Nil))
+        case d ~ i ~ f ~ p =>
+          val td = TypeDefinition(i, f, p.getOrElse(Nil), d.isDefined)
           typeMap += ((i, td))
           td
     }

@@ -35,8 +35,7 @@ class Driver {
     }.asInstanceOf[SQL.System]
   }
 
-  def compile(sql: SQL.System, dtree: Tree[DTreeNode],
-              batchUpdates: Boolean, factorizedOutput: Boolean): String = {
+  def compile(sql: SQL.System, dtree: Tree[DTreeNode], batchUpdates: Boolean): String = {
 
     checkSchemas(sql.sources, dtree.getRelations)
 
@@ -51,7 +50,7 @@ class Driver {
 
     Main.logger.debug("\n\nVIEW TREE:\n" + viewtree)
 
-    val cg = new CodeGenerator(viewtree, sql.typeDefs, sql.sources, batchUpdates, factorizedOutput)
+    val cg = new CodeGenerator(viewtree, sql.typeDefs, sql.sources, batchUpdates)
     val m3 = cg.generateM3
     Main.logger.debug("\n\nORIGINAL M3\n" + m3)
 
