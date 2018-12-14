@@ -315,7 +315,9 @@ function run_fulljoin_housing() {
     for bs in 1000
     do 
       run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
-      # run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
+      run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_GENERATED_${bs}" 4 "" "--no-output" ${bs}
+      run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_${bs}" 4 "" "--no-output" ${bs}
+      run "bin/full_join/housing/Factorized_Housing_DF-INCR_ALL_GENERATED_${bs}" 4 "" "--no-output" ${bs}
       # run "bin/full_join/housing/Factorized_Housing_DF-REEVAL_ALL_${bs}" 4 "" "--no-output" ${bs}
 
       # run "bin/full_join/housing/Relational_Housing_DF-INCR_ALL_${bs}" 1 "-DLOG_OUTPUT=$((500 * ${scale}))" "--no-output" ${bs}
@@ -336,15 +338,19 @@ function run_fulljoin_retailer() {
 
   # for bs in 100 1000 10000 100000
   for bs in 1000
-  do 
+  do
+    run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_${bs}" 4 "" "--no-output" ${bs}     
     run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 4 "" "--no-output" ${bs}
+    run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED_${bs}" 4 "" "--no-output" ${bs}
+    run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_${bs}" 4 "" "--no-output" ${bs}
     run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 4 "" "--no-output" ${bs}
+    run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_GENERATED_${bs}" 4 "" "--no-output" ${bs}
 
-    run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-DLOG_OUTPUT=500000" "--no-output" ${bs}
-    run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-DLOG_OUTPUT=500000" "--no-output" ${bs}
+    # run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-DLOG_OUTPUT=500000" "--no-output" ${bs}
+    # run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-DLOG_OUTPUT=500000" "--no-output" ${bs}
 
-    run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=500000" "--no-output" ${bs}
-    run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=500000" "--no-output" ${bs}
+    # run "bin/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=500000" "--no-output" ${bs}
+    # run "bin/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_IMPROVED_${bs}" 1 "-ltcmalloc -DLOG_MEMORY_INFO -DLOG_OUTPUT=500000" "--no-output" ${bs}
   done
 }
 
@@ -405,7 +411,7 @@ rm -f *.heap
 # run_sum_tpch
 
 run_fulljoin_housing
-# run_fulljoin_retailer
+run_fulljoin_retailer
 
 # run_mcm_dbtoaster
 # run_mcm_octave

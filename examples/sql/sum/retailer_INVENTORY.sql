@@ -1,5 +1,5 @@
 CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
-FROM FILE './datasets/sears/Inventory_toy2.tbl' LINE DELIMITED CSV(delimiter := '|');
+FROM FILE './datasets/sears/Inventory.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 CREATE TABLE LOCATION(locn long, zip long, rgn_cd double, clim_zn_nbr double, tot_area_sq_ft double, sell_area_sq_ft double, avghhi double, supertargetdistance double, supertargetdrivetime double, targetdistance double, targetdrivetime double, walmartdistance double, walmartdrivetime double, walmartsupercenterdistance double, walmartsupercenterdrivetime double)
 FROM FILE './datasets/sears/Location.tbl' LINE DELIMITED CSV(delimiter := '|');

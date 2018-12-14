@@ -1,5 +1,5 @@
 CREATE TYPE RingAvg 
-FROM FILE 'ring_avg.hpp';
+FROM FILE 'ring/ring_avg.hpp';
 
 CREATE STREAM HOUSE(postcode double, livingarea double, price double, nbbedrooms double, nbbathrooms double, kitchensize double, house double, flat double, unknown double, garden double, parking double)
 FROM FILE './datasets/housing/House.tbl' LINE DELIMITED CSV(delimiter := '|');

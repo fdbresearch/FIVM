@@ -480,9 +480,9 @@ class MultiHashMap {
   public:
     Pool<T> pool;
     PRIMARY_INDEX* primary_index;
-    SecondaryIndex<T>** secondary_indexes;    
+    SecondaryIndex<T>** secondary_indexes;
 
-    FORCE_INLINE void insert(const T& elem, HASH_RES_t h) {
+    FORCE_INLINE void insert(const T& elem, HASH_RES_t h) { // the element is not in the map 
         T* cur = pool.add();
         new (cur) T(elem);
 
@@ -496,24 +496,8 @@ class MultiHashMap {
             secondary_indexes[i]->insert(cur);
     }
 
-    FORCE_INLINE void insert(const T& elem, V&& value, HASH_RES_t h) {
-        T* cur = pool.add();
-        new (cur) T(elem);
-        cur->__av = std::move(value);
-
-        cur->prv = nullptr;
-        cur->nxt = head;
-        if (head != nullptr) { head->prv = cur; }
-        head = cur;
-
-        primary_index->insert(cur, h);
-        for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++)
-            secondary_indexes[i]->insert(cur);
-    }
-
-
-    FORCE_INLINE void del(T* elem, HASH_RES_t h) { // assume the element is already in the map and mainIdx=0
-        assert(elem != nullptr);    // and elem is in the map
+    FORCE_INLINE void erase(T* elem, HASH_RES_t h) { // the element is already in the map 
+        assert(elem != nullptr);
 
         T* elemPrv = elem->prv;
         T* elemNxt = elem->nxt;
@@ -533,8 +517,6 @@ class MultiHashMap {
   public:
 
     T* head;
-
-    static MultiHashMap<T, V, PRIMARY_INDEX, SECONDARY_INDEXES...> zero;
 
     MultiHashMap() : head(nullptr) { 
         primary_index = new PRIMARY_INDEX();
@@ -581,10 +563,6 @@ class MultiHashMap {
         return *this;
     }
 
-    FORCE_INLINE bool operator==(const MultiHashMap<T, V, PRIMARY_INDEX, SECONDARY_INDEXES...> &other) const {
-        return (this == &other) || (*primary_index) == (*other.primary_index);
-    }
-
     FORCE_INLINE MultiHashMap<T, V, PRIMARY_INDEX, SECONDARY_INDEXES...>& operator+=(const MultiHashMap<T, V, PRIMARY_INDEX, SECONDARY_INDEXES...> &other) {
         for (size_t b = 0; b < other.primary_index->size_; b++) {
             PrimaryIdxNode<T> *n = &other.primary_index->buckets_[b];
@@ -599,36 +577,30 @@ class MultiHashMap {
         return primary_index->count();
     }
 
-    FORCE_INLINE const T* get(const T& key) const {
-      return primary_index->get(key);
+    FORCE_INLINE bool isZero() const {
+        return (count() == 0);
     }
 
-    FORCE_INLINE const V& getValueOrDefault(const T& key) const {
-        T* elem = primary_index->get(key);
-        return (elem != nullptr ? elem->__av : ZeroValue<V>::zero);
+    FORCE_INLINE const T* get(const T& key) const {
+      return primary_index->get(key);
     }
 
     FORCE_INLINE const SecondaryIdxNode<T>* slice(const T& k, size_t idx) {
         return secondary_indexes[idx]->slice(k);
     }    
     
-    FORCE_INLINE void del(const T& k) {
+    FORCE_INLINE void erase(const T& k) {
         HASH_RES_t h = primary_index->computeHash(k);
-        T *elem = get(k, h);
-        if (elem != nullptr) { del(elem, h); }
+        T* elem = get(k, h);
+        if (elem != nullptr) erase(elem, h);
     }
 
-    FORCE_INLINE void insert(const T& k) {
-        insert(k, primary_index->computeHash(k));
-    }
-
-    FORCE_INLINE void add(T& k, const V& v) {
-        if (v == ZeroValue<V>::zero) { return; }
-
+    template <typename V2>
+    FORCE_INLINE void insertOrAssign(const T& k, const V2& v) {
         HASH_RES_t h = primary_index->computeHash(k);
         T* elem = primary_index->get(k, h);
-        if (elem != nullptr) { 
-            elem->__av += v; 
+        if (elem != nullptr) {
+            elem->__av = v;
         }
         else {
             k.__av = v;
@@ -636,14 +608,26 @@ class MultiHashMap {
         }
     }
 
-    FORCE_INLINE void addOrDelOnZero(T& k, const V& v) {
-        if (v == ZeroValue<V>::zero) { return; }
+    template <typename V2>
+    FORCE_INLINE void insertOrAssignNonZero(const T& k, const V2& v) {
+        HASH_RES_t h = primary_index->computeHash(k);
+        T* elem = primary_index->get(k, h);
+        if (elem != nullptr) {
+            if (Value<V2>::isZero(v)) erase(elem, h);
+            else elem->__av = v;
+        }
+        else if (!Value<V2>::isZero(v)) {
+            k.__av = v;
+            insert(k, h);
+        }
+    }
 
+    template <typename V2>
+    FORCE_INLINE void incrementOrAssign(T& k, const V2& v) {
         HASH_RES_t h = primary_index->computeHash(k);
         T* elem = primary_index->get(k, h);
         if (elem != nullptr) {
             elem->__av += v;
-            if (elem->__av == ZeroValue<V>::zero) { del(elem, h); }
         }
         else {
             k.__av = v;
@@ -651,32 +635,40 @@ class MultiHashMap {
         }
     }
 
-    FORCE_INLINE void addOrDelOnZero(T& k, V&& v) {
-        if (v == ZeroValue<V>::zero) { return; }
-
+    template <typename V2>
+    FORCE_INLINE void incrementOrAssignNonZero(T& k, const V2& v) {
+        if (Value<V2>::isZero(v)) return;
         HASH_RES_t h = primary_index->computeHash(k);
         T* elem = primary_index->get(k, h);
         if (elem != nullptr) {
-            elem->__av += std::move(v);
-            if (elem->__av == ZeroValue<V>::zero) { del(elem, h); }
+            elem->__av += v;
+            if (Value<V>::isZero(elem->__av)) erase(elem, h);
         }
         else {
-            k.__av = std::move(v);
-            insert(k, h);
-        }        
-    }
-
-    FORCE_INLINE void setOrDelOnZero(T& k, const V& v) {
-        HASH_RES_t h = primary_index->computeHash(k);
-        T* elem = primary_index->get(k, h);
-        if (elem != nullptr) {
-            if (v == ZeroValue<V>::zero) { del(elem, h); }
-            else { elem->__av = v; }
-        }
-        else if (v != ZeroValue<V>::zero) {
             k.__av = v;
             insert(k, h);
         }
+    }
+
+    template <typename V2>
+    FORCE_INLINE void addOrDelOnZero(T& k, const V2& v) {
+        incrementOrAssignNonZero(k, v);
+    }
+
+    template <typename V2>
+    FORCE_INLINE void add(T& k, const V2& v) {
+        incrementOrAssign(k, v);
+    }
+
+    template <typename V2>
+    FORCE_INLINE void setOrDelOnZero(T& k, const V2& v) {
+        insertOrAssignNonZero(k, v);
+    }
+
+    FORCE_INLINE const V& getValueOrDefault(const T& key) const {
+       T* elem = primary_index->get(key);
+       if (elem != nullptr) return elem->__av;
+       return Value<V>::zero;
     }
 
     FORCE_INLINE void clear() {
@@ -701,9 +693,6 @@ class MultiHashMap {
         }
     }
 };
-
-template <typename T, typename V, typename PRIMARY_INDEX, typename... SECONDARY_INDEXES> 
-MultiHashMap<T,V,PRIMARY_INDEX,SECONDARY_INDEXES...> MultiHashMap<T,V,PRIMARY_INDEX,SECONDARY_INDEXES...>::zero = MultiHashMap<T,V,PRIMARY_INDEX,SECONDARY_INDEXES...>();
 
 }
 

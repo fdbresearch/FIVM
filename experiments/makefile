@@ -149,6 +149,7 @@ SUM_HOUSING_SOURCE_EVAL = \
 SUM_HOUSING_SOURCE_INCR = \
 	sum/housing/Sum_Housing_DBT-INCR_ALL.sql \
 	sum/housing/Sum_Housing_DF-INCR_ALL.m3 \
+	sum/housing/Avg_Housing_DF-INCR_ALL_GENERATED.m3 \
 	sum/housing/Sum_Housing_DF-INCR_REEVAL_ALL.m3
 
 SUM_HOUSING_GENERATE_HPP_FROM_SQL_EVAL = $(patsubst %.sql, $(BINDIR)/queries/%.hpp, $(filter %.sql, $(SUM_HOUSING_SOURCE_EVAL)))
@@ -231,6 +232,7 @@ SUM_TPCH_SOURCE_INCR = \
 	sum/tpch/TPCH10_DF-INCR_ALL.m3 \
 	sum/tpch/TPCH1_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH1_DF-INCR_ALL.hpp \
+	sum/tpch/TPCH1_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH12_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH12_DF-INCR_ALL.hpp \
 	sum/tpch/TPCH14_DBT-INCR_ALL.sql \

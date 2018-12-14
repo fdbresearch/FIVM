@@ -1,5 +1,5 @@
 CREATE TYPE RingRelation
-FROM FILE 'ring_relation.hpp'
+FROM FILE 'ring/ring_relational_opt.hpp'
 WITH PARAMETER SCHEMA (dynamic_concat);
 
 CREATE STREAM HOUSE(postcode double, livingarea double, price double, nbbedrooms double, nbbathrooms double, kitchensize double, house double, flat double, unknown double, garden double, parking double)
@@ -19,6 +19,17 @@ FROM FILE './datasets/housing/Demographics.tbl' LINE DELIMITED CSV(delimiter := 
 
 CREATE STREAM TRANSPORT(postcode double, nbbuslines double, nbtrainstations double, distancecitycentre double)
 FROM FILE './datasets/housing/Transport.tbl' LINE DELIMITED CSV(delimiter := '|');
+
+SELECT SUM(
+    [lift<0>: RingRelation<[0,double]>](postcode) *
+    [lift<1>: RingRelation<[1,double,double,double,double,double,double,double,double,double,double]>](livingarea, price, nbbedrooms, nbbathrooms, kitchensize, house, flat, unknown, garden, parking) *
+    [lift<11>: RingRelation<[11,double,double,double,double,double]>](openinghoursshop, pricerangeshop, sainsburys, tesco, ms) *
+    [lift<16>: RingRelation<[16,double,double]>](typeeducation, sizeinstitution) *
+    [lift<18>: RingRelation<[18,double,double]>](openinghoursrest, pricerangerest) *    
+    [lift<20>: RingRelation<[20,double,double,double,double]>](averagesalary, crimesperyear, unemployment, nbhospitals) *
+    [lift<24>: RingRelation<[24,double,double,double]>](nbbuslines, nbtrainstations, distancecitycentre)
+)
+FROM HOUSE NATURAL JOIN SHOP NATURAL JOIN INSTITUTION NATURAL JOIN RESTAURANT NATURAL JOIN DEMOGRAPHICS NATURAL JOIN TRANSPORT;
 
 -- SELECT SUM(
 --     [lift<0>: RingRelation<[0,double]>](postcode) *
@@ -50,14 +61,3 @@ FROM FILE './datasets/housing/Transport.tbl' LINE DELIMITED CSV(delimiter := '|'
 --     [lift<26>: RingRelation<[26,double]>](distancecitycentre)
 -- )
 -- FROM HOUSE NATURAL JOIN SHOP NATURAL JOIN INSTITUTION NATURAL JOIN RESTAURANT NATURAL JOIN DEMOGRAPHICS NATURAL JOIN TRANSPORT;
-
-SELECT SUM(
-    [lift<0>: RingRelation<[0,double]>](postcode) *
-    [lift<1>: RingRelation<[1,double,double,double,double,double,double,double,double,double,double]>](livingarea, price, nbbedrooms, nbbathrooms, kitchensize, house, flat, unknown, garden, parking) *
-    [lift<11>: RingRelation<[11,double,double,double,double,double]>](openinghoursshop, pricerangeshop, sainsburys, tesco, ms) *
-    [lift<16>: RingRelation<[16,double,double]>](typeeducation, sizeinstitution) *
-    [lift<18>: RingRelation<[18,double,double]>](openinghoursrest, pricerangerest) *    
-    [lift<20>: RingRelation<[20,double,double,double,double]>](averagesalary, crimesperyear, unemployment, nbhospitals) *
-    [lift<24>: RingRelation<[24,double,double,double]>](nbbuslines, nbtrainstations, distancecitycentre)
-)
-FROM HOUSE NATURAL JOIN SHOP NATURAL JOIN INSTITUTION NATURAL JOIN RESTAURANT NATURAL JOIN DEMOGRAPHICS NATURAL JOIN TRANSPORT;

@@ -1,7 +1,6 @@
 #ifndef DBTOASTER_TYPES_HPP
 #define DBTOASTER_TYPES_HPP
 
-// #include <stdexcept>
 #include "string.hpp"
 
 // #define DOUBLE_ZERO_APPROXIMATED
@@ -17,9 +16,9 @@ namespace dbtoaster
 
     typedef size_t HASH_RES_t;
 
-    //typedef RefCountedString STRING_TYPE;
-
     typedef PooledRefCountedString STRING_TYPE;
+
+    //typedef RefCountedString STRING_TYPE;
 
     //typedef VariableLengthString STRING_TYPE;
 
@@ -27,56 +26,54 @@ namespace dbtoaster
 
     //typedef std::string STRING_TYPE;
 
-    template<typename V>
-    struct ZeroValue 
-    {
-        static const V zero;
-        FORCE_INLINE static const V get() { return V::zero; }
-        FORCE_INLINE static bool isZero(const V& a) { return (a == V::zero); }
+    template<typename T>
+    struct Value {
+        static const T zero;
+        inline static bool isZero(const T& a) { return a.isZero(); }
     };
-    template<typename V>
-    const V ZeroValue<V>::zero = V::zero;
+
+    template<typename T>
+    const T Value<T>::zero = T();
 
     template<>
-    struct ZeroValue<int> 
-    {
-        static const int zero;
-        FORCE_INLINE static const int get() { return 0; }
-        FORCE_INLINE static bool isZero(const int& a) { return (a == 0); }
+    struct Value<int> {
+        static constexpr int zero = 0;
+        inline static bool isZero(const int& a) { return (a == 0); }
     };
-    const int ZeroValue<int>::zero = 0;
 
     template<>
-    struct ZeroValue<long> 
-    {
-        static const long zero;
-        FORCE_INLINE static const long get() { return 0L; }
-        FORCE_INLINE static bool isZero(const long& a) { return (a == 0L); }
+    struct Value<char> {
+        static constexpr char zero = 0;
+        inline static bool isZero(const char& a) { return (a == 0); }
     };
-    const long ZeroValue<long>::zero = 0L;
 
     template<>
-    struct ZeroValue<float> 
-    {
-        static const float zero;
-        FORCE_INLINE static const float get() { return 0.0f; }
-        FORCE_INLINE static bool isZero(const float& a) { return (a == 0.0f); }
+    struct Value<short> {
+        static constexpr short zero = 0;
+        inline static bool isZero(const short& a) { return (a == 0); }
     };
-    const float ZeroValue<float>::zero = 0.0f;
 
     template<>
-    struct ZeroValue<double> 
-    {
-        static const double zero;
-        FORCE_INLINE static double get() { return 0.0; }
-    #ifdef DOUBLE_ZERO_APPROXIMATED
-        FORCE_INLINE static bool isZero(const double& a) { return (a >= -DOUBLE_ZERO_THRESHOLD && a <= DOUBLE_ZERO_THRESHOLD); }
-    #else
-        FORCE_INLINE static bool isZero(const double& a) { return (a == 0.0); }
-    #endif
+    struct Value<long> {
+        static constexpr long zero = 0L;
+        inline static bool isZero(const long& a) { return (a == 0L); }
     };
-    const double ZeroValue<double>::zero = 0.0;
 
+    template<>
+    struct Value<float> {
+        static constexpr float zero = 0.0f;
+        inline static bool isZero(const float& a) { return (a == 0.0f); }
+    };
+
+    template<>
+    struct Value<double> {
+        static constexpr double zero = 0.0;
+#ifdef DOUBLE_ZERO_APPROXIMATED
+        inline static bool isZero(const double& a) { return (a >= -DOUBLE_ZERO_THRESHOLD && a <= DOUBLE_ZERO_THRESHOLD); }
+#else
+        inline static bool isZero(const double& a) { return (a == 0.0); }
+#endif        
+    };
 }
 
 #endif /* DBTOASTER_TYPES_HPP */

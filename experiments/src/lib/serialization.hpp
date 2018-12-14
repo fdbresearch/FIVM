@@ -28,6 +28,13 @@ namespace dbtoaster {
     }
 
     template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const char & t)
+    {
+        ar << t;
+        return ar;
+    }
+
+    template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const int & t)
     {
         ar << t;

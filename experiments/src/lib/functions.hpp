@@ -38,7 +38,7 @@ namespace dbtoaster
 
     FORCE_INLINE long Ulistmax(long v1,  long v2) { return ((v1 > v2) ? v1 : v2 ); }
 
-    FORCE_INLINE DOUBLE_TYPE Ulistmax(DOUBLE_TYPE v1, long v2) { return ((v1 > v2) ? v1 : v2); }
+    FORCE_INLINE DOUBLE_TYPE Ulistmax(DOUBLE_TYPE v1, DOUBLE_TYPE v2) { return ((v1 > v2) ? v1 : v2); }
 
     FORCE_INLINE DOUBLE_TYPE Udiv(DOUBLE_TYPE x) { return (x != 0.0 ? 1.0 / x : 0.0); }
 

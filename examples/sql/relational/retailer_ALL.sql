@@ -1,5 +1,5 @@
 CREATE TYPE RingRelation
-FROM FILE 'ring_relation.hpp'
+FROM FILE 'ring/ring_relational_opt.hpp'
 WITH PARAMETER SCHEMA (dynamic_concat);
 
 CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
@@ -17,6 +17,30 @@ FROM FILE './datasets/sears/Item.tbl' LINE DELIMITED CSV(delimiter := '|');
 CREATE STREAM WEATHER(locn long, dateid long, rain long, snow long, maxtemp long, mintemp long, meanwind double, thunder long) 
 FROM FILE './datasets/sears/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 
+SELECT SUM(
+    [lift<0>: RingRelation<[0,long]>](locn) *
+    [lift<1>: RingRelation<[1,long]>](dateid) *
+    [lift<2>: RingRelation<[2,double, double]>](ksn, inventoryunits) *
+    [lift<14>: RingRelation<[14,long]>](zip) *
+    [lift<15>: RingRelation<[15,double,double,double,double,double,double,double,double,double,double,double,double,double]>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
+    [lift<28>: RingRelation<[28,long,long,long,long,long,double,long,long,long,long,long,long,long,long,long]>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic) *
+    [lift<4>: RingRelation<[4,long,long,long,double]>](subcategory, category, categoryCluster, prize) *
+    [lift<8>: RingRelation<[8,long,long,long,long,double,long]>](rain, snow, maxtemp, mintemp, meanwind, thunder)
+)
+FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
+
+-- SELECT SUM(
+--     [lift<0>: RingRelation<[0,long]>](locn) *
+--     [lift<1>: RingRelation<[1,long]>](dateid) *
+--     [lift<2>: RingRelation<[2,double]>](ksn) *
+--     [lift<14>: RingRelation<[14,long]>](zip) *
+--     [lift<3>: RingRelation<[3,double]>](inventoryunits) *
+--     [lift<15>: RingRelation<[15,double,double,double,double,double,double,double,double,double,double,double,double,double]>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
+--     [lift<28>: RingRelation<[28,long,long,long,long,long,double,long,long,long,long,long,long,long,long,long]>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic) *
+--     [lift<4>: RingRelation<[4,long,long,long,double]>](subcategory, category, categoryCluster, prize) *
+--     [lift<8>: RingRelation<[8,long,long,long,long,double,long]>](rain, snow, maxtemp, mintemp, meanwind, thunder)
+-- )
+-- FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
 
 -- SELECT SUM(
 --     [lift<0>: RingRelation<[0,long]>](locn) *
@@ -64,16 +88,3 @@ FROM FILE './datasets/sears/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 --     [lift<13>: RingRelation<[13,long]>](thunder)
 -- )
 -- FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
-
-SELECT SUM(
-    [lift<0>: RingRelation<[0,long]>](locn) *
-    [lift<1>: RingRelation<[1,long]>](dateid) *
-    [lift<2>: RingRelation<[2,double]>](ksn) *
-    [lift<14>: RingRelation<[14,long]>](zip) *
-    [lift<3>: RingRelation<[3,double]>](inventoryunits) *
-    [lift<15>: RingRelation<[15,double,double,double,double,double,double,double,double,double,double,double,double,double]>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
-    [lift<28>: RingRelation<[28,long,long,long,long,long,double,long,long,long,long,long,long,long,long,long]>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic) *
-    [lift<4>: RingRelation<[4,long,long,long,double]>](subcategory, category, categoryCluster, prize) *
-    [lift<8>: RingRelation<[8,long,long,long,long,double,long]>](rain, snow, maxtemp, mintemp, meanwind, thunder)
-)
-FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
