@@ -45,6 +45,14 @@ class SQLParser extends Parser with (String => SQL.System) {
         }
     }
 
+  lazy val constant: Parser[Const] =
+    ( floatLit ^^ { Const(_, TypeFloat) }
+    | doubleLit ^^ { Const(_, TypeDouble) }
+    | longLit ^^ { Const(_, TypeLong) }
+    | intLit ^^ { Const(_, TypeInt) }
+    | stringLit ^^ { Const(_, TypeString) }
+    )
+
   lazy val atom: Parser[Expr] =
     ( "COUNT" ~> "(" ~>"DISTINCT" ~> expr <~ ")" ^^ { Agg(_,OpCountDistinct) }
       //| "INTERVAL" ~> stringLit ~
@@ -95,11 +103,7 @@ class SQLParser extends Parser with (String => SQL.System) {
     | field
     | "(" ~> expr <~ ")"
     | "(" ~> query <~ ")" ^^ Nested
-    | floatLit ^^ { Const(_, TypeFloat) }
-    | doubleLit ^^ { Const(_, TypeDouble) }
-    | longLit ^^ { Const(_, TypeLong) }
-    | intLit ^^ { Const(_, TypeInt) }
-    | stringLit ^^ { Const(_, TypeString) }
+    | constant
     | failure("SQL expression")
     )
 
@@ -113,13 +117,16 @@ class SQLParser extends Parser with (String => SQL.System) {
   lazy val cond: Parser[Cond] =
     ( "EXISTS" ~> "(" ~> query <~ ")" ^^ Exists
     | "NOT" ~> cond ^^ Not
+    | expr ~ ("INLIST" ~> "(" ~> rep1sep(constant, ",") <~ ")") ^^ {
+        case e ~ l => InList(e, l)
+      }
     | expr ~ opt("NOT") ~ ("LIKE" ~> stringLit) ^^ {
         case e ~ o ~ s => o match {
           case Some(_) => Not(Like(e, s))
           case None => Like(e, s)
       }}
     | expr ~ ("BETWEEN" ~> expr) ~ ("AND" ~> expr) ^^ {
-        case e ~ m ~ n => And(Cmp(e, m, OpGt), Cmp(n, e, OpGt))
+        case e ~ m ~ n => And(Cmp(e, m, OpGe), Cmp(n, e, OpGe))
       }
     | expr ~ (opt("NOT") <~ "IN") ~ query ^^ {
         case e ~ Some(_) ~ q => Not(In(e, q))

@@ -51,11 +51,11 @@ class CodeGenerator(tree: Tree[View],
       val childJoin = tree.node.link.node match {
         case _: DTreeVariable => tree.children match {
           case Nil => sys.error("Variable as a leaf node")
-          case cl =>
-            (cl.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul)
+          case cc => (cc.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul)
         }
         case DTreeRelation(name, keys) =>
-          M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
+          val ref = M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
+          (ref :: tree.node.terms).reduceLeft(M3.Mul)
       }
 
       val marginalizedVars =
@@ -73,7 +73,7 @@ class CodeGenerator(tree: Tree[View],
             case hd :: Nil =>
               ( hd.createDeltaExpr(event) ::
                 (hd.rightSiblings ++ hd.leftSiblings.reverse).map(_.createExpr) ++
-                  tree.node.terms).reduceLeft(M3.Mul)
+                  tree.node.terms ).reduceLeft(M3.Mul)
             case _ => sys.error("# of delta paths not 1")
           }
 
@@ -81,11 +81,12 @@ class CodeGenerator(tree: Tree[View],
           assert(name == event.schema.name)
           event match {
             case M3.EventBatchUpdate(_) =>
-              M3.DeltaMapRefConst(name, keys.map(v => (v.name, v.tp)))
+              val ref = M3.DeltaMapRefConst(name, keys.map(v => (v.name, v.tp)))
+              (ref :: tree.node.terms).reduceLeft(M3.Mul)
             case M3.EventInsert(_) =>
-              M3.Const(TypeLong, "1L")
+              (M3.Const(TypeLong, "1L") :: tree.node.terms).reduceLeft(M3.Mul)
             case M3.EventDelete(_) =>
-              M3.Const(TypeLong, "-1L")
+              (M3.Const(TypeLong, "-1L") :: tree.node.terms).reduceLeft(M3.Mul)
             case M3.EventReady =>
               sys.error("No delta trigger for SystemReady")
           }
@@ -108,9 +109,7 @@ class CodeGenerator(tree: Tree[View],
   }
 
   def generateM3: M3.System =
-    Optimizer.optimize(
-      M3.System(typeDefs, sources, generateMaps, generateQueries, generateTriggers)
-    )
+    M3.System(typeDefs, sources, generateMaps, generateQueries, generateTriggers)
 
   private def generateMaps: List[M3.MapDef] =
     tree.map2(t => if (t.isMaterialized) Some(t.createMapDef) else None).flatten.toList

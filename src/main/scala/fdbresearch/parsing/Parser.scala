@@ -64,6 +64,7 @@ class Parser extends StandardTokenParsers {
       "char" ~> "(" ~> "1" ~> ")" ^^^ TypeChar
     | ( "string" | ("char" | "varchar") ~> "(" ~> numericLit <~ ")") ^^^ TypeString
     | "char" ^^^ TypeChar
+    | "byte" ^^^ TypeByte
     | "short" ^^^ TypeShort
     | "int" ^^^ TypeInt
     | "long" ^^^ TypeLong

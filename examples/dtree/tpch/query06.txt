@@ -1,0 +1,18 @@
+16 1
+0 l_orderkey int -1 {} 0
+1 l_partkey int 0 {0} 0
+2 l_suppkey int 1 {0,1} 0
+3 l_linenumber int 2 {0,1,2} 0
+4 l_quantity double 3 {0,1,2,3} 0
+5 l_extendedprice double 4 {0,1,2,3,4} 0
+6 l_discount double 5 {0,1,2,3,4,5} 0
+7 l_tax double 6 {0,1,2,3,4,5,6} 0
+8 l_returnflag char 7 {0,1,2,3,4,5,6,7} 0
+9 l_linestatus char 8 {0,1,2,3,4,5,6,7,8} 0
+10 l_shipdate date 9 {0,1,2,3,4,5,6,7,8,9} 0
+11 l_commitdate date 10 {0,1,2,3,4,5,6,7,8,9,10} 0
+12 l_receiptdate date 11 {0,1,2,3,4,5,6,7,8,9,10,11} 0
+13 l_shipinstruct string 12 {0,1,2,3,4,5,6,7,8,9,10,11,12} 0
+14 l_shipmode string 13 {0,1,2,3,4,5,6,7,8,9,10,11,12,13} 0
+15 l_comment string 14 {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14} 0
+LINEITEM 15 l_orderkey, l_partkey, l_suppkey, l_linenumber, l_quantity, l_extendedprice, l_discount, l_tax, l_returnflag, l_linestatus, l_shipdate, l_commitdate, l_receiptdate, l_shipinstruct, l_shipmode, l_comment

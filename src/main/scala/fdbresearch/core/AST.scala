@@ -190,7 +190,7 @@ object M3 {
 
   case class TriggerStmt(target: MapRef, expr: Expr, op: OpMap, initExpr: Option[Expr]) extends Statement {
     override def toString =
-      target + initExpr.map(":(" + _ + ")").getOrElse("") + " " + op + " " + expr + ";"
+      target + initExpr.map(":(" + _ + ")").getOrElse("") + " " + op + " " + expr.toString + ";"
   }
 
   case class IfStmt(cond: Cmp, thenBlk: List[Statement], elseBlk: List[Statement]) extends Statement {
@@ -268,9 +268,28 @@ object M3 {
       * @return A pair of lists, holding input variables and output variables
       */
     def schema: (List[(String, Type)], List[(String, Type)]) = {
-      def union(l1: List[(String, Type)],l2: List[(String, Type)])  = (l1 ++ l2).distinct
-      def diff(l1: List[(String, Type)], l2: List[(String, Type)])  = l1.filterNot(l2.contains)
-      def inter(l1: List[(String, Type)], l2: List[(String, Type)]) = l1.filter(l2.contains)
+      def resolver(l: List[(String, Type)]): Map[String, Type] =
+        l.groupBy(_._1).mapValues(_.map(_._2).reduce(Type.resolve))
+
+      def distinct(l: List[(String, Type)]) = {
+        val tr = resolver(l)
+        l.map(_._1).distinct.map(x => x -> tr(x))
+      }
+
+      def union(l1: List[(String, Type)], l2: List[(String, Type)]) = {
+        val tr = resolver(l1 ++ l2)
+        (l1 ++ l2).map(_._1).distinct.map(x => x -> tr(x))
+      }
+
+      def diff(l1: List[(String, Type)], l2: List[(String, Type)]) = {
+        val tr = resolver(l1 ++ l2)
+        l1.map(_._1).filterNot(l2.map(_._1).contains).map(x => x -> tr(x))
+      }
+
+      def inter(l1: List[(String, Type)], l2: List[(String, Type)]) = {
+        val tr = resolver(l1 ++ l2)
+        l1.map(_._1).filter(l2.map(_._1).contains).map(x => x -> tr(x))
+      }
 
       this match {
         case Const(_, _) => (List(), List())
@@ -282,7 +301,7 @@ object M3 {
         case CmpOrList(l, _) => (l.schema._1, List())
         case Apply(_, _, as, _) =>
           val (ivs, ovs) = as.map(_.schema).unzip
-          (ivs.flatten.distinct, ovs.flatten.distinct)
+          (distinct(ivs.flatten), distinct(ovs.flatten))
         case Mul(el, er) =>
           val (iv1, ov1) = el.schema
           val (iv2, ov2) = er.schema
@@ -324,7 +343,7 @@ object M3 {
       if (this.tp != that.tp) None else (this, that) match {
         case (Const(_, v1), Const(_, v2)) =>
           if (v1 == v2) empty else None
-        case (a @ Ref(n1, tp1), b @ Ref(n2, tp2)) =>
+        case (Ref(n1, tp1), Ref(n2, tp2)) =>
           Some(Map((n1, tp1) -> (n2, tp2)))
         case (Apply(fn1, _, as1, tas1), Apply(fn2, _, as2, tas2)) =>
           if (fn1 != fn2 || as1.length != as2.length || tas1 != tas2) None
@@ -346,7 +365,9 @@ object M3 {
             case (fmap, (a, b)) => merge(fmap, Some(Map(a -> b)))
           }
         case (Cmp(l1, r1, op1), Cmp(l2, r2, op2)) =>
-          if (op1 != op2) None else merge(l1.cmp(l2), r1.cmp(r2))
+          if (op1 == op2) merge(l1.cmp(l2), r1.cmp(r2)) else None
+        case (CmpOrList(e1, l1), CmpOrList(e2, l2)) =>
+          if (l1.toSet == l2.toSet) e1.cmp(e2) else None
         case (Mul(l1, r1), Mul(l2, r2)) =>
           merge(l1.cmp(l2), r1.cmp(r2))
         case (Add(l1, r1), Add(l2, r2)) =>
@@ -378,7 +399,10 @@ object M3 {
   // Constants
   case class Const(tp: Type, v: String) extends Expr {
     val locality: Option[LocalityType] = None
-    override def toString = if (tp == TypeString) "'" + v + "'" else v
+    override def toString = tp match {
+      case TypeString | TypeChar => "'" + v + "'"
+      case _ => v
+    }
     def toDecoratedString = toString + ": " + tp
   }
 
@@ -403,7 +427,7 @@ object M3 {
 
   // Lifting operator ('Let name=e in ...' semantics)
   case class Lift(name: String, e: Expr) extends Expr {
-    val tp: Type = TypeChar
+    val tp: Type = TypeInt
     val locality: Option[LocalityType] = e.locality
     override def toString = "(" + name + " ^= " + e + ")"
     def toDecoratedString = "(" + name + " ^= " + e.toDecoratedString + ")" + ": " + tp
@@ -481,7 +505,7 @@ object M3 {
 
   // Exists operator - returns 0 or 1 (checks if there is at least one tuple)
   case class Exists(e: Expr) extends Expr {
-    val tp: Type = TypeChar
+    val tp: Type = TypeInt
     val locality: Option[LocalityType] = e.locality
     override def toString = "EXISTS(" + e + ")"
     def toDecoratedString = "EXISTS(" + e.toDecoratedString + "): " + tp
@@ -499,7 +523,7 @@ object M3 {
 
   // Comparison, returns 0 or 1
   case class Cmp(l: Expr, r: Expr, op: OpCmp) extends Expr {
-    val tp: Type = TypeChar
+    val tp: Type = TypeInt
     val locality: Option[LocalityType] = None
     override def toString = "{" + l + " " + op + " " + r + "}"
     def toDecoratedString = "{" + l.toDecoratedString + " " + op + " " + r.toDecoratedString + "}: " + tp
@@ -507,7 +531,7 @@ object M3 {
 
   // OR comparison with a given expr list, returns 0 or 1
   case class CmpOrList(l: Expr, r: List[Expr]) extends Expr {
-    val tp: Type = TypeChar
+    val tp: Type = TypeInt
     val locality: Option[LocalityType] = None
     override def toString = "{" + l + " IN [" + r.mkString(", ") + "]}"
     def toDecoratedString = "{" + l.toDecoratedString + " IN [" + r.map(_.toDecoratedString).mkString(", ") + "]}: " + tp
@@ -587,6 +611,8 @@ sealed abstract class SQL {
       case SQL.Exists(q) => SQL.Exists(q.replace(f).asInstanceOf[SQL.Query])
       case SQL.In(e, q) => SQL.In(e.replace(f).asInstanceOf[SQL.Expr],
         q.replace(f).asInstanceOf[SQL.Query])
+      case SQL.InList(e, l) => SQL.InList(e.replace(f).asInstanceOf[SQL.Expr],
+        l.map(_.replace(f).asInstanceOf[SQL.Const]))
       case SQL.Not(c2) => SQL.Not(c2.replace(f).asInstanceOf[SQL.Cond])
       case SQL.Like(l, p) => SQL.Like(l.replace(f).asInstanceOf[SQL.Expr], p)
       case SQL.Cmp(l, r, op) => SQL.Cmp(l.replace(f).asInstanceOf[SQL.Expr],
@@ -795,6 +821,10 @@ object SQL {
 
   case class In(e: Expr, q: Query) extends Cond {
     override def toString = e + " IN (" + ind("\n" + q) + "\n)"
+  }
+
+  case class InList(e: Expr, l: List[Const]) extends Cond {
+    override def toString = e + " IN LIST (" + l.mkString(", ") + ")"
   }
 
   case class Not(e: Cond) extends Cond {

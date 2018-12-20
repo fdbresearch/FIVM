@@ -12,6 +12,7 @@ FLAGS ?=
 # COFACTOR HOUSING
 ####################
 COFACTOR_HOUSING_SOURCE_EVAL = \
+	cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3 \
 	cofactor/housing/Cofactor_Housing_DF-EVAL.hpp \
 	cofactor/housing/Cofactor_Housing_PIVOT-EVAL.m3
 	# cofactor/housing/Cofactor_Housing_DBT-EVAL.sql
@@ -39,6 +40,8 @@ COFACTOR_HOUSING_EXE_INCR = $(COFACTOR_HOUSING_GENERATE_HPP_INCR:$(BINDIR)/queri
 # COFACTOR RETAILER 
 ####################
 COFACTOR_RETAILER_SOURCE_EVAL = \
+	cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3 \
 	cofactor/retailer/Cofactor_Retailer_DF-EVAL.hpp \
 	cofactor/retailer/Cofactor_Retailer_PIVOT-EVAL.m3 \
 	cofactor/retailer/Cofactor_Retailer_PIVOT-EVAL_2.m3
@@ -198,6 +201,12 @@ SUM_RETAILER_EXE_INCR = $(SUM_RETAILER_GENERATE_HPP_INCR:$(BINDIR)/queries/%.hpp
 # SUM TPCH
 ####################
 SUM_TPCH_SOURCE_EVAL = \
+	sum/tpch/TPCH1_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	sum/tpch/TPCH3_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	sum/tpch/TPCH6_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	sum/tpch/TPCH10_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	sum/tpch/TPCH12_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	sum/tpch/TPCH14_DF-INCR_ALL_GENERATED_SINGLE.m3 \
 	sum/tpch/TPCH3_DBT-EVAL.sql \
 	sum/tpch/TPCH3_DF-EVAL.m3 \
 	sum/tpch/TPCH5_DBT-EVAL.sql \
@@ -224,19 +233,23 @@ SUM_TPCH_SOURCE_EVAL = \
 SUM_TPCH_SOURCE_INCR = \
 	sum/tpch/TPCH3_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH3_DF-INCR_ALL.m3 \
+	sum/tpch/TPCH3_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH3_DF-INCR_REEVAL_ALL.m3 \
 	sum/tpch/TPCH5_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH5_DF-INCR_ALL.m3 \
 	sum/tpch/TPCH5_DF-INCR_ALL_NOINDPROJ.m3 \
 	sum/tpch/TPCH10_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH10_DF-INCR_ALL.m3 \
+	sum/tpch/TPCH10_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH1_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH1_DF-INCR_ALL.hpp \
 	sum/tpch/TPCH1_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH12_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH12_DF-INCR_ALL.hpp \
+	sum/tpch/TPCH12_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH14_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH14_DF-INCR_ALL.hpp \
+	sum/tpch/TPCH14_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH7_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH7_DF-INCR_ALL.m3 \
 	sum/tpch/TPCH8_DBT-INCR_ALL.sql \
@@ -244,6 +257,7 @@ SUM_TPCH_SOURCE_INCR = \
 	sum/tpch/TPCH9_DBT-INCR_ALL.sql \
 	sum/tpch/TPCH9_DF-INCR_ALL.hpp \
 	sum/tpch/TPCH6_DBT-INCR_ALL.sql \
+	sum/tpch/TPCH6_DF-INCR_ALL_GENERATED.m3 \
 	sum/tpch/TPCH19_DBT-INCR_ALL.sql 
 
 SUM_TPCH_GENERATE_HPP_FROM_SQL_EVAL = $(patsubst %.sql, $(BINDIR)/queries/%.hpp, $(filter %.sql, $(SUM_TPCH_SOURCE_EVAL)))
@@ -285,6 +299,8 @@ FULL_TPCH_EXE_INCR = $(FULL_TPCH_GENERATE_HPP_INCR:$(BINDIR)/queries/%.hpp=$(BIN
 # FULL JOIN HOUSING
 ####################
 FULL_HOUSING_SOURCE_EVAL = \
+	full_join/housing/Relational_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	full_join/housing/Factorized_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3 \
 	full_join/housing/Relational_Housing_DF-EVAL.hpp \
 	full_join/housing/Factorized_Housing_DF-EVAL.hpp
 	
@@ -311,8 +327,12 @@ FULL_HOUSING_EXE_INCR = $(FULL_HOUSING_GENERATE_HPP_INCR:$(BINDIR)/queries/%.hpp
 ####################
 # FULL JOIN RETAILER
 ####################
-FULL_RETAILER_SOURCE_EVAL = 
-	
+FULL_RETAILER_SOURCE_EVAL = \
+	full_join/retailer/Relational_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3 \
+	full_join/retailer/Factorized_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3 \
+	full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3
+
 FULL_RETAILER_SOURCE_INCR = \
 	full_join/retailer/Relational_Retailer_DF-INCR_ALL_GENERATED.m3 \
 	full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED.m3 \

@@ -18,7 +18,7 @@ namespace dbtoaster
 {
     struct data_t;    
 
-    #if defined(RELATION_LINEITEM_STATIC)
+    #if defined(RELATION_LINEITEM_STATIC) || (defined(RELATION_LINEITEM_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<LINEITEM_entry> lineitem;
         std::vector<LINEITEM_entry>::iterator lineitemIt;
     #elif defined(RELATION_LINEITEM_DYNAMIC)
@@ -26,7 +26,7 @@ namespace dbtoaster
         std::vector<DELTA_LINEITEM_entry>::iterator lineitemIt;
     #endif
 
-    #if defined(RELATION_ORDERS_STATIC)
+    #if defined(RELATION_ORDERS_STATIC) || (defined(RELATION_ORDERS_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<ORDERS_entry> orders;
         std::vector<ORDERS_entry>::iterator ordersIt;
     #elif defined(RELATION_ORDERS_DYNAMIC)
@@ -34,7 +34,7 @@ namespace dbtoaster
         std::vector<DELTA_ORDERS_entry>::iterator ordersIt;
     #endif
 
-    #if defined(RELATION_CUSTOMER_STATIC)
+    #if defined(RELATION_CUSTOMER_STATIC) || (defined(RELATION_CUSTOMER_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<CUSTOMER_entry> customer;
         std::vector<CUSTOMER_entry>::iterator customerIt;
     #elif defined(RELATION_CUSTOMER_DYNAMIC)
@@ -42,7 +42,7 @@ namespace dbtoaster
         std::vector<DELTA_CUSTOMER_entry>::iterator customerIt;
     #endif
 
-    #if defined(RELATION_PART_STATIC)
+    #if defined(RELATION_PART_STATIC) || (defined(RELATION_PART_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<PART_entry> part;
         std::vector<PART_entry>::iterator partIt;
     #elif defined(RELATION_PART_DYNAMIC)
@@ -50,7 +50,7 @@ namespace dbtoaster
         std::vector<DELTA_PART_entry>::iterator partIt;
     #endif
 
-    #if defined(RELATION_PARTSUPP_STATIC)
+    #if defined(RELATION_PARTSUPP_STATIC) || (defined(RELATION_PARTSUPP_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<PARTSUPP_entry> partsupp;
         std::vector<PARTSUPP_entry>::iterator partsuppIt;
     #elif defined(RELATION_PARTSUPP_DYNAMIC)
@@ -58,7 +58,7 @@ namespace dbtoaster
         std::vector<DELTA_PARTSUPP_entry>::iterator partsuppIt;
     #endif
 
-    #if defined(RELATION_SUPPLIER_STATIC) 
+    #if defined(RELATION_SUPPLIER_STATIC) || (defined(RELATION_SUPPLIER_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<SUPPLIER_entry> supplier;
         std::vector<SUPPLIER_entry>::iterator supplierIt;
     #elif defined(RELATION_SUPPLIER_DYNAMIC)
@@ -66,13 +66,13 @@ namespace dbtoaster
         std::vector<DELTA_SUPPLIER_entry>::iterator supplierIt;
     #endif
     
-    #if defined(RELATION_NATION_STATIC)
+    #if defined(RELATION_NATION_STATIC) || (defined(RELATION_NATION_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<NATION_entry> nation;
     #elif defined(RELATION_NATION_DYNAMIC)
         std::vector<DELTA_NATION_entry> nation;
     #endif
 
-    #if defined(RELATION_REGION_STATIC)
+    #if defined(RELATION_REGION_STATIC) || (defined(RELATION_REGION_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<REGION_entry> region;
     #elif defined(RELATION_REGION_DYNAMIC)
         std::vector<DELTA_REGION_entry> region;

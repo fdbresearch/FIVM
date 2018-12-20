@@ -34,7 +34,7 @@ object SQLToM3Compiler {
     case SQL.Const(v, tp) => M3.Const(tp, v)
     case SQL.Apply(f, tp, as, tas) => M3.Apply(f, tp, as.map(compile), tas)
     case SQL.Add(l, r) => M3.Add(compile(l), compile(r))
-    case SQL.Sub(l, r) => M3.Add(compile(l), M3.Mul(M3.Const(TypeChar, "-1"), compile(r)))
+    case SQL.Sub(l, r) => M3.Add(compile(l), M3.Mul(M3.Const(TypeInt, "-1"), compile(r)))
     case SQL.Mul(l, r) => M3.Mul(compile(l), compile(r))
     case SQL.Div(l, r) => M3.Apply("div", typeOf(e), List(compile(l), compile(r)))
     case SQL.Mod(l, r) => M3.Apply("mod", typeOf(e), List(compile(l), compile(r)))
@@ -44,6 +44,7 @@ object SQLToM3Compiler {
   private def compile(c: SQL.Cond): M3.Expr = c match {
     case SQL.And(l, r) => M3.Mul(compile(l), compile(r))
     case SQL.Cmp(l, r, op) => M3.Cmp(compile(l), compile(r), op)
+    case SQL.InList(e, l) => M3.CmpOrList(compile(e), l.map(compile))
     case _ => throw UnsupportedSQLException("[SQL] Not supported condition: " + c)
   }
 
@@ -78,16 +79,15 @@ object SQLToM3Compiler {
     case _ => List(e)
   }
 
-  def compile(sys: SQL.System): (List[M3.Expr], List[String], List[String]) =
+  def compile(sys: SQL.System): (List[M3.Expr], List[String], List[M3.Expr], List[String]) =
     sys.queries match {
       case SQL.Select(false, cs, ts, wh, gb, None) :: Nil =>
         val sumFn = extractSumAggFn(cs)
         val tables = extractTableNames(ts)
         val whCond = wh.map(compile)
         val gbVars = gb.map(extractGroupByVars).getOrElse(Nil)
-        // Concatenate where and sum terms
-        val terms = whCond.map(toList).getOrElse(Nil) ++ toList(sumFn)
-        (terms, tables, gbVars)
+
+        (toList(sumFn), tables, whCond.map(toList).getOrElse(Nil), gbVars)
       case _ => throw UnsupportedSQLException("[SQL] Not supported SQL query")
     }
 }

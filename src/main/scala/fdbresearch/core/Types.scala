@@ -8,9 +8,9 @@ trait Type {
   def resolve(b: Type): Type
 }
 
-case object TypeChar extends Type {
+case object TypeByte extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => b
+    case TypeByte | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => b
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
 
@@ -19,7 +19,7 @@ case object TypeChar extends Type {
 
 case object TypeShort extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort => this
+    case TypeByte | TypeShort => this
     case TypeInt | TypeLong | TypeFloat | TypeDouble => b
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -29,7 +29,7 @@ case object TypeShort extends Type {
 
 case object TypeInt extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeDate => this
+    case TypeByte | TypeShort | TypeInt | TypeDate => this
     case TypeLong | TypeFloat | TypeDouble => b
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -39,7 +39,7 @@ case object TypeInt extends Type {
 
 case object TypeLong extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeDate => this
+    case TypeByte | TypeShort | TypeInt | TypeLong | TypeDate => this
     case TypeFloat | TypeDouble => b
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -49,7 +49,7 @@ case object TypeLong extends Type {
 
 case object TypeFloat extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat => this
+    case TypeByte | TypeShort | TypeInt | TypeLong | TypeFloat => this
     case TypeDouble => b
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
@@ -59,7 +59,7 @@ case object TypeFloat extends Type {
 
 case object TypeDouble extends Type {
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
+    case TypeByte | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
 
@@ -74,6 +74,15 @@ case object TypeDate extends Type {
   }
 
   override def toString = "date"
+}
+
+case object TypeChar extends Type {
+  def resolve(b: Type): Type = b match {
+    case TypeChar => this
+    case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
+  }
+
+  override def toString = "char"
 }
 
 case object TypeString extends Type {
@@ -125,7 +134,7 @@ case class TypeCustom(typeDef: TypeDefinition,
     }
 
   def resolve(b: Type): Type = b match {
-    case TypeChar | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
+    case TypeByte | TypeShort | TypeInt | TypeLong | TypeFloat | TypeDouble => this
     case b: TypeCustom if typeDef == b.typeDef =>
       TypeCustom(typeDef, (params, b.params, typeDef.schema).zipped.map(resolveParam))
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
@@ -148,7 +157,19 @@ object Type {
     }
 
   def isDistributed(tp: Type): Boolean = tp match {
-    case TypeCustom(TypeDefinition(_, _, _, true), _) => true
+    case c: TypeCustom => c.typeDef.isDistributed
+    case _ => false
+  }
+
+  def isNumerical(tp: Type): Boolean = isInteger(tp) || isFloat(tp)
+
+  def isInteger(tp: Type): Boolean = tp match {
+    case TypeByte | TypeShort | TypeInt | TypeLong => true
+    case _ => false
+  }
+
+  def isFloat(tp: Type): Boolean = tp match {
+    case TypeFloat | TypeDouble => true
     case _ => false
   }
 }

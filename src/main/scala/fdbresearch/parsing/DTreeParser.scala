@@ -58,7 +58,7 @@ class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
           children.map(n => new Tree(n.node, Some(parent), createChildTrees))
         }
         new Tree(root.node, None, createChildTrees)
-      case _ => sys.error("No root or multiple roots")
+      case rr => sys.error("No root or multiple roots: " + rr.map(_.toString).mkString("\n"))
     }
 
   def apply(str: String): Tree[DTreeNode] = phrase(tree)(new lexical.Scanner(str)) match {

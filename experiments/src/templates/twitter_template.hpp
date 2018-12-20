@@ -23,7 +23,7 @@ namespace dbtoaster
     // ASSUMPTION: All twitterX datasets have equal size
 
 
-    #if defined(RELATION_TWITTER1_STATIC)
+    #if defined(RELATION_TWITTER1_STATIC) || (defined(RELATION_TWITTER1_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER1_entry> twitter1;
         std::vector<TWITTER1_entry>::iterator twitterIt1;
     #elif defined(RELATION_TWITTER1_DYNAMIC)
@@ -31,7 +31,7 @@ namespace dbtoaster
         std::vector<DELTA_TWITTER1_entry>::iterator twitterIt1;
     #endif
 
-    #if defined(RELATION_TWITTER2_STATIC)
+    #if defined(RELATION_TWITTER2_STATIC) || (defined(RELATION_TWITTER2_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER2_entry> twitter2;
         std::vector<TWITTER2_entry>::iterator twitterIt2;    
     #elif defined(RELATION_TWITTER2_DYNAMIC)
@@ -39,7 +39,7 @@ namespace dbtoaster
         std::vector<DELTA_TWITTER2_entry>::iterator twitterIt2;    
     #endif
 
-    #if defined(RELATION_TWITTER3_STATIC)
+    #if defined(RELATION_TWITTER3_STATIC) || (defined(RELATION_TWITTER3_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER3_entry> twitter3;
         std::vector<TWITTER3_entry>::iterator twitterIt3;
     #elif defined(RELATION_TWITTER3_DYNAMIC)
@@ -47,7 +47,7 @@ namespace dbtoaster
         std::vector<DELTA_TWITTER3_entry>::iterator twitterIt3;
     #endif
 
-    #if defined(RELATION_TWITTER4_STATIC)
+    #if defined(RELATION_TWITTER4_STATIC) || (defined(RELATION_TWITTER4_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER4_entry> twitter4;
         std::vector<TWITTER4_entry>::iterator twitterIt4;
     #elif defined(RELATION_TWITTER4_DYNAMIC)
@@ -55,7 +55,7 @@ namespace dbtoaster
         std::vector<DELTA_TWITTER4_entry>::iterator twitterIt4;
     #endif
 
-    #if defined(RELATION_TWITTER5_STATIC)
+    #if defined(RELATION_TWITTER5_STATIC) || (defined(RELATION_TWITTER5_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER5_entry> twitter5;
         std::vector<TWITTER5_entry>::iterator twitterIt5;
     #elif defined(RELATION_TWITTER5_DYNAMIC)
@@ -63,7 +63,7 @@ namespace dbtoaster
         std::vector<DELTA_TWITTER5_entry>::iterator twitterIt5;
     #endif
 
-    #if defined(RELATION_TWITTER6_STATIC)
+    #if defined(RELATION_TWITTER6_STATIC) || (defined(RELATION_TWITTER6_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<TWITTER6_entry> twitter6;
         std::vector<TWITTER6_entry>::iterator twitterIt6;
     #elif defined(RELATION_TWITTER6_DYNAMIC)

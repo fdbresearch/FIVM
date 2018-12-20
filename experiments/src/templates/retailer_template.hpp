@@ -19,7 +19,7 @@ namespace dbtoaster
 {
     struct data_t;    
 
-    #if defined(RELATION_INVENTORY_STATIC)
+    #if defined(RELATION_INVENTORY_STATIC) || (defined(RELATION_INVENTORY_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<INVENTORY_entry> inventory;
         std::vector<INVENTORY_entry>::iterator inventoryIt;
     #elif defined(RELATION_INVENTORY_DYNAMIC)
@@ -27,7 +27,7 @@ namespace dbtoaster
         std::vector<DELTA_INVENTORY_entry>::iterator inventoryIt;
     #endif 
 
-    #if defined(RELATION_LOCATION_STATIC)
+    #if defined(RELATION_LOCATION_STATIC) || (defined(RELATION_LOCATION_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<LOCATION_entry> location;
         std::vector<LOCATION_entry>::iterator locationIt;
     #elif defined(RELATION_LOCATION_DYNAMIC)
@@ -35,7 +35,7 @@ namespace dbtoaster
         std::vector<DELTA_LOCATION_entry>::iterator locationIt;
     #endif 
 
-    #if defined(RELATION_CENSUS_STATIC)
+    #if defined(RELATION_CENSUS_STATIC) || (defined(RELATION_CENSUS_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<CENSUS_entry> census;
         std::vector<CENSUS_entry>::iterator censusIt;
     #elif defined(RELATION_CENSUS_DYNAMIC)
@@ -43,7 +43,7 @@ namespace dbtoaster
         std::vector<DELTA_CENSUS_entry>::iterator censusIt;
     #endif 
 
-    #if defined(RELATION_ITEM_STATIC)
+    #if defined(RELATION_ITEM_STATIC) || (defined(RELATION_ITEM_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<ITEM_entry> item;
         std::vector<ITEM_entry>::iterator itemIt;
     #elif defined(RELATION_ITEM_DYNAMIC)
@@ -51,7 +51,7 @@ namespace dbtoaster
         std::vector<DELTA_ITEM_entry>::iterator itemIt;
     #endif 
 
-    #if defined(RELATION_WEATHER_STATIC)
+    #if defined(RELATION_WEATHER_STATIC) || (defined(RELATION_WEATHER_DYNAMIC) && !defined(BATCH_SIZE))
         std::vector<WEATHER_entry> weather;
         std::vector<WEATHER_entry>::iterator weatherIt;
     #elif defined(RELATION_WEATHER_DYNAMIC)

@@ -1,13 +1,9 @@
 package fdbresearch
 
 import fdbresearch.parsing.{DTreeParser, SQLParser}
-import org.slf4j.LoggerFactory
+import fdbresearch.util.Logger
 
 object Main extends App {
-
-  System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO")
-
-  val logger = LoggerFactory.getLogger("fdbresearch.fivm")
 
   case class Config(inputSQL: String = "",
                     inputDTree: String = "",
@@ -42,12 +38,12 @@ object Main extends App {
       val sql = new SQLParser().apply(
         scala.io.Source.fromFile(config.inputSQL).mkString)
 
-      logger.debug("SQL FILE: " + sql.toString)
+      Logger.instance.debug("SQL FILE: " + sql.toString)
 
       val dtree = new DTreeParser().apply(
         scala.io.Source.fromFile(config.inputDTree).mkString)
 
-      logger.debug("DTREE FILE: " + dtree.toString)
+      Logger.instance.debug("DTREE FILE: " + dtree.toString)
 
       val output = new Driver().compile(sql, dtree, config.batchUpdates)
       config.outputM3 match {

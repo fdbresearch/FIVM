@@ -42,7 +42,7 @@ tmp_out_bin_file=""
 option="-"
 filter_options="-c -d -D -I -L -r -n"
 no_parameter_options="-r"
-new_args=""
+new_args="-d HEURISTICS-DECOMPOSE-OVER-TABLES"
 
 compile_cmd=""
 run_cmd=""
