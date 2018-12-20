@@ -60,16 +60,6 @@ DECLARE MAP V_population_C1(RingFactorizedRelation<[28, long, long, long, long, 
     (CENSUS(zip, population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic) * [lift<28>: RingFactorizedRelation<[28, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic))
   );
 
-DECLARE MAP TMP_SUM1(RingFactorizedRelation<[2, double, double]>)[][locn: long, dateid: long] :=
-  AggSum([locn, dateid],
-    (((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits))
-  );
-
-DECLARE MAP TMP_SUM2(RingFactorizedRelation<[1, long]>)[][locn: long] :=
-  AggSum([locn],
-    ((TMP_SUM1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local> * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid))
-  );
-
 -------------------- QUERIES --------------------
 DECLARE QUERY V_locn_IIWLC1 := V_locn_IIWLC1(RingFactorizedRelation<[0, long]>)[][]<Local>;
 
@@ -88,18 +78,16 @@ DECLARE QUERY V_rgn_cd_L1 := V_rgn_cd_L1(RingFactorizedRelation<[15, double, dou
 DECLARE QUERY V_population_C1 := V_population_C1(RingFactorizedRelation<[28, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][zip]<Local>;
 
 ------------------- TRIGGERS --------------------
-ON BATCH UPDATE OF INVENTORY {
-  TMP_SUM1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local>  :=  AggSum([locn, dateid],
-    (((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits))
-  );
-  TMP_SUM2(RingFactorizedRelation<[1, long]>)[][locn]<Local>  :=  AggSum([locn],
-    ((TMP_SUM1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local> * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid))
-  );
-  V_locn_IIWLC1(RingFactorizedRelation<[0, long]>)[][]<Local>  +=  AggSum([],
-    ((TMP_SUM2(RingFactorizedRelation<[1, long]>)[][locn]<Local> * V_zip_LC1(RingFactorizedRelation<[14, long]>)[][locn]<Local>) * [lift<0>: RingFactorizedRelation<[0, long]>](locn))
-  );
-  V_dateid_IIW1(RingFactorizedRelation<[1, long]>)[][locn]<Local>  +=  TMP_SUM2(RingFactorizedRelation<[1, long]>)[][locn]<Local>;
-  V_ksn_II1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local>  +=  TMP_SUM1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local>;
+ON + INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingFactorizedRelation<[0, long]>)[][]<Local>  +=  ((((((1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid)) * V_zip_LC1(RingFactorizedRelation<[14, long]>)[][locn]<Local>) * [lift<0>: RingFactorizedRelation<[0, long]>](locn));
+  V_dateid_IIW1(RingFactorizedRelation<[1, long]>)[][locn]<Local>  +=  ((((1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid));
+  V_ksn_II1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local>  +=  ((1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits));
+}
+
+ON - INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingFactorizedRelation<[0, long]>)[][]<Local>  +=  ((((((-1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid)) * V_zip_LC1(RingFactorizedRelation<[14, long]>)[][locn]<Local>) * [lift<0>: RingFactorizedRelation<[0, long]>](locn));
+  V_dateid_IIW1(RingFactorizedRelation<[1, long]>)[][locn]<Local>  +=  ((((-1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingFactorizedRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingFactorizedRelation<[1, long]>](dateid));
+  V_ksn_II1(RingFactorizedRelation<[2, double, double]>)[][locn, dateid]<Local>  +=  ((-1 * V_subcategory_I1(RingFactorizedRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingFactorizedRelation<[2, double, double]>](ksn, inventoryunits));
 }
 
 ON SYSTEM READY {

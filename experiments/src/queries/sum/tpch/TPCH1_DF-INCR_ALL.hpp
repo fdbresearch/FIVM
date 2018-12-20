@@ -13,8 +13,6 @@ namespace dbtoaster {
 
   /* Definitions of maps used for storing materialized views. */
   struct PAYLOAD_entry {
-    static PAYLOAD_entry zero;
-
     DOUBLE_TYPE sum_qty;
     DOUBLE_TYPE sum_base_price;
     DOUBLE_TYPE sum_disc_price;
@@ -28,6 +26,8 @@ namespace dbtoaster {
     explicit PAYLOAD_entry() { 
       clear();
     }
+
+    FORCE_INLINE bool isZero() const { return count_order == 0; }
 
     FORCE_INLINE PAYLOAD_entry& operator +=(const PAYLOAD_entry &obj) {
       sum_qty += obj.sum_qty;
@@ -85,8 +85,6 @@ namespace dbtoaster {
       DBT_SERIALIZATION_NVP(ar, avg_disc);
     }
   };
-
-  PAYLOAD_entry PAYLOAD_entry::zero = PAYLOAD_entry();
 
   struct KEY_entry {
     STRING_TYPE LINEITEM_RETURNFLAG; STRING_TYPE LINEITEM_LINESTATUS; PAYLOAD_entry __av; KEY_entry* nxt; KEY_entry* prv;

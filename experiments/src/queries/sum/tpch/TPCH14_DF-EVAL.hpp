@@ -18,6 +18,7 @@ namespace dbtoaster {
 
     DOUBLE_TYPE promo_revenue;
     DOUBLE_TYPE total_revenue;
+    DOUBLE_TYPE ratio_revenue;
 
     explicit PAYLOAD_entry() { 
       clear();
@@ -26,6 +27,7 @@ namespace dbtoaster {
     FORCE_INLINE PAYLOAD_entry& operator +=(const PAYLOAD_entry &obj) {
       promo_revenue += obj.promo_revenue;
       total_revenue += obj.total_revenue;
+      ratio_revenue = (total_revenue != 0.0 ? 100.0 * promo_revenue / total_revenue : 0.0)
       return *this;
     }
 
@@ -34,6 +36,7 @@ namespace dbtoaster {
     }
 
     FORCE_INLINE void clear() { 
+      count = 0;
       promo_revenue = 0;
       total_revenue = 0;
     }

@@ -1,104 +1,195 @@
-#ifndef RINGFACTORIZED_HPP
-#define RINGFACTORIZED_HPP
+#ifndef RINGRELATIONAL_HPP
+#define RINGRELATIONAL_HPP
 
 #include <unordered_map>
 #include <tuple>
 #include <type_traits>
 #include "types.hpp"
 #include "serialization.hpp"
+#include "accumulator.hpp"
 
 using namespace dbtoaster;
 
-template <size_t IDX, typename... Keys>
-struct RingFactorizedRelation {
-    static const RingFactorizedRelation zero;
+template <typename... Keys>
+using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>; 
 
-    std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>> store;
+template <typename... Keys>
+using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>; 
 
-    explicit RingFactorizedRelation() { }
+template <typename T>
+using base_type = typename std::remove_cv<typename std::remove_reference<T>::type>::type;
 
-    explicit RingFactorizedRelation(const Keys&... keys) {
-        store[std::make_tuple(keys...)] = 1L;
+// Define a type which holds an unsigned integer value 
+template <size_t> struct Int { };
+
+template <typename Accumulator, typename Target, size_t N>
+inline void accumulatorApply(const Accumulator& acc, Target& target, long value, Int<N>) {
+    accumulatorApply(acc, target, value * std::get<N-1>(acc).store.size(), Int<N-1>());
+}
+
+template <typename Accumulator, typename Target>
+inline void accumulatorApply(const Accumulator& acc, Target& target, long value, Int<1>) {
+    for (auto &it : std::get<0>(acc).store) {
+        target[std::get<0>(it)] += std::get<1>(it) * value;
     }
+}
 
-    inline bool operator==(const RingFactorizedRelation& other) const {
-        return store == other.store;
-    }
+template <typename Accumulator, size_t N>
+inline bool accumulatorIsZero(const Accumulator& acc, Int<N>) {
+    return std::get<N-1>(acc).isZero() || accumulatorIsZero(acc, Int<N-1>());
+}
+
+template <typename Accumulator>
+inline bool accumulatorIsZero(const Accumulator& acc, Int<1>) {
+    return std::get<0>(acc).isZero();
+}
+
+template <size_t Id, typename Store>
+struct Relation {
+    Store store;
+
+    static constexpr size_t getId() { return Id; }
+
+    explicit Relation() { }
+    Relation(Store&& s) : store(std::forward<Store>(s)) { }
 
     inline bool isZero() const {
         return store.empty();
     }
 
-    RingFactorizedRelation& operator+=(const RingFactorizedRelation& other) {
-        for (auto it : other.store)
-            store[it.first] += it.second;
+    inline bool operator==(const Relation& other) const {
+        return store == other.store;
+    }    
+};
+
+template <size_t Id, typename... Keys>
+struct RelationVector : public Relation<Id, Vector<Keys...>> {
+
+    RelationVector(const Keys&... keys, long value)
+        : Relation<Id, Vector<Keys...>>(Vector<Keys...> { std::make_pair(std::make_tuple(keys...), value) }) { }
+};
+
+template <size_t Id, typename... Keys>
+struct RelationMap : public Relation<Id, Map<Keys...>> {
+
+    static const RelationMap zero;
+
+    explicit RelationMap() : Relation<Id, Map<Keys...>>() { }
+
+    RelationMap& operator+=(const RelationMap& other) {
+        for (auto &it : other.store)
+            this->store[it.first] += it.second;
         return *this;
     }
 
-    template <size_t IDX2, typename... Keys2>
-    typename std::enable_if<(IDX < IDX2), RingFactorizedRelation<IDX, Keys...>>::type
-      operator*(const RingFactorizedRelation<IDX2, Keys2...>& other) const {
-        if (isZero() || other.isZero())
-            return RingFactorizedRelation<IDX, Keys...>::zero;
-        return this->multiply(other);
+    template <typename... Args2>
+    RelationMap& operator+=(const Accumulator<Args2...>& acc) {
+        if (!accumulatorIsZero(acc.values, Int<sizeof...(Args2)>()))
+            accumulatorApply(acc.values, this->store, 1L, Int<sizeof...(Args2)>());
+        return *this;
     }
 
-    template <size_t IDX2, typename... Keys2>
-    typename std::enable_if<(IDX > IDX2), RingFactorizedRelation<IDX2, Keys2...>>::type
-      operator*(const RingFactorizedRelation<IDX2, Keys2...>& other) const {
-        if (isZero() || other.isZero())
-            return RingFactorizedRelation<IDX2, Keys2...>::zero;
-        return other.multiply(*this);        
+    RelationMap& operator=(const RelationMap& other) {
+        this->store.clear();
+        for (auto &it : other.store)
+            this->store[it.first] += it.second;
+        return *this;
     }
 
-    template <size_t IDX2, typename... Keys2>
-    RingFactorizedRelation<IDX, Keys...> multiply(const RingFactorizedRelation<IDX2, Keys2...>& other) const {
-        RingFactorizedRelation<IDX, Keys...> r;
-        size_t count2 = other.store.size();
-        for (auto it1 : store) 
-            r.store[it1.first] = it1.second * count2;
-        return r;
+    template <typename... Args2>
+    RelationMap& operator=(const Accumulator<Args2...>& acc) {
+        this->store.clear();
+        if (!accumulatorIsZero(acc.values, Int<sizeof...(Args2)>()))
+            accumulatorApply(acc.values, this->store, 1L, Int<sizeof...(Args2)>());
+        return *this;
     }
 
-    RingFactorizedRelation operator*(long int alpha) const {
-        if (alpha == 1L) return *this;
-        return multiply(alpha); 
+    template <size_t Id2, typename... Keys2>
+    typename std::enable_if<(Id < Id2), Accumulator<const RelationMap<Id, Keys...>&, const RelationMap<Id2, Keys2...>&>>::type
+    operator*(const RelationMap<Id2, Keys2...>& other) {
+        return FactoryAccumulator<RelationMap<Id, Keys...>>::create(*this) * 
+                    FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(other);
     }
 
-    RingFactorizedRelation multiply(long int alpha) const {
-        RingFactorizedRelation<IDX, Keys...> r;
-        for (auto it : store)
-            r.store[it.first] = it.second * alpha;
-        return r; 
+    template <size_t Id2, typename... Keys2>
+    typename std::enable_if<(Id > Id2), Accumulator<const RelationMap<Id2, Keys2...>&, const RelationMap<Id, Keys...>&>>::type
+    operator*(const RelationMap<Id2, Keys2...>& other) {
+        return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(other) * 
+                    FactoryAccumulator<RelationMap<Id, Keys...>>::create(*this);
     }
 
-    void clear() { store.clear(); }
-
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version) const {
+    template<class Stream>
+    void serialize(Stream& ar, const unsigned int version) const {
         ar << ELEM_SEPARATOR;
-        DBT_SERIALIZATION_NVP(ar, store.size());
-        for (auto it : store) {
+        DBT_SERIALIZATION_NVP(ar, this->store.size());
+        for (auto &it : this->store) {
             ar << ELEM_SEPARATOR;
             ar << it.first;
             ar << ELEM_SEPARATOR;
             DBT_SERIALIZATION_NVP(ar, it.second);
-        }          
+        }
     }
 };
 
-template <size_t IDX, typename... Keys>
-const RingFactorizedRelation<IDX, Keys...> RingFactorizedRelation<IDX, Keys...>::zero = RingFactorizedRelation<IDX, Keys...>();
+template <size_t Id, typename... Keys>
+const RelationMap<Id, Keys...> RelationMap<Id, Keys...>::zero = RelationMap<Id, Keys...>();
 
-template <size_t IDX, typename... Keys>
-RingFactorizedRelation<IDX, Keys...> operator*(long int alpha, const RingFactorizedRelation<IDX, Keys...>& r) {
-    if (alpha == 1L) return r;
-    return r.multiply(alpha);
+template <typename... Args>
+Accumulator<Args...> operator*(long a, Accumulator<Args...>&& b) {
+    return std::forward<decltype(b)>(b);        // ignore a
 }
 
-template <size_t IDX, typename... Args>
-RingFactorizedRelation<IDX, Args...> Ulift(size_t idx, Args&... args) {
-    return RingFactorizedRelation<IDX, Args...>(args...);
+template <typename... Args>
+Accumulator<Args...> operator*(Accumulator<Args...>&& a, long b) {
+    return std::forward<decltype(a)>(a);        // ignore b
 }
 
-#endif /* RINGFACTORIZED_HPP */
+template <typename Value, typename... Values, size_t Id2, typename... Keys2>
+typename std::enable_if<(base_type<Value>::getId() < Id2), Accumulator<Value, Values..., const RelationMap<Id2, Keys2...>&>>::type
+operator*(Accumulator<Value, Values...>&& a, const RelationMap<Id2, Keys2...>& b) {
+    return std::forward<decltype(a)>(a) * FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b);
+}
+
+template <typename Value, typename... Values, size_t Id2, typename... Keys2>
+typename std::enable_if<(Id2 < base_type<Value>::getId()), Accumulator<const RelationMap<Id2, Keys2...>&, Value, Values...>>::type
+operator*(Accumulator<Value, Values...>&& a, const RelationMap<Id2, Keys2...>& b) {
+    return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b) * std::forward<decltype(a)>(a);
+}
+
+template <typename Value, typename... Values, typename Value2, typename... Values2>
+typename std::enable_if<(base_type<Value>::getId() < base_type<Value2>::getId()),
+                        Accumulator<Value, Values..., Value2, Values2...>>::type
+operator*(Accumulator<Value, Values...>&& a, Accumulator<Value2, Values2...>&& b) {
+    return Accumulator<Value, Values..., Value2, Values2...>(
+            std::tuple_cat( std::forward<decltype(a.values)>(a.values),
+                            std::forward<decltype(b.values)>(b.values) ));
+}
+
+template <typename Value, typename... Values, typename Value2, typename... Values2>
+typename std::enable_if<(base_type<Value>::getId() > base_type<Value2>::getId()),
+                        Accumulator<Value2, Values2..., Value, Values...>>::type
+operator*(Accumulator<Value, Values...>&& a, Accumulator<Value2, Values2...>&& b) {
+    return Accumulator<Value2, Values2..., Value, Values...>(
+            std::tuple_cat( std::forward<decltype(b.values)>(b.values),
+                            std::forward<decltype(a.values)>(a.values) ));
+}
+
+template <typename... Args, size_t Id, typename... Keys>
+bool operator==(Accumulator<Args...>&& a, const RelationMap<Id, Keys...>& b) {
+    return false;
+}
+
+template <typename... Args, size_t Id, typename... Keys>
+bool operator==(const Accumulator<Args...>& a, const RelationMap<Id, Keys...>& b) {
+    return false;
+}
+
+template <size_t Id, typename... Args>
+Accumulator<RelationVector<Id, Args...>> Ulift(size_t, Args&... args) {
+    return FactoryAccumulator<RelationVector<Id, Args...>>::create(RelationVector<Id, Args...>(args..., 1L));
+}
+
+template <size_t Id, typename... Keys>
+using RingFactorizedRelation = RelationMap<Id, Keys...>;
+
+#endif /* RINGRELATIONAL_HPP */

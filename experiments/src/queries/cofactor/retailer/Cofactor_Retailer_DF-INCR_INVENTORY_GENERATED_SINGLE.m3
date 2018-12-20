@@ -52,16 +52,12 @@ DECLARE MAP V_zip_LC1(RingCofactor<double, 14, 29>)[][locn: long] :=
 DECLARE QUERY V_locn_IIWLC1 := V_locn_IIWLC1(RingCofactor<double, 0, 43>)[][]<Local>;
 
 ------------------- TRIGGERS --------------------
-ON BATCH UPDATE OF INVENTORY {
-  V_locn_IIWLC1(RingCofactor<double, 0, 43>)[][]<Local>  +=  AggSum([],
-    ((AggSum([locn],
-      ((AggSum([locn, dateid],
-        ((AggSum([locn, dateid, ksn],
-          ((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * [lift<3>: RingCofactor<double, 3, 1>](inventoryunits))
-        ) * V_subcategory_I1(RingCofactor<double, 4, 4>)[][ksn]<Local>) * [lift<2>: RingCofactor<double, 2, 1>](ksn))
-      ) * V_rain_W1(RingCofactor<double, 8, 6>)[][locn, dateid]<Local>) * [lift<1>: RingCofactor<double, 1, 1>](dateid))
-    ) * V_zip_LC1(RingCofactor<double, 14, 29>)[][locn]<Local>) * [lift<0>: RingCofactor<double, 0, 1>](locn))
-  );
+ON + INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingCofactor<double, 0, 43>)[][]<Local>  +=  (((((((1 * [lift<3>: RingCofactor<double, 3, 1>](inventoryunits)) * V_subcategory_I1(RingCofactor<double, 4, 4>)[][ksn]<Local>) * [lift<2>: RingCofactor<double, 2, 1>](ksn)) * V_rain_W1(RingCofactor<double, 8, 6>)[][locn, dateid]<Local>) * [lift<1>: RingCofactor<double, 1, 1>](dateid)) * V_zip_LC1(RingCofactor<double, 14, 29>)[][locn]<Local>) * [lift<0>: RingCofactor<double, 0, 1>](locn));
+}
+
+ON - INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingCofactor<double, 0, 43>)[][]<Local>  +=  (((((((-1 * [lift<3>: RingCofactor<double, 3, 1>](inventoryunits)) * V_subcategory_I1(RingCofactor<double, 4, 4>)[][ksn]<Local>) * [lift<2>: RingCofactor<double, 2, 1>](ksn)) * V_rain_W1(RingCofactor<double, 8, 6>)[][locn, dateid]<Local>) * [lift<1>: RingCofactor<double, 1, 1>](dateid)) * V_zip_LC1(RingCofactor<double, 14, 29>)[][locn]<Local>) * [lift<0>: RingCofactor<double, 0, 1>](locn));
 }
 
 ON SYSTEM READY {

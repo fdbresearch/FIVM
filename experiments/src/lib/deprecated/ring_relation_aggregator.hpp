@@ -63,7 +63,7 @@ struct Relation {
 
     inline bool operator==(const Relation& other) const {
         return store == other.store;
-    }
+    }    
 };
 
 template <size_t Id, typename... Keys>
@@ -109,16 +109,14 @@ struct RelationMap : public Relation<Id, Map<Keys...>> {
     }
 
     template <size_t Id2, typename... Keys2>
-    typename std::enable_if<(Id < Id2),
-                            Accumulator<const RelationMap<Id, Keys...>&, const RelationMap<Id2, Keys2...>&>>::type
+    typename std::enable_if<(Id < Id2), Accumulator<const RelationMap<Id, Keys...>&, const RelationMap<Id2, Keys2...>&>>::type
     operator*(const RelationMap<Id2, Keys2...>& other) {
         return FactoryAccumulator<RelationMap<Id, Keys...>>::create(*this) * 
                     FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(other);
     }
 
     template <size_t Id2, typename... Keys2>
-    typename std::enable_if<(Id > Id2),
-                            Accumulator<const RelationMap<Id2, Keys2...>&, const RelationMap<Id, Keys...>&>>::type
+    typename std::enable_if<(Id > Id2), Accumulator<const RelationMap<Id2, Keys2...>&, const RelationMap<Id, Keys...>&>>::type
     operator*(const RelationMap<Id2, Keys2...>& other) {
         return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(other) * 
                     FactoryAccumulator<RelationMap<Id, Keys...>>::create(*this);
@@ -140,67 +138,26 @@ struct RelationMap : public Relation<Id, Map<Keys...>> {
 template <size_t Id, typename... Keys>
 const RelationMap<Id, Keys...> RelationMap<Id, Keys...>::zero = RelationMap<Id, Keys...>();
 
-// ACCUMULATOR v LONG
 template <typename... Args>
 Accumulator<Args...> operator*(long a, Accumulator<Args...>&& b) {
-    return std::move(b);        // ignore a
+    return std::forward<decltype(b)>(b);        // ignore a
 }
 
 template <typename... Args>
 Accumulator<Args...> operator*(Accumulator<Args...>&& a, long b) {
-    return std::move(a);        // ignore b
+    return std::forward<decltype(a)>(a);        // ignore b
 }
 
-// ACCUMULATOR v RELATION MAP
 template <typename Value, typename... Values, size_t Id2, typename... Keys2>
-typename std::enable_if<(base_type<Value>::getId() < Id2), 
-                        Accumulator<Value, Values..., const RelationMap<Id2, Keys2...>&>>::type
+typename std::enable_if<(base_type<Value>::getId() < Id2), Accumulator<Value, Values..., const RelationMap<Id2, Keys2...>&>>::type
 operator*(Accumulator<Value, Values...>&& a, const RelationMap<Id2, Keys2...>& b) {
-    return std::forward<decltype(a)>(a) * 
-                FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b);
+    return std::forward<decltype(a)>(a) * FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b);
 }
 
 template <typename Value, typename... Values, size_t Id2, typename... Keys2>
-typename std::enable_if<(base_type<Value>::getId() < Id2), 
-                        Accumulator<Value, Values..., const RelationMap<Id2, Keys2...>&>>::type
-operator*(const RelationMap<Id2, Keys2...>& b, Accumulator<Value, Values...>&& a) {
-    return std::forward<decltype(a)>(a) * 
-                FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b);
-}
-
-template <typename Value, typename... Values, size_t Id2, typename... Keys2>
-typename std::enable_if<(Id2 < base_type<Value>::getId()), 
-                        Accumulator<const RelationMap<Id2, Keys2...>&, Value, Values...>>::type
+typename std::enable_if<(Id2 < base_type<Value>::getId()), Accumulator<const RelationMap<Id2, Keys2...>&, Value, Values...>>::type
 operator*(Accumulator<Value, Values...>&& a, const RelationMap<Id2, Keys2...>& b) {
-    return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b) *
-                std::forward<decltype(a)>(a);
-}
-
-template <typename Value, typename... Values, size_t Id2, typename... Keys2>
-typename std::enable_if<(Id2 < base_type<Value>::getId()), 
-                        Accumulator<const RelationMap<Id2, Keys2...>&, Value, Values...>>::type
-operator*(const RelationMap<Id2, Keys2...>& b, Accumulator<Value, Values...>&& a) {
-    return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b) *
-                std::forward<decltype(a)>(a);
-}
-
-// ACCUMULATOR v ACCUMULATOR
-template <typename Value, typename... Values, typename Value2, typename... Values2>
-typename std::enable_if<(base_type<Value>::getId() < base_type<Value2>::getId()),
-                        Accumulator<Value, Values..., Value2, Values2...>>::type
-operator*(Accumulator<Value, Values...>&& a, Accumulator<Value2, Values2...>&& b) {
-    return Accumulator<Value, Values..., Value2, Values2...>(
-            std::tuple_cat( std::forward<decltype(a.values)>(a.values),
-                            std::forward<decltype(b.values)>(b.values) ));
-}
-
-template <typename Value, typename... Values, typename Value2, typename... Values2>
-typename std::enable_if<(base_type<Value>::getId() > base_type<Value2>::getId()),
-                        Accumulator<Value2, Values2..., Value, Values...>>::type
-operator*(Accumulator<Value, Values...>&& a, Accumulator<Value2, Values2...>&& b) {
-    return Accumulator<Value2, Values2..., Value, Values...>(
-            std::tuple_cat( std::forward<decltype(b.values)>(b.values),
-                            std::forward<decltype(a.values)>(a.values) ));
+    return FactoryAccumulator<RelationMap<Id2, Keys2...>>::create(b) * std::forward<decltype(a)>(a);
 }
 
 template <typename... Args, size_t Id, typename... Keys>
@@ -213,7 +170,6 @@ bool operator==(const Accumulator<Args...>& a, const RelationMap<Id, Keys...>& b
     return false;
 }
 
-// LIFTING FUNCTIONS
 template <size_t Id, typename... Args>
 Accumulator<RelationVector<Id, Args...>> Ulift(size_t, Args&... args) {
     return FactoryAccumulator<RelationVector<Id, Args...>>::create(RelationVector<Id, Args...>(args..., 1L));

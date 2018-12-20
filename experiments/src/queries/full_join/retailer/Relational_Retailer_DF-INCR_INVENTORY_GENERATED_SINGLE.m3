@@ -50,14 +50,12 @@ DECLARE MAP V_zip_LC1(RingRelation<[14, long, double, double, double, double, do
 DECLARE QUERY V_locn_IIWLC1 := V_locn_IIWLC1(RingRelation<[0, long, long, double, double, long, long, long, double, long, long, long, long, double, long, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][]<Local>;
 
 ------------------- TRIGGERS --------------------
-ON BATCH UPDATE OF INVENTORY {
-  V_locn_IIWLC1(RingRelation<[0, long, long, double, double, long, long, long, double, long, long, long, long, double, long, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][]<Local>  +=  AggSum([],
-    ((AggSum([locn],
-      ((AggSum([locn, dateid],
-        (((DELTA INVENTORY)(locn, dateid, ksn, inventoryunits) * V_subcategory_I1(RingRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingRelation<[2, double, double]>](ksn, inventoryunits))
-      ) * V_rain_W1(RingRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingRelation<[1, long]>](dateid))
-    ) * V_zip_LC1(RingRelation<[14, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][locn]<Local>) * [lift<0>: RingRelation<[0, long]>](locn))
-  );
+ON + INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingRelation<[0, long, long, double, double, long, long, long, double, long, long, long, long, double, long, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][]<Local>  +=  ((((((1 * V_subcategory_I1(RingRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingRelation<[1, long]>](dateid)) * V_zip_LC1(RingRelation<[14, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][locn]<Local>) * [lift<0>: RingRelation<[0, long]>](locn));
+}
+
+ON - INVENTORY (locn, dateid, ksn, inventoryunits) {
+  V_locn_IIWLC1(RingRelation<[0, long, long, double, double, long, long, long, double, long, long, long, long, double, long, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][]<Local>  +=  ((((((-1 * V_subcategory_I1(RingRelation<[4, long, long, long, double]>)[][ksn]<Local>) * [lift<2>: RingRelation<[2, double, double]>](ksn, inventoryunits)) * V_rain_W1(RingRelation<[8, long, long, long, long, double, long]>)[][locn, dateid]<Local>) * [lift<1>: RingRelation<[1, long]>](dateid)) * V_zip_LC1(RingRelation<[14, long, double, double, double, double, double, double, double, double, double, double, double, double, double, long, long, long, long, long, double, long, long, long, long, long, long, long, long, long]>)[][locn]<Local>) * [lift<0>: RingRelation<[0, long]>](locn));
 }
 
 ON SYSTEM READY {

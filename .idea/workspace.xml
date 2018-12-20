@@ -2,24 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48b3e1b0-47b1-4ef7-b20b-77f9817b29e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/examples/dtree/tpch/query01.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/util/Logger.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/a.out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/accumulator.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_naive.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized_map.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_aggregator.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_hashkey.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_inlined_mmap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_mixed_vector_map.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_vector.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/housing/Factorized_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/housing/Relational_Housing_DF-" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/housing/Relational_Housing_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Factorized_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Factorized_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/housing/Avg_Housing_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH10_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH10_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH12_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH12_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH14_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH14_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH1_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH1_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH3_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH3_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH6_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH6_DF-INCR_ALL_GENERATED_SINGLE.m3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hash.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hash.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/libdbtoaster.a" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/libdbtoaster.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/serialization.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/serialization.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_adaptors.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_adaptors.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-spark_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-spark_2.11-3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-sstore_2.11-3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-sstore_2.11-3.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring_relation_mmap.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_mmap.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/misc/degreeGen.scala" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_ALL_GENERATED.m3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-INCR_INVENTORY_GENERATED.m3" afterDir="false" />
@@ -31,17 +52,11 @@
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED.m3" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/full_join/retailer/Relational_Retailer_DF-INCR_INVENTORY_GENERATED.m3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH14_DF-EVAL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH14_DF-EVAL.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH1_DF-INCR_ALL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/sum/tpch/TPCH1_DF-INCR_ALL.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/DTreeParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/DTreeParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/templates/cofactor_value.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/templates/degree.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/templates/housing.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/templates/retailer.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/src/templates/twitter.hpp" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -791,7 +806,6 @@
             <option name="proportions">
               <list>
                 <option value="0.37471265" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
