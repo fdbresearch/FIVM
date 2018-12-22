@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/F-IVM.iml" filepath="$PROJECT_DIR$/.idea/modules/F-IVM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/F-IVM-build.iml" filepath="$PROJECT_DIR$/.idea/modules/F-IVM-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/.idea/modules/FIVM.iml" filepath="$PROJECT_DIR$/frontend/.idea/modules/FIVM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/.idea/modules/FIVM-build.iml" filepath="$PROJECT_DIR$/frontend/.idea/modules/FIVM-build.iml" />
     </modules>
   </component>
 </project>

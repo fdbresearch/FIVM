@@ -4,14 +4,14 @@
     <option name="customVMPath" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/frontend" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/project" />
+            <option value="$PROJECT_DIR$/frontend" />
+            <option value="$PROJECT_DIR$/frontend/project" />
           </set>
         </option>
-        <option name="sbtVersion" value="1.1.2" />
+        <option name="sbtVersion" value="1.2.7" />
       </SbtProjectSettings>
     </option>
   </component>
