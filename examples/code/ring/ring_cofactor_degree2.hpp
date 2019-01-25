@@ -49,6 +49,22 @@ struct RingCofactor {
             sum3[i] = sum2[i] * sum1[i];
             sum4[i] = sum3[i] * sum1[i];
         }
+
+        T *out2 = degree2.data();
+        T *out3 = degree3.data();
+        T *out4 = degree4.data();
+        for (size_t i = 0; i < SZ; i++) {
+            for (size_t j = 0; j < SZ; j++) {
+                *out2++ = sum1[i] * sum1[j];
+
+                *out3++ = sum2[i] * sum1[j];
+                *out3++ = sum1[i] * sum2[j];
+
+                *out4++ = sum3[i] * sum1[j];
+                *out4++ = sum2[i] * sum2[j];
+                *out4++ = sum1[i] * sum3[j];
+            }
+        }
     }
 
     inline bool isZero() const { return count == 0; }

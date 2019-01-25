@@ -32,8 +32,12 @@ struct RingCofactor {
     explicit RingCofactor(Args&&... args) : count(1), sum1 { args... } {
         static_assert(SZ == sizeof...(args), "Incompatible array sizes");
 
+        T *out2 = degree2.data();
         for (size_t i = 0; i < SZ; i++) {
             sum2[i] = sum1[i] * sum1[i];
+            for (size_t j = 0; j < SZ; j++) {
+                *out2++ = sum1[i] * sum1[j];
+            }
         }
     }
 
