@@ -1,3 +1,12 @@
+//===----------------------------------------------------------------------===//
+//
+// Copyright (c) 2010-2017 EPFL DATA Lab (http://data.epfl.ch)
+// 
+// Modified by FDB Research Group, University of Oxford
+//
+// https://fdbresearch.github.io/
+//
+//===----------------------------------------------------------------------===//
 #ifndef DBTOASTER_MEMORY_HPP
 #define DBTOASTER_MEMORY_HPP
 

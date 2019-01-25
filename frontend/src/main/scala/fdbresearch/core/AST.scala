@@ -1,3 +1,12 @@
+//===----------------------------------------------------------------------===//
+//
+// Copyright (c) 2010-2017 EPFL DATA Lab (http://data.epfl.ch)
+// 
+// Modified by FDB Research Group, University of Oxford
+//
+// https://fdbresearch.github.io/
+//
+//===----------------------------------------------------------------------===//
 package fdbresearch.core
 
 import fdbresearch.util.Utils.ind

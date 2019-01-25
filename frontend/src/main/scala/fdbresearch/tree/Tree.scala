@@ -1,3 +1,12 @@
+//===----------------------------------------------------------------------===//
+//
+// Factorized IVM (F-IVM)
+//
+// https://fdbresearch.github.io/
+//
+// Copyright (c) 2018-2019, FDB Research Group, University of Oxford
+// 
+//===----------------------------------------------------------------------===//
 package fdbresearch.tree
 
 /**
