@@ -12,7 +12,7 @@
 using namespace std;
 using namespace dbtoaster;
 
-const string dataPath = "data/tpch0.5";
+const string dataPath = "data/tpch0.01";
 const string dataset = "";
 
 #if defined(RELATION_LINEITEM_STATIC) || (defined(RELATION_LINEITEM_DYNAMIC) && !defined(BATCH_SIZE))

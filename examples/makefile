@@ -1,10 +1,6 @@
-FIVM_VERSION = 1.0
-SCALA_VERSION = 2.12
-
 # Compilers
-FRONTEND_BIN = scala ../frontend/target/scala-$(SCALA_VERSION)/FIVM-assembly-$(FIVM_VERSION).jar
-BACKEND_BIN = ../backend/dbtoaster/bin/dbtoaster
-BACKEND_FLAGS ?= -l vcpp -O3 -xhashmap -xruntime -F HEURISTICS-DECOMPOSE-OVER-TABLES
+FRONTEND_BIN = ../bin/run_frontend.sh
+BACKEND_BIN = ../bin/run_backend.sh
 CC = g++
 CFLAGS = -O3 -DNDEBUG -Wall -Wno-unused-variable -std=c++11 -pedantic
 
@@ -44,18 +40,18 @@ $(M3_FILES_SINGLE): $(OUTPUT_DIR_M3)/%_SINGLE.m3: $(INPUT_DIR_SQL)/%.sql
 
 $(CPP_FILES_BATCH): $(OUTPUT_DIR_CPP)/%.hpp : $(OUTPUT_DIR_M3)/%.m3
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(BACKEND_BIN) $(BACKEND_FLAGS) --batch -o $@ $<
+	$(BACKEND_BIN) --batch -o $@ $<
 
 $(CPP_FILES_SINGLE): $(OUTPUT_DIR_CPP)/%.hpp : $(OUTPUT_DIR_M3)/%.m3
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(BACKEND_BIN) $(BACKEND_FLAGS) -o $@ $<
+	$(BACKEND_BIN) -o $@ $<
 
-$(EXE_FILES_BATCH): $(OUTPUT_DIR_EXE)/%_$(BATCH_SIZE) : $(OUTPUT_DIR_CPP)/%.hpp
+$(EXE_FILES_BATCH): $(OUTPUT_DIR_EXE)/%_$(BATCH_SIZE) : $(OUTPUT_DIR_CPP)/%.hpp code/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
 	$(eval TEMPLATE := $(patsubst $(OUTPUT_DIR_EXE)/%/,%, $(dir $@)))
 	$(CC) $(CFLAGS) code/main.cpp -I ../backend/lib -I code -I code/lib -DNUMBER_OF_RUNS=$(NUMBER_OF_RUNS) -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include code/templates/$(TEMPLATE)_template.hpp -o $@ 
 
-$(EXE_FILES_SINGLE): $(OUTPUT_DIR_EXE)/% : $(OUTPUT_DIR_CPP)/%.hpp
+$(EXE_FILES_SINGLE): $(OUTPUT_DIR_EXE)/% : $(OUTPUT_DIR_CPP)/%.hpp code/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
 	$(eval TEMPLATE := $(patsubst $(OUTPUT_DIR_EXE)/%/,%, $(dir $@)))
 	$(CC) $(CFLAGS) code/main.cpp -I ../backend/lib -I code -I code/lib -DNUMBER_OF_RUNS=$(NUMBER_OF_RUNS) -include $< -include code/templates/$(TEMPLATE)_template.hpp -o $@ 

@@ -1,5 +1,6 @@
 .DS_Store
-experiments/bin
-experiments/target
-project/target
-target
+frontend/project
+frontend/target
+examples/bin/
+examples/code/generated/
+
