@@ -11,6 +11,8 @@ using namespace std;
 void RunQuery(bool printResult) {
     std::cout << "-------------" << std::endl;
 
+    init_relations();
+
     load_relations();
 
     Stopwatch sw, local_sw;
@@ -61,11 +63,11 @@ void RunQuery(bool printResult) {
                   << std::endl
                   << "-------------"
                   << std::endl;
-    }
 
 #ifdef LOG_MEMORY_INFO
         stopHeapProfiler();
 #endif
+    }
 
     destroy_relations();
 }

@@ -14,6 +14,8 @@ using namespace dbtoaster;
 
 class data_t;
 
+void init_relations() { }
+
 void load_relations() { }
 
 void destroy_relations() { }
