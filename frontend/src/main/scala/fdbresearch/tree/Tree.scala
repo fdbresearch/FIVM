@@ -40,6 +40,9 @@ class Tree[A](val node: A, private var _parent: Option[Tree[A]],
 
   def iterator: Iterator[A] = Iterator.single(node) ++ children.flatMap(_.iterator)
 
+  def post_order_traversal: List[A] =
+    children.flatMap(_.post_order_traversal) ++ Iterator.single(node)
+
   def map[B](f: A => B): Tree[B] = map2(t => f(t.node))
 
   def mapWithPostChildren[B](f: (A, List[Tree[B]]) => B): Tree[B] =

@@ -137,7 +137,7 @@ class CodeGenerator(tree: Tree[View],
           if (t.isStatic && t.isMaterialized)
             Some(M3.TriggerStmt(t.createMapRef, t.createDefExpr, M3.OpSet, None))
           else None
-        ).flatten.toList
+        ).post_order_traversal.flatten
       )
     case e: M3.EventBatchUpdate => generateUpdateTrigger(e)
     case e: M3.EventInsert => generateUpdateTrigger(e)

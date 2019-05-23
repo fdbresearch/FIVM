@@ -5,6 +5,6 @@ FRONTEND_DIR=${BIN_DIR}/../frontend
 
 echo "Compiling F-IVM frontend..."
 cd ${FRONTEND_DIR}
-sbt compile
+sbt assembly
 cd -
 echo "Done."

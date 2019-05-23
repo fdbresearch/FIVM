@@ -2,881 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="785c1143-fb6a-4f0b-ade5-5d1735c11022" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/modules/FIVM-build.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/modules/FIVM.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_12_6_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_12_6_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/housing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/cofactor/housing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/retailer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/cofactor/retailer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/rstu.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query01.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query01.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query03.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query03.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query06.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query06.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query10.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query12.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query12.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dtree/tpch/query14.txt" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query14.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/housing_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/cofactor/housing_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/retailer_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/cofactor/retailer_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/cofactor/retailer_INVENTORY.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/cofactor/retailer_INVENTORY.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/factorized/housing_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/factorized/housing_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/factorized/retailer_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/factorized/retailer_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/factorized/retailer_INVENTORY.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/factorized/retailer_INVENTORY.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/relational/housing_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/relational/housing_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/relational/retailer_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/relational/retailer_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/relational/retailer_INVENTORY.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/relational/retailer_INVENTORY.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/housing_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/housing_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/housing_avg_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/housing_avg_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/retailer_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/retailer_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/retailer_INVENTORY.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/retailer_INVENTORY.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/rst_RT.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/rst_RT.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/sum/rst_RT_complex.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/sum/rst_RT_complex.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query01_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query01_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query03_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query03_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query06_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query06_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query10_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query10_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query12_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query12_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/sql/tpch/query14_ALL.sql" beforeDir="false" afterPath="$PROJECT_DIR$/examples/queries/tpch/query14_ALL.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/CHANGELOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/bin/dbtoaster" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/bin/dbtoaster_frontend" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/code/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/finance.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/angles.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/atommeta.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/atompositions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/bonds.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/buckets.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/conformationpoints.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/dihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/dimensions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/improperdihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/mddb/nonbonded.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/simple/r.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/simple/s.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/simple/t.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/customer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/lineitem.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/nation.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/orders.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/part.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/partsupp.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/region.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/data/tpch/supplier.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/axfinder.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/brokerspread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/brokervariance.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/missedtrades.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/pricespread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/finance/vwap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/mddb/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/mddb/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/mddb/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/mddb/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_aggcomparison.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_aggofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_aggofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_agtb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_agtbexists.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_avg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_bigsumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_btimesa.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_btimesacorrelated.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_case.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_case2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_count_of_one.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_count_of_one_prime.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_deepscoping.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_distinct.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_distincttest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_divb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_existsnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_gbasumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_gtealldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_gtesomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_gtsomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_impossibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_indynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_ineqandeq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_inlist.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_instatic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_lift_of_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_ltallagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_ltallavg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_ltallcorravg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_ltalldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_multinest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_multiors.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_natselfjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_nestedfrom.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_nestedrename.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_nogroupby.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_nonjoineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_possibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_possibleineqwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_simplenest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_smallstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_starofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_starofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sum_gb_all_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sum_gb_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sum_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumadivsumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumdivgrp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumnestedintarget.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumnestedintargetwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumoutsideofagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_sumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_union.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/r_unique_counts_by_a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rr_ormyself.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_cmpnest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_column_mapping_1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_column_mapping_2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_column_mapping_3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_eqineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_example1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_example2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_ineqonnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_inequality.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_ineqwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_joinon.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_joinwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_natjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_natjoinineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_natjoinnooverlap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_natjoinpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_selectconstcmp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_selectpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_simple.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_streamvtable.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rs_stringjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rst.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/simple/rtt_or_with_stars.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query10.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query11.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query11a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query12.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query13.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query14.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query15.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query16.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query17.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query17a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query18.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query18a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query19.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query20.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query21.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query22.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query22a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query4.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query5.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query6.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query7.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query8.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/query9.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/examples/queries/tpch/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/Aggregator.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/ExecutionProfiler.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/GenericEntry.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/MB1.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/Predicate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/ScExtra.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/SpinLock.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/TPCC.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/Transaction.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/TransactionManager.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/Version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/benchHashCmp.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/circular_buffer.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/event.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/event.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/filepath.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hash.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/KDouble.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/KDouble.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/charpool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/macro.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/pstring.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/pstring.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/hpds/pstringops.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/iprogram.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/iprogram.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/libdbtoaster.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/cmmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/mmap.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/mmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/mmap1.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/mmap2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/mmap/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/optionparser.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/program_base.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/program_base.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/runtime.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/runtime.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/serialization.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/smhasher/MurmurHash2.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/smhasher/MurmurHash2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/standard_adaptors.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/standard_adaptors.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/standard_functions.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/standard_functions.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/statistics.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/statistics_split.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/statistics_split.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/streams.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/streams.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/types.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_c++/util.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/akka-actor_2.11-2.5.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/config-1.3.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-spark_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/dbtoaster-sstore_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-pardis-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-pardis-core-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-pardis-library_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-pardis-quasi-core_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-pardis-quasi_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/sc-shared_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/scala-library-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/scala-parser-combinators_2.11-1.0.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/scala-reflect-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/scala-xml_2.11-1.0.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/scala-yinyang_2.11-0.2.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/squid-sc-backend-macros_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_linux/lib/dbt_scala/squid-sc-backend_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/CHANGELOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/bin/dbtoaster_frontend" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/bakeoff.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/bluetab.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/bluetabactive.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/bugs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/css/bootstrap-theme.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/dbtoaster-logo.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_adaptors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_architecture.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_compiler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_cpp.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_customadaptors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_scala.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_sql.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_start.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/docs_stdlib.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/download.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_features.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_people.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_performance.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/home_research.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/internal_arch.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/js/jquery-2.0.3.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/perf.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/research.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/samples.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/doc/schematic.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/code/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/finance.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/angles.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/atommeta.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/atompositions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/bonds.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/buckets.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/conformationpoints.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/dihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/dimensions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/improperdihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/mddb/nonbonded.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/simple/r.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/simple/s.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/simple/t.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/customer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/lineitem.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/nation.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/orders.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/part.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/partsupp.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/region.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/data/tpch/supplier.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/axfinder.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/brokerspread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/brokervariance.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/missedtrades.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/pricespread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/finance/vwap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/mddb/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/mddb/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/mddb/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/mddb/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_aggcomparison.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_aggofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_aggofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_agtb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_agtbexists.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_avg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_bigsumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_btimesa.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_btimesacorrelated.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_case.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_case2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_count_of_one.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_count_of_one_prime.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_deepscoping.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_distinct.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_distincttest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_divb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_existsnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_gbasumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_gtealldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_gtesomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_gtsomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_impossibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_indynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_ineqandeq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_inlist.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_instatic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_lift_of_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_ltallagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_ltallavg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_ltallcorravg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_ltalldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_multinest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_multiors.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_natselfjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_nestedfrom.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_nestedrename.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_nogroupby.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_nonjoineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_possibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_possibleineqwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_simplenest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_smallstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_starofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_starofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sum_gb_all_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sum_gb_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sum_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumadivsumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumdivgrp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumnestedintarget.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumnestedintargetwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumoutsideofagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_sumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_union.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/r_unique_counts_by_a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rr_ormyself.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_cmpnest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_column_mapping_1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_column_mapping_2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_column_mapping_3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_eqineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_example1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_example2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_ineqonnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_inequality.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_ineqwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_joinon.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_joinwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_natjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_natjoinineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_natjoinnooverlap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_natjoinpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_selectconstcmp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_selectpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_simple.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_streamvtable.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rs_stringjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rst.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/simple/rtt_or_with_stars.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query10.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query11.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query11a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query12.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query13.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query14.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query15.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query16.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query17.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query17a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query18.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query18a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query19.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query20.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query21.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query22.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query22a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query4.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query5.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query6.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query7.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query8.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/query9.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/examples/queries/tpch/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/CHANGELOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/bin/dbtoaster" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/bin/dbtoaster_frontend" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/Aggregator.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/ExecutionProfiler.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/GenericEntry.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/MB1.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/Predicate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/ScExtra.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/SpinLock.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/TPCC.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/Transaction.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/TransactionManager.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/Version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/benchHashCmp.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/circular_buffer.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/event.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/event.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/filepath.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hash.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/KDouble.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/KDouble.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/charpool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/macro.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/pstring.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/pstring.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/hpds/pstringops.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/iprogram.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/iprogram.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/libdbtoaster.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/cmmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/mmap.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/mmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/mmap1.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/mmap2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/mmap/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/optionparser.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/program_base.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/program_base.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/runtime.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/runtime.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/serialization.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/smhasher/MurmurHash2.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/smhasher/MurmurHash2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_adaptors.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_adaptors.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_functions.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/standard_functions.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/statistics.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/statistics_split.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/statistics_split.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/streams.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/streams.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/types.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_c++/util.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/akka-actor_2.11-2.5.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/config-1.3.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0-lms.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-spark_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/dbtoaster-sstore_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/lms_2.11-0.3-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-pardis-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-pardis-core-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-pardis-library_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-pardis-quasi-core_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-pardis-quasi_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/sc-shared_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-library-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-library-2.11.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-parser-combinators_2.11-1.0.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-parser-combinators_2.11-1.0.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-reflect-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-reflect-2.11.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-xml_2.11-1.0.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scala-yinyang_2.11-0.2.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/scalariform_2.11-0.2.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/squid-sc-backend-macros_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/dbt_scala/squid-sc-backend_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/bakeoff.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/bluetab.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/bluetabactive.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/bugs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/css/bootstrap-theme.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/dbtoaster-logo.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_adaptors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_architecture.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_compiler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_cpp.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_customadaptors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_java.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_scala.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_sql.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_start.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/docs_stdlib.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/download.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_features.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_people.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_performance.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/home_research.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/internal_arch.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/js/jquery-2.0.3.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/perf.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/research.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/samples.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/doc/schematic.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/code/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/finance.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/angles.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/atommeta.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/atompositions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/bonds.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/buckets.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/conformationpoints.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/dihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/dimensions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/improperdihedrals.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/mddb/nonbonded.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/simple/r.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/simple/s.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/simple/t.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/customer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/lineitem.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/nation.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/orders.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/part.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/partsupp.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/region.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/data/tpch/supplier.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/axfinder.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/brokerspread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/brokervariance.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/missedtrades.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/pricespread.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/finance/vwap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/mddb/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/mddb/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/mddb/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/mddb/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_aggcomparison.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_aggofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_aggofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_agtb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_agtbexists.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_avg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_bigsumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_btimesa.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_btimesacorrelated.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_case.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_case2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_count_of_one.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_count_of_one_prime.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_deepscoping.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_distinct.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_distincttest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_divb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_existsnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_gbasumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_gtealldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_gtesomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_gtsomedynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_impossibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_indynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_ineqandeq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_inlist.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_instatic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_lift_of_count.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_ltallagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_ltallavg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_ltallcorravg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_ltalldynamic.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_multinest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_multiors.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_natselfjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_nestedfrom.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_nestedrename.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_nogroupby.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_nonjoineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_possibleineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_possibleineqwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_simplenest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_smallstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_starofnested.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_starofnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sum_gb_all_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sum_gb_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sum_out_of_aggregate.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumadivsumb.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumdivgrp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumnestedintarget.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumnestedintargetwitheq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumoutsideofagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_sumstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_union.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/r_unique_counts_by_a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rr_ormyself.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_cmpnest.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_column_mapping_1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_column_mapping_2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_column_mapping_3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_eqineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_example1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_example2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_ineqonnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_inequality.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_ineqwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_joinon.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_joinwithnestedagg.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_natjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_natjoinineq.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_natjoinnooverlap.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_natjoinpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_selectconstcmp.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_selectpartstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_selectstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_simple.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_streamvtable.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rs_stringjoin.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rst.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rstar.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/simple/rtt_or_with_stars.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query10.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query11.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query11a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query12.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query13.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query14.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query15.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query16.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query17.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query17a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query18.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query18a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query19.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query20.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query21.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query22.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query22a.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query3.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query4.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query5.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query6.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query7.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query8.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/query9.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/examples/queries/tpch/schemas.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/Aggregator.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/ExecutionProfiler.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/GenericEntry.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/MB1.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/Predicate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/ScExtra.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/SpinLock.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/TPCC.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/Transaction.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/TransactionManager.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/Version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/benchHashCmp.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/circular_buffer.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/event.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/event.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/filepath.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hash.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/KDouble.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/KDouble.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/charpool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/macro.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/pstring.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/pstring.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/hpds/pstringops.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/iprogram.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/iprogram.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/libdbtoaster.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/cmmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/mmap.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/mmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/mmap1.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/mmap2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/mmap/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/optionparser.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/program_base.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/program_base.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/runtime.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/runtime.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/serialization.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/smhasher/MurmurHash2.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/smhasher/MurmurHash2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/standard_adaptors.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/standard_adaptors.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/standard_functions.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/standard_functions.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/statistics.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/statistics_split.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/statistics_split.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/streams.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/streams.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/types.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_c++/util.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/akka-actor_2.11-2.5.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/config-1.3.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-core_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-lms_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-pardis_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-spark_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/dbtoaster-sstore_2.11-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-pardis-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-pardis-core-compiler_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-pardis-library_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-pardis-quasi-core_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-pardis-quasi_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/sc-shared_2.11-0.1.4-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/scala-library-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/scala-parser-combinators_2.11-1.0.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/scala-reflect-2.11.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/scala-xml_2.11-1.0.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/scala-yinyang_2.11-0.2.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/squid-sc-backend-macros_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/release_macos/lib/lib/dbt_scala/squid-sc-backend_2.11-0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/csvreader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/lib/csvreader.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/a.out" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/accumulator.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/hashmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/mmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/mmap2.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/pool.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/pool.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_dummy.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_lazy.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_move.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_move.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_cofactor_naive.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_factorized_map.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_aggregator.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_hashkey.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_inlined_mmap.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_mixed_vector_map.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_mmap.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/ring_relation_vector.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/string.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/string.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/test" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/deprecated/test.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/functions.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/functions.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/hash.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/hash.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/macro.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/macro.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/memory.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/mmap.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/mmap.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/pool.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_avg.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_avg.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_cofactor_degree1.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_cofactor_degree1.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_cofactor_degree2.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_cofactor_degree2.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_factorized.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_factorized.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_relational.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_relational.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/ring_relational_opt.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/ring_relational_opt.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/tpch/ring_query01.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/tpch/ring_query01.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/tpch/ring_query12.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/tpch/ring_query12.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/ring/tpch/ring_query14.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/ring/tpch/ring_query14.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/serialization.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/serialization.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/stopwatch.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/lib/stopwatch.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/string.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/lib/types.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/backend/lib/types.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-EVAL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-EVAL.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/housing/Cofactor_Housing_DF-INCR_ALL.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-EVAL.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/src/queries/cofactor/retailer/Cofactor_Retailer_DF-EVAL.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/housing_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/templates/housing_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/mcm_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/templates/mcm_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/retailer_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/templates/retailer_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/tpch_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/templates/tpch_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiments/src/templates/twitter_template.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/code/templates/twitter_template.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/hydra.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/modules/F-IVM-build.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/modules/F-IVM.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/sbt.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_queries.sh" beforeDir="false" afterPath="$PROJECT_DIR$/examples/generate_queries.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/build.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/CodeGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/CodeGenerator.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Driver.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Driver.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Main.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/Optimizer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Optimizer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/AST.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/AST.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/SQLToM3Compiler.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/core/Types.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/Types.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/DTreeParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/DTreeParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/M3Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/M3Parser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/Parser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/parsing/SQLParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/SQLParser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/DTree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/DTree.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/Tree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/Tree.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/tree/ViewTree.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/ViewTree.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/util/Logger.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/util/Logger.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/fdbresearch/util/Utils.scala" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/util/Utils.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/src/lib/relation.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/src/lib/relation.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/examples/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/modules/FIVM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.idea/modules/FIVM.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/frontend/target/" />
@@ -887,6 +17,10 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/frontend">
@@ -902,13 +36,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Main.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10">
-              <caret line="20" column="40" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="40" />
+            <state relative-caret-position="190">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/CodeGenerator.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="620">
+              <caret line="139" column="17" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/Tree.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="411">
+              <caret line="40" column="83" lean-forward="true" selection-start-line="40" selection-start-column="83" selection-end-line="40" selection-end-column="83" />
               <folding>
-                <element signature="e#21#72#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -917,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/DTreeParser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+            <state relative-caret-position="38">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -926,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Driver.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+            <state relative-caret-position="133">
+              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -935,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/Parser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2755">
-              <caret line="147" column="30" selection-start-line="147" selection-start-column="30" selection-end-line="147" selection-end-column="30" />
+            <state relative-caret-position="2603">
+              <caret line="147" column="5" selection-start-line="147" selection-start-column="5" selection-end-line="147" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -944,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/SQLParser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4275">
-              <caret line="225" column="39" selection-start-line="225" selection-start-column="39" selection-end-line="225" selection-end-column="39" />
+            <state relative-caret-position="4123">
+              <caret line="225" column="20" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -953,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/AST.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11951">
+            <state relative-caret-position="11799">
               <caret line="629" column="17" selection-start-line="629" selection-start-column="17" selection-end-line="629" selection-end-column="17" />
             </state>
           </provider>
@@ -977,6 +129,8 @@
         <option value="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/SQLParser.scala" />
         <option value="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/AST.scala" />
         <option value="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Main.scala" />
+        <option value="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/CodeGenerator.scala" />
+        <option value="$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/Tree.scala" />
       </list>
     </option>
   </component>
@@ -1047,11 +201,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -1115,9 +270,9 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$/frontend/build.sbt" value="1654940394" />
-        <entry key="$PROJECT_DIR$/frontend/project/build.properties" value="162545940" />
-        <entry key="$PROJECT_DIR$/frontend/project/plugins.sbt" value="2947818574" />
+        <entry key="$PROJECT_DIR$/frontend/build.sbt" value="1212303859" />
+        <entry key="$PROJECT_DIR$/frontend/project/build.properties" value="3280644262" />
+        <entry key="$PROJECT_DIR$/frontend/project/plugins.sbt" value="3661142816" />
       </map>
     </option>
     <option name="projectSyncType">
@@ -1142,10 +297,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1406" height="877" extended-state="6" />
+    <frame x="8" y="23" width="1867" height="1177" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19794722" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20054795" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1174,13 +329,6 @@
     <entry file="file://$PROJECT_DIR$/frontend/src/main/main.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/Tree.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/Types.scala">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1193,46 +341,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Main.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="40" />
-          <folding>
-            <element signature="e#21#72#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="190">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/DTreeParser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        <state relative-caret-position="38">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/Driver.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        <state relative-caret-position="133">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/Parser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2755">
-          <caret line="147" column="30" selection-start-line="147" selection-start-column="30" selection-end-line="147" selection-end-column="30" />
+        <state relative-caret-position="2603">
+          <caret line="147" column="5" selection-start-line="147" selection-start-column="5" selection-end-line="147" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/parsing/SQLParser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4275">
-          <caret line="225" column="39" selection-start-line="225" selection-start-column="39" selection-end-line="225" selection-end-column="39" />
+        <state relative-caret-position="4123">
+          <caret line="225" column="20" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/core/AST.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11951">
+        <state relative-caret-position="11799">
           <caret line="629" column="17" selection-start-line="629" selection-start-column="17" selection-end-line="629" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/CodeGenerator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="139" column="17" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/main/scala/fdbresearch/tree/Tree.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="40" column="83" lean-forward="true" selection-start-line="40" selection-start-column="83" selection-end-line="40" selection-end-column="83" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
