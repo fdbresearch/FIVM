@@ -50,13 +50,13 @@ $(CPP_FILES_SINGLE): $(CPP_OUT_DIR)/%.hpp : $(M3_OUT_DIR)/%.m3
 
 $(EXE_FILES_BATCH): $(EXE_OUT_DIR)/%_$(BATCH_SIZE) : $(CPP_OUT_DIR)/%.hpp $(SRC_DIR)/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(eval TEMPLATE := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
-	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DNUMBER_OF_RUNS=$(NUMBER_OF_RUNS) -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(SRC_DIR)/templates/$(TEMPLATE)_template.hpp -o $@ 
+	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
+	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ 
 
 $(EXE_FILES_SINGLE): $(EXE_OUT_DIR)/% : $(CPP_OUT_DIR)/%.hpp $(SRC_DIR)/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(eval TEMPLATE := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
-	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DNUMBER_OF_RUNS=$(NUMBER_OF_RUNS) -include $< -include $(SRC_DIR)/templates/$(TEMPLATE)_template.hpp -o $@ 
+	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
+	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ 
 
 m3_batch: $(M3_FILES_BATCH)
 

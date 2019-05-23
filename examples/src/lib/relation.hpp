@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 #include "dispatcher.hpp"
+#include "csvreader.hpp"
 
 class IRelation {
   protected:
