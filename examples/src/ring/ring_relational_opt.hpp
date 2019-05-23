@@ -160,11 +160,11 @@ template <size_t Idx, typename T>
 struct FactoryAccumulator {
 
     static Accumulator<Idx, T> create(T&& t, long scale = 1L) {
-        return Accumulator<Idx, T>(std::forward<T>(t), t.count > 0 ? scale : 0L);
+        return Accumulator<Idx, T>(std::forward<T>(t), t.store.size() > 0 ? scale : 0L);
     }
 
     static Accumulator<Idx, const T&> create(const T& t, long scale = 1L) {
-        return Accumulator<Idx, const T&>(t, t.count > 0 ? scale : 0L);
+        return Accumulator<Idx, const T&>(t, t.store.size() > 0 ? scale : 0L);
     }
 };
 
