@@ -1,6 +1,7 @@
 .DS_Store
+.idea/
 frontend/project
 frontend/target
 examples/bin/
-examples/code/generated/
+examples/generated/
 
