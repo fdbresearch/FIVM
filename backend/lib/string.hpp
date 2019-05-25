@@ -10,6 +10,7 @@
 #ifndef DBTOASTER_STRING_HPP
 #define DBTOASTER_STRING_HPP
 
+#include <iostream>
 #include <string>
 #include <cstring>
 #include "pool.hpp"
@@ -87,10 +88,13 @@ namespace dbtoaster {
                            FixedLengthString(this->data_ + pos, size_ - pos)) :
                        FixedLengthString());
         }
-
-        template <uint64_t SZ>
-        friend std::ostream& operator<<(std::ostream& o, FixedLengthString<SZ> const& str);
     };
+
+    template <uint64_t SIZE>
+    std::ostream& operator<<(std::ostream& os, const FixedLengthString<SIZE>& s) {
+        os << s.c_str();
+        return os;
+    }    
 
     struct VariableLengthString {
         uint64_t size_;
@@ -170,9 +174,12 @@ namespace dbtoaster {
                            VariableLengthString(this->data_ + pos, size_ - pos)) :
                        VariableLengthString());
         }
-
-        friend std::ostream& operator<<(std::ostream& o, VariableLengthString const& str);
     };
+
+    std::ostream& operator<<(std::ostream& os, const VariableLengthString& s) {
+        os << s.c_str();
+        return os;
+    }    
 
     struct RefCountedString : VariableLengthString {
         uint64_t* ptr_count_;
@@ -239,6 +246,11 @@ namespace dbtoaster {
                        RefCountedString());
         }
     };
+
+    std::ostream& operator<<(std::ostream& os, const RefCountedString& s) {
+        os << s.c_str();
+        return os;
+    }    
 
     ValuePool<uint64_t> pool;
 
@@ -344,6 +356,11 @@ namespace dbtoaster {
                        PooledRefCountedString());
         }
     };
+
+    std::ostream& operator<<(std::ostream& os, const PooledRefCountedString& s) {
+        os << s.c_str();
+        return os;
+    }
 }
 
 #endif /* DBTOASTER_STRING_HPP */

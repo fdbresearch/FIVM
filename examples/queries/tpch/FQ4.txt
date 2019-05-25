@@ -1,0 +1,40 @@
+/* 
+DTREE FOR FQ4
+---
+             SK
+           /   \ 
+          PK   S(...)
+        /   \  
+    LI(...) PS(...) 
+*/
+
+25 3
+0 suppkey int -1 {} 0
+1 partkey int 0 {0} 0
+2 l_orderkey int 1 {0,1} 0
+3 l_linenumber int 2 {0,1,2} 0
+4 l_quantity double 3 {0,1,2,3} 0
+5 l_extendedprice double 4 {0,1,2,3,4} 0
+6 l_discount double 5 {0,1,2,3,4,5} 0
+7 l_tax double 6 {0,1,2,3,4,5,6} 0
+8 l_returnflag char 7 {0,1,2,3,4,5,6,7} 0
+9 l_linestatus char 8 {0,1,2,3,4,5,6,7,8} 0
+10 l_shipdate date 9 {0,1,2,3,4,5,6,7,8,9} 0
+11 l_commitdate date 10 {0,1,2,3,4,5,6,7,8,9,10} 0
+12 l_receiptdate date 11 {0,1,2,3,4,5,6,7,8,9,10,11} 0
+13 l_shipinstruct string 12 {0,1,2,3,4,5,6,7,8,9,10,11,12} 0
+14 l_shipmode string 13 {0,1,2,3,4,5,6,7,8,9,10,11,12,13} 0
+15 l_comment string 14 {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14} 0
+16 ps_availqty int 1 {0,1} 0
+17 ps_supplycost double 16 {0,1,16} 0
+18 ps_comment string 17 {0,1,16,17} 0
+19 s_name string 0 {0} 0
+20 s_address string 19 {0,19} 0
+21 s_nationkey int 20 {0,19,20} 0
+22 s_phone string 21 {0,19,20,21} 0
+23 s_acctbal double 22 {0,19,20,21,22} 0
+24 s_comment string 23 {0,19,20,21,22,23} 0
+
+LINEITEM 15 l_orderkey, partkey, suppkey, l_linenumber, l_quantity, l_extendedprice, l_discount, l_tax, l_returnflag, l_linestatus, l_shipdate, l_commitdate, l_receiptdate, l_shipinstruct, l_shipmode, l_comment
+PARTSUPP 18 partkey, suppkey, ps_availqty, ps_supplycost, ps_comment
+SUPPLIER 24 suppkey, s_name, s_address, s_nationkey, s_phone, s_acctbal, s_comment

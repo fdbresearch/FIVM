@@ -12,6 +12,7 @@
 
 #include <tuple>
 #include "macro.hpp"
+#include "string.hpp"
 
 namespace dbtoaster {
 
@@ -114,19 +115,43 @@ namespace hash_tuple {
         seed ^= hash_tuple::hash<T>()(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
     }
 
+    template <>
+    inline void hash_combine(std::size_t & seed, dbtoaster::PooledRefCountedString const &v) {
+        // seed ^= hash_tuple::hash<const char *>()(v.c_str()) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        seed ^= dbtoaster::MurmurHash2(v.data_, sizeof(char) * (v.size_ - 1), 0) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+
+    template<size_t SZ>
+    inline void hash_combine(size_t& seed, const dbtoaster::FixedLengthString<SZ>& v) {
+        // seed ^= hash_tuple::hash<const char *>()(v.c_str()) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        seed ^= dbtoaster::MurmurHash2(v.data_, sizeof(char) * (v.size_ - 1), 0) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+
+    template<>
+    inline void hash_combine(size_t& seed, const dbtoaster::VariableLengthString& v) {
+        // seed ^= hash_tuple::hash<const char *>()(v.c_str()) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        seed ^= dbtoaster::MurmurHash2(v.data_, sizeof(char) * (v.size_ - 1), 0) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+
+    template<>
+    inline void hash_combine(size_t& seed, const dbtoaster::RefCountedString& v) {
+        // seed ^= hash_tuple::hash<const char *>()(v.c_str()) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        seed ^= dbtoaster::MurmurHash2(v.data_, sizeof(char) * (v.size_ - 1), 0) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
+
     // Recursive template code derived from Matthieu M.
     template <class Tuple, size_t Index = std::tuple_size<Tuple>::value - 1>
     struct HashValueImpl {
       static void apply(size_t& seed, Tuple const& tuple) {
         HashValueImpl<Tuple, Index - 1>::apply(seed, tuple);
-        hash_combine(seed, std::get<Index>(tuple));
+        hash_tuple::hash_combine(seed, std::get<Index>(tuple));
       }
     };
 
     template <class Tuple>
     struct HashValueImpl<Tuple, 0> {
       static void apply(size_t& seed, Tuple const& tuple) {
-        hash_combine(seed, std::get<0>(tuple));
+        hash_tuple::hash_combine(seed, std::get<0>(tuple));
       }
     };
 

@@ -1,0 +1,53 @@
+/* 
+DTREE FOR FQ1
+---
+                  OK
+                /    \
+               PK     Orders(...)
+             /    \  
+           SK      Part(...)
+         /    \
+Lineitem(...)  PartSupp(...) 
+*/
+
+35 4
+0 orderkey int -1 {} 0
+1 partkey int 0 {0} 0
+2 suppkey int 1 {0,1} 0
+3 l_linenumber int 2 {0,1,2} 0
+4 l_quantity double 3 {0,1,2,3} 0
+5 l_extendedprice double 4 {0,1,2,3,4} 0
+6 l_discount double 5 {0,1,2,3,4,5} 0
+7 l_tax double 6 {0,1,2,3,4,5,6} 0
+8 l_returnflag char 7 {0,1,2,3,4,5,6,7} 0
+9 l_linestatus char 8 {0,1,2,3,4,5,6,7,8} 0
+10 l_shipdate date 9 {0,1,2,3,4,5,6,7,8,9} 0
+11 l_commitdate date 10 {0,1,2,3,4,5,6,7,8,9,10} 0
+12 l_receiptdate date 11 {0,1,2,3,4,5,6,7,8,9,10,11} 0
+13 l_shipinstruct string 12 {0,1,2,3,4,5,6,7,8,9,10,11,12} 0
+14 l_shipmode string 13 {0,1,2,3,4,5,6,7,8,9,10,11,12,13} 0
+15 l_comment string 14 {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14} 0
+16 ps_availqty int 2 {1,2} 0
+17 ps_supplycost double 16 {1,2,16} 0
+18 ps_comment string 17 {1,2,16,17} 0
+19 p_name string 1 {1} 0
+20 p_mfgr string 19 {1,19} 0
+21 p_brand string 20 {1,19,20} 0
+22 p_type string 21 {1,19,20,21} 0
+23 p_size int 22 {1,19,20,21,22} 0
+24 p_container string 23 {1,19,20,21,22,23} 0
+25 p_retailprice double 24 {1,19,20,21,22,23,24} 0
+26 p_comment string 25 {1,19,20,21,22,23,24,25} 0
+27 o_custkey int 0 {0} 0
+28 o_orderstatus char 27 {0,27} 0
+29 o_totalprice double 28 {0,27,28} 0
+30 o_orderdate date 29 {0,27,28,29} 0
+31 o_shippriority int 30 {0,27,28,29,30} 0
+32 o_orderpriority string 31 {0,27,28,29,30,31} 0
+33 o_clerk string 32 {0,27,28,29,30,31,32} 0
+34 o_comment string 33 {0,27,28,29,30,31,32,33} 0
+
+LINEITEM 15 orderkey, partkey, suppkey, l_linenumber, l_quantity, l_extendedprice, l_discount, l_tax, l_returnflag, l_linestatus, l_shipdate, l_commitdate, l_receiptdate, l_shipinstruct, l_shipmode, l_comment
+PARTSUPP 18 partkey, suppkey, ps_availqty, ps_supplycost, ps_comment
+PART 26 partkey, p_name, p_mfgr, p_brand, p_type, p_size, p_container, p_retailprice, p_comment
+ORDERS 34 orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority, o_comment
