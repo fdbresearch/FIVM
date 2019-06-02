@@ -112,6 +112,15 @@ struct RingRelation {
         return *this;
     }
 
+    RingRelation& operator+=(const VectorRelation<Idx, const Keys...>& other) {
+        if (other.isZero()) return *this;
+        for (auto &t : other.store) {
+            store[std::get<0>(t)] += std::get<1>(t);
+            if (store[std::get<0>(t)] == 0L) store.erase(std::get<0>(t));
+        }
+        return *this;
+    }
+
     RingRelation& operator+=(const VectorRelation<Idx, Keys...>& other) {
         if (other.isZero()) return *this;
         for (auto &t : other.store) {
@@ -218,8 +227,8 @@ RingRelation<Idx, Keys...> operator*(long alpha, RingRelation<Idx, Keys...>&& r)
 }
 
 template <size_t Idx, typename... Args>
-VectorRelation<Idx, Args...> Ulift(Args&... args) {
-    return VectorRelation<Idx, Args...>(args...);
+VectorRelation<Idx, typename std::remove_cv<Args>::type...> Ulift(Args&... args) {
+    return VectorRelation<Idx, typename std::remove_cv<Args>::type...>(args...);
 }
 
 #endif /* RINGRELATIONAL_HPP */

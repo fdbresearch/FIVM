@@ -5,7 +5,7 @@ FROM FILE 'ring/ring_relational_opt.hpp'
 WITH PARAMETER SCHEMA (dynamic_concat);
 
 CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
-FROM FILE './datasets/sears/Inventory_toy2.tbl' LINE DELIMITED CSV(delimiter := '|');
+FROM FILE './datasets/sears/Inventory.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 CREATE STREAM LOCATION(locn long, zip long, rgn_cd double, clim_zn_nbr double, tot_area_sq_ft double, sell_area_sq_ft double, avghhi double, supertargetdistance double, supertargetdrivetime double, targetdistance double, targetdrivetime double, walmartdistance double, walmartdrivetime double, walmartsupercenterdistance double, walmartsupercenterdrivetime double)
 FROM FILE './datasets/sears/Location.tbl' LINE DELIMITED CSV(delimiter := '|');
