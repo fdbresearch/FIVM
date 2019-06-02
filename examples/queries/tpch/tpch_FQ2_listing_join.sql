@@ -1,4 +1,4 @@
-IMPORT DTREE FROM FILE 'FQ2.txt';
+IMPORT DTREE FROM FILE 'tpch_FQ2.txt';
 
 CREATE TYPE RingRelation
 FROM FILE 'ring/ring_relational_opt.hpp'

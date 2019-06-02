@@ -2,7 +2,7 @@
 --   ORDER BY (ignored)
 --   LIMIT    (ignored)
 
-IMPORT DTREE FROM FILE 'query03.txt';
+IMPORT DTREE FROM FILE 'tpch_query03.txt';
 
 CREATE STREAM LINEITEM (
         orderkey       INT,

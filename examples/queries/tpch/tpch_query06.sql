@@ -1,4 +1,4 @@
-IMPORT DTREE FROM FILE 'query06.txt';
+IMPORT DTREE FROM FILE 'tpch_query06.txt';
 
 CREATE STREAM LINEITEM (
         l_orderkey       INT,

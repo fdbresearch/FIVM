@@ -37,6 +37,8 @@ class Application {
 
     void on_snapshot(dbtoaster::data_t& data);
 
+    void on_begin_processing(dbtoaster::data_t& data);
+
     void on_end_processing(dbtoaster::data_t& data, bool print_result);
 
     void print_result(dbtoaster::data_t& data);
@@ -149,7 +151,13 @@ void Application::run(size_t num_of_runs, bool print_result) {
 
         init_dispatchers(data);
 
-        std::cout << "1. Processing tables... " << std::flush;
+        std::cout << "1. On begin of processing... " << std::flush;
+        local_time.restart();
+        on_begin_processing(data);
+        local_time.stop();
+        std::cout << local_time.elapsedTimeInMilliSeconds() << " ms" << std::endl;
+
+        std::cout << "2. Processing tables... " << std::flush;
         local_time.restart();
         process_tables(data);
         local_time.stop();
@@ -157,19 +165,19 @@ void Application::run(size_t num_of_runs, bool print_result) {
         
         total_time.restart();
 
-        std::cout << "2. On system ready... " << std::flush;
+        std::cout << "3. On system ready... " << std::flush;
         local_time.restart();
         process_on_system_ready(data);
         local_time.stop();
         std::cout << local_time.elapsedTimeInMilliSeconds() << " ms" << std::endl;
 
-        std::cout << "3. Processing streams... " << std::flush;;
+        std::cout << "4. Processing streams... " << std::flush;;
         local_time.restart();
         process_streams(data);
         local_time.stop();
         std::cout << local_time.elapsedTimeInMilliSeconds() << " ms" << std::endl;
 
-        std::cout << "4. On end of processing... " << std::flush;
+        std::cout << "5. On end of processing... " << std::flush;
         local_time.restart();
         on_end_processing(data, print_result);
         local_time.stop();

@@ -3,7 +3,7 @@
 
 #include "../application.hpp"
 
-const string dataPath = "data/housing-4-normalised";
+const string dataPath = "data/housing-1-normalised";
 
 void Application::init_relations() {
     clear_relations();

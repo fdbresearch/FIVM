@@ -1,7 +1,7 @@
-IMPORT DTREE FROM FILE 'query12.txt';
+IMPORT DTREE FROM FILE 'tpch_query12.txt';
 
 CREATE TYPE TPCH12Payload
-FROM FILE 'ring/tpch/ring_query12.hpp';
+FROM FILE 'ring/ring_tpch_query12.hpp';
 
 CREATE STREAM LINEITEM (
         orderkey         INT,

@@ -35,7 +35,7 @@ struct RingCofactor {
         T *out2 = degree2.data();
         for (size_t i = 0; i < SZ; i++) {
             sum2[i] = sum1[i] * sum1[i];
-            for (size_t j = 0; j < SZ; j++) {
+            for (size_t j = i + 1; j < SZ; j++) {
                 *out2++ = sum1[i] * sum1[j];
             }
         }
@@ -50,8 +50,9 @@ struct RingCofactor {
             sum1[i] += other.sum1[i];
             sum2[i] += other.sum2[i];
         }
-        for (size_t i = 0; i < DEG2_SZ; i++)
+        for (size_t i = 0; i < DEG2_SZ; i++) {
             degree2[i] += other.degree2[i];
+        }
         return *this;
     }
 
@@ -86,19 +87,20 @@ struct RingCofactor {
             r.sum2[j] = count * other.sum2[i];
         }
 
+        const T *in1 = degree2.data();
         T *out2 = r.degree2.data();
-        for (size_t i = 0; i < DEG2_SZ; i++) {
-            *out2++ = degree2[i] * other.count;
+        for (size_t i = 0; i < SZ; i++) {
+            for (size_t j = i + 1; j < SZ; j++) {
+                *out2++ = other.count * (*in1++);
+            }
+            for (size_t j = 0; j < SZ2; j++) {
+                *out2++ = sum1[i] * other.sum1[j];
+            }
         }
         for (size_t i = 0; i < RingCofactor<T, IDX2, SZ2>::DEG2_SZ; i++) {
             *out2++ = count * other.degree2[i];
         }
 
-        for (size_t i = 0; i < SZ; i++) {
-            for (size_t j = 0; j < SZ2; j++) {
-                *out2++ = sum1[i] * other.sum1[j];
-            }
-        }
         return r;
     }
 
@@ -116,8 +118,9 @@ struct RingCofactor {
             r.sum1[i] = alpha * sum1[i];
             r.sum2[i] = alpha * sum2[i];
         }
-        for (size_t i = 0; i < DEG2_SZ; i++)
+        for (size_t i = 0; i < DEG2_SZ; i++) {
             r.degree2[i] = alpha * degree2[i];
+        }
         return r;
     }
 

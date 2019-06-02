@@ -1,3 +1,5 @@
+# Usage: make [APP=(regression|factorized_join|listing_join)] [DATASET=(retailer|housing|tpch|simple)]
+
 # Compilers
 FRONTEND_BIN = ../bin/run_frontend.sh
 BACKEND_BIN = ../bin/run_backend.sh
@@ -7,6 +9,7 @@ CFLAGS = -O3 -DNDEBUG -Wall -Wno-unused-variable -std=c++11 -pedantic
 # Runtime arguments
 NUMBER_OF_RUNS ?= 1
 BATCH_SIZE ?= 1000
+APP ?=
 
 # Directories
 SRC_DIR = src
@@ -15,8 +18,20 @@ M3_OUT_DIR = generated/m3
 CPP_OUT_DIR = generated/cpp
 EXE_OUT_DIR = bin
 
-# SQL to M3 compilation
+# Find all SQL queries
 SQL_FILES := $(shell find $(SQL_DIR) -name "*.sql")
+
+# Filter queries by application
+ifneq ($(APP), )
+SQL_FILES := $(filter %_$(APP).sql, $(SQL_FILES))
+endif
+
+# Filter queries by dataset
+ifneq ($(DATASET),)
+SQL_FILES := $(filter $(wildcard */$(DATASET)/*.sql), $(SQL_FILES))
+endif
+
+# SQL to M3 compilation
 M3_FILES_BATCH := $(patsubst $(SQL_DIR)/%.sql, $(M3_OUT_DIR)/%_BATCH.m3, $(SQL_FILES))
 M3_FILES_SINGLE := $(patsubst $(SQL_DIR)/%.sql, $(M3_OUT_DIR)/%_SINGLE.m3, $(SQL_FILES))
 
@@ -50,13 +65,27 @@ $(CPP_FILES_SINGLE): $(CPP_OUT_DIR)/%.hpp : $(M3_OUT_DIR)/%.m3
 
 $(EXE_FILES_BATCH): $(EXE_OUT_DIR)/%_$(BATCH_SIZE) : $(CPP_OUT_DIR)/%.hpp $(SRC_DIR)/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
-	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ 
+	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/, %, $(dir $@)))
+	$(eval APP_HEADER := $(patsubst $(EXE_OUT_DIR)/$(DATASET)/%_BATCH_$(BATCH_SIZE), $(SRC_DIR)/application/$(DATASET)/application_%.hpp, $@))
+	@if [ -f $(APP_HEADER) ]; then \
+		echo $(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(APP_HEADER) -o $@; \
+		$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(APP_HEADER) -o $@; \
+	else \
+		echo $(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@; \
+		$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -DBATCH_SIZE=$(BATCH_SIZE) -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ ;\
+	fi
 
 $(EXE_FILES_SINGLE): $(EXE_OUT_DIR)/% : $(CPP_OUT_DIR)/%.hpp $(SRC_DIR)/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))
-	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ 
+	$(eval DATASET := $(patsubst $(EXE_OUT_DIR)/%/,%, $(dir $@)))	
+	$(eval APP_HEADER := $(patsubst $(EXE_OUT_DIR)/$(DATASET)/%_SINGLE, $(SRC_DIR)/application/$(DATASET)/application_%.hpp, $@))
+	@if [ -f $(APP_HEADER) ]; then \
+		echo $(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(APP_HEADER) -o $@; \
+		$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(APP_HEADER) -o $@; \
+	else \
+		echo $(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@; \
+		$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -I ../backend/lib -I $(SRC_DIR) -I $(SRC_DIR)/lib -include $< -include $(SRC_DIR)/application/$(DATASET)/application_$(DATASET).hpp -o $@ ; \
+	fi
 
 m3_batch: $(M3_FILES_BATCH)
 
