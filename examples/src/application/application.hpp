@@ -142,7 +142,7 @@ void Application::run(size_t num_of_runs, bool print_result) {
     for (auto &r : relations) {
         std::cout << "  " << r->get_name() << " (" << r->size() << ") " << std::endl;
     }
-    
+
     for (size_t run = 0; run < num_of_runs; run++) {
 
         dbtoaster::data_t data;

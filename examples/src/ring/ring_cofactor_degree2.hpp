@@ -44,25 +44,21 @@ struct RingCofactor {
     explicit RingCofactor(Args&&... args) : count(1), sum1 { args... } {
         static_assert(SZ == sizeof...(args), "Incompatible array sizes");
 
-        for (size_t i = 0; i < SZ; i++) {
-            sum2[i] = sum1[i] * sum1[i];
-            sum3[i] = sum2[i] * sum1[i];
-            sum4[i] = sum3[i] * sum1[i];
-        }
-
         T *out2 = degree2.data();
         T *out3 = degree3.data();
         T *out4 = degree4.data();
         for (size_t i = 0; i < SZ; i++) {
-            for (size_t j = 0; j < SZ; j++) {
+            sum2[i] = sum1[i] * sum1[i];
+            sum3[i] = sum2[i] * sum1[i];
+            sum4[i] = sum3[i] * sum1[i];
+
+            for (size_t j = i + 1; j < SZ; j++) {
                 *out2++ = sum1[i] * sum1[j];
-
-                *out3++ = sum2[i] * sum1[j];
                 *out3++ = sum1[i] * sum2[j];
-
-                *out4++ = sum3[i] * sum1[j];
-                *out4++ = sum2[i] * sum2[j];
+                *out3++ = sum2[i] * sum1[j];
                 *out4++ = sum1[i] * sum3[j];
+                *out4++ = sum2[i] * sum2[j];
+                *out4++ = sum3[i] * sum1[j];
             }
         }
     }
@@ -78,12 +74,15 @@ struct RingCofactor {
             sum3[i] += other.sum3[i];
             sum4[i] += other.sum4[i];
         }
-        for (size_t i = 0; i < DEG2_SZ; i++)
+        for (size_t i = 0; i < DEG2_SZ; i++) {
             degree2[i] += other.degree2[i];
-        for (size_t i = 0; i < DEG3_SZ; i++)
+        }
+        for (size_t i = 0; i < DEG3_SZ; i++) {
             degree3[i] += other.degree3[i];
-        for (size_t i = 0; i < DEG4_SZ; i++)
+        }
+        for (size_t i = 0; i < DEG4_SZ; i++) {
             degree4[i] += other.degree4[i];
+        }
         return *this;
     }
 
@@ -177,12 +176,15 @@ struct RingCofactor {
             r.sum3[i] = alpha * sum3[i];
             r.sum4[i] = alpha * sum4[i];
         }
-        for (size_t i = 0; i < DEG2_SZ; i++)
+        for (size_t i = 0; i < DEG2_SZ; i++) {
             r.degree2[i] = alpha * degree2[i];
-        for (size_t i = 0; i < DEG3_SZ; i++)
+        }
+        for (size_t i = 0; i < DEG3_SZ; i++) {
             r.degree3[i] = alpha * degree3[i];
-        for (size_t i = 0; i < DEG4_SZ; i++)
+        }
+        for (size_t i = 0; i < DEG4_SZ; i++) {
             r.degree4[i] = alpha * degree4[i];
+        }
         return r;
     }
 

@@ -22,7 +22,7 @@ void Application::init_relations() {
         typedef const std::vector<DELTA_INVENTORY_entry>::iterator CIteratorInventory;
         relations.push_back(std::unique_ptr<IRelation>(
             new BatchDispatchableRelation<DELTA_INVENTORY_entry>(
-                "Inventory", dataPath + "/Inventory_toy.tbl", '|', false,
+                "Inventory", dataPath + "/Inventory.tbl", '|', false,
                 [](dbtoaster::data_t& data) {
                     return [&](CIteratorInventory& begin, CIteratorInventory& end) {
                         data.on_batch_update_INVENTORY(begin, end);

@@ -1,10 +1,10 @@
-# Usage: make [APP=(regression|factorized_join|listing_join)] [DATASET=(retailer|housing|tpch|simple)]
+# Usage: make [APP=(regression|regression_categorical|factorized_join|listing_join)] [DATASET=(retailer|housing|tpch|simple)]
 
 # Compilers
 FRONTEND_BIN = ../bin/run_frontend.sh
 BACKEND_BIN = ../bin/run_backend.sh
 CC = g++
-CFLAGS = -O3 -DNDEBUG -Wall -Wno-unused-variable -std=c++11 -pedantic
+CFLAGS = -O3 -DNDEBUG -Wall -Wno-unused-variable -std=c++17 -pedantic
 
 # Runtime arguments
 NUMBER_OF_RUNS ?= 1

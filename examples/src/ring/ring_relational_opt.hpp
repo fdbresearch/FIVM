@@ -7,6 +7,7 @@
 #include <type_traits>
 #include "types.hpp"
 #include "serialization.hpp"
+#include "container.hpp"
 
 using namespace dbtoaster;
 
@@ -15,12 +16,6 @@ using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>;
 
 template <typename... Keys>
 using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
-
-template <size_t, typename...>
-struct Accumulator;
-
-template <size_t, typename>
-struct FactoryAccumulator;
 
 template <size_t Idx, typename... Keys>
 struct RelationVector {
@@ -34,6 +29,7 @@ struct RelationVector {
 
 template <size_t Idx, typename... Keys>
 struct RelationMap {
+    static constexpr size_t INDEX = Idx;
 
     Map<Keys...> store;
 
@@ -52,8 +48,8 @@ struct RelationMap {
     }
 
     template <typename... Args>
-    RelationMap& operator+=(const Accumulator<Idx, Args...>& acc) {
-        if (!acc.isZero()) acc.apply(this->store);
+    RelationMap& operator+=(const Container<Idx, Args...>& c) {
+        if (!c.isZero()) apply(c);
         return *this;
     }
 
@@ -65,30 +61,50 @@ struct RelationMap {
     }
 
     template <typename... Args>
-    RelationMap& operator=(const Accumulator<Idx, Args...>& acc) {
+    RelationMap& operator=(const Container<Idx, Args...>& c) {
         this->store.clear();
-        if (!acc.isZero()) acc.apply(this->store);
+        if (!c.isZero()) apply(c);
         return *this;
     }
 
-    template <size_t Idx2, typename... Keys2>
-    typename std::enable_if<(Idx < Idx2), Accumulator<Idx, const RelationMap<Idx, Keys...>&, const RelationMap<Idx2, Keys2...>&>>::type
-    operator*(const RelationMap<Idx2, Keys2...>& other) {
-        return FactoryAccumulator<Idx, RelationMap<Idx, Keys...>>::create(*this) *
-                    FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(other);
+    template <typename... Args>
+    inline void apply(const Container<Idx, Args...>& c) {
+        apply(c, std::tuple<>(), c.scale, Int<sizeof...(Args)>());
+    }
+
+    template <typename Key, size_t N, typename... Args>
+    inline void apply(const Container<Idx, Args...>& c, Key&& key, long value, Int<N>) {
+        for (auto &it : std::get<N-1>(c.values).store) {
+            apply(c, tuple_cat(std::get<0>(it), std::forward<decltype(key)>(key)), std::get<1>(it) * value, Int<N-1>());
+        }
+    }
+
+    template <typename Key, typename... Args>
+    inline void apply(const Container<Idx, Args...>& c, Key&& key, long value, Int<1>) {
+        for (auto &it : std::get<0>(c.values).store) {
+            auto t = std::tuple_cat(std::get<0>(it), key);
+            store[t] += std::get<1>(it) * value;
+            if (store[t] == 0L) this->store.erase(t);
+        }
     }
 
     template <size_t Idx2, typename... Keys2>
-    typename std::enable_if<(Idx > Idx2), Accumulator<Idx2, const RelationMap<Idx2, Keys2...>&, const RelationMap<Idx, Keys...>&>>::type
+    typename std::enable_if<(Idx < Idx2), Container<Idx, const RelationMap<Idx, Keys...>&, const RelationMap<Idx2, Keys2...>&>>::type
     operator*(const RelationMap<Idx2, Keys2...>& other) {
-        return FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(other) *
-                    FactoryAccumulator<Idx, RelationMap<Idx, Keys...>>::create(*this);
+        return FactoryContainer<Idx, RelationMap<Idx, Keys...>>::create(*this) *
+                    FactoryContainer<Idx2, RelationMap<Idx2, Keys2...>>::create(other);
     }
 
-    Accumulator<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha) const {
-        return FactoryAccumulator<Idx, RelationMap<Idx, Keys...>>::create(*this, alpha);
+    template <size_t Idx2, typename... Keys2>
+    typename std::enable_if<(Idx > Idx2), Container<Idx2, const RelationMap<Idx2, Keys2...>&, const RelationMap<Idx, Keys...>&>>::type
+    operator*(const RelationMap<Idx2, Keys2...>& other) {
+        return FactoryContainer<Idx2, RelationMap<Idx2, Keys2...>>::create(other) *
+                    FactoryContainer<Idx, RelationMap<Idx, Keys...>>::create(*this);
     }
 
+    Container<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha) const {
+        return FactoryContainer<Idx, RelationMap<Idx, Keys...>>::create(*this, alpha);
+    }
 
     template<class Stream>
     void serialize(Stream& ar, const unsigned int version) const {
@@ -102,137 +118,19 @@ struct RelationMap {
 };
 
 template <size_t Idx, typename... Keys>
-Accumulator<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, const RelationMap<Idx, Keys...>& r) {
-    return FactoryAccumulator<Idx, RelationMap<Idx, Keys...>>::create(r, alpha);
+Container<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, const RelationMap<Idx, Keys...>& r) {
+    return FactoryContainer<Idx, RelationMap<Idx, Keys...>>::create(r, alpha);
 }
 
 template <size_t Idx, typename... Keys>
-Accumulator<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, RelationMap<Idx, Keys...>&& r) {
-    return FactoryAccumulator<Idx, RelationMap<Idx, Keys...>>::create(std::forward<decltype(r)>(r), alpha);
-}
-
-// Define a type which holds an unsigned integer value
-template <size_t> struct Int { };
-
-template <size_t Idx, typename... T>
-struct Accumulator {
-    long scale;
-    std::tuple<T...> values;
-
-    Accumulator(T&&... t, long s) : scale(s), values(std::forward<T>(t)...) { }
-    Accumulator(std::tuple<T...>&& t, long s) : scale(s), values(std::forward<decltype(t)>(t)) { }
-
-    template <typename Target>
-    inline void apply(Target& target) const {
-        apply(target, std::tuple<>(), scale, Int<sizeof...(T)>());
-    }
-
-    inline bool isZero() const { return scale == 0L || isZero(Int<sizeof...(T)>()); }
-
-private:
-    template <typename Target, typename Key, size_t N>
-    inline void apply(Target& target, Key&& key, long value, Int<N>) const {
-        for (auto &it : std::get<N-1>(values).store) {
-            apply(target, tuple_cat(std::get<0>(it), std::forward<decltype(key)>(key)), std::get<1>(it) * value, Int<N-1>());
-        }
-    }
-
-    template <typename Target, typename Key>
-    inline void apply(Target& target, Key&& key, long value, Int<1>) const {
-        for (auto &it : std::get<0>(values).store) {
-            auto t = std::tuple_cat(std::get<0>(it), key);
-            target[t] += std::get<1>(it) * value;
-            if (target[t] == 0L) target.erase(t);
-        }
-    }
-
-    template <size_t N>
-    inline bool isZero(Int<N>) const {
-        return std::get<N-1>(values).isZero() || isZero(Int<N-1>());
-    }
-
-    inline bool isZero(Int<1>) const {
-        return std::get<0>(values).isZero();
-    }
-};
-
-template <size_t Idx, typename T>
-struct FactoryAccumulator {
-
-    static Accumulator<Idx, T> create(T&& t, long scale = 1L) {
-        return Accumulator<Idx, T>(std::forward<T>(t), t.store.size() > 0 ? scale : 0L);
-    }
-
-    static Accumulator<Idx, const T&> create(const T& t, long scale = 1L) {
-        return Accumulator<Idx, const T&>(t, t.store.size() > 0 ? scale : 0L);
-    }
-};
-
-// ACCUMULATOR v LONG
-template <size_t Idx, typename... Keys>
-Accumulator<Idx, Keys...> operator*(long a, Accumulator<Idx, Keys...>&& b) {
-    if (a == 1L) return std::move(b);
-    return Accumulator<Idx, Keys...>(std::forward<decltype(b.values)>(b.values), b.scale * a);
-}
-
-template <size_t Idx, typename... Keys>
-Accumulator<Idx, Keys...> operator*(Accumulator<Idx, Keys...>&& a, long b) {
-    if (b == 1L) return std::move(a);
-    return Accumulator<Idx, Keys...>(std::forward<decltype(a.values)>(a.values), a.scale * b);
-}
-
-// ACCUMULATOR v RELATION MAP
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx < Idx2), Accumulator<Idx, Keys..., const RelationMap<Idx2, Keys2...>&>>::type
-operator*(Accumulator<Idx, Keys...>&& a, const RelationMap<Idx2, Keys2...>& b) {
-    return std::forward<decltype(a)>(a) *
-                FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(b);
-}
-
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx < Idx2), Accumulator<Idx, Keys..., const RelationMap<Idx2, Keys2...>&>>::type
-operator*(const RelationMap<Idx2, Keys2...>& b, Accumulator<Idx, Keys...>&& a) {
-    return std::forward<decltype(a)>(a) *
-                FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(b);
-}
-
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx2 < Idx), Accumulator<Idx2, const RelationMap<Idx2, Keys2...>&, Keys...>>::type
-operator*(Accumulator<Idx, Keys...>&& a, const RelationMap<Idx2, Keys2...>& b) {
-    return FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(b) *
-                std::forward<decltype(a)>(a);
-}
-
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx2 < Idx), Accumulator<Idx2, const RelationMap<Idx2, Keys2...>&, Keys...>>::type
-operator*(const RelationMap<Idx2, Keys2...>& b, Accumulator<Idx, Keys...>&& a) {
-    return FactoryAccumulator<Idx2, RelationMap<Idx2, Keys2...>>::create(b) *
-                std::forward<decltype(a)>(a);
-}
-
-// ACCUMULATOR v ACCUMULATOR
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx < Idx2), Accumulator<Idx, Keys..., Keys2...>>::type
-operator*(Accumulator<Idx, Keys...>&& a, Accumulator<Idx2, Keys2...>&& b) {
-    return Accumulator<Idx, Keys..., Keys2...>(
-            std::tuple_cat( std::forward<decltype(a.values)>(a.values),
-                            std::forward<decltype(b.values)>(b.values) ),
-            a.scale * b.scale);
-}
-
-template <size_t Idx, typename... Keys, size_t Idx2, typename... Keys2>
-typename std::enable_if<(Idx > Idx2), Accumulator<Idx2, Keys2..., Keys...>>::type
-operator*(Accumulator<Idx, Keys...>&& a, Accumulator<Idx2, Keys2...>&& b) {
-    return Accumulator<Idx2, Keys2..., Keys...>(
-            std::tuple_cat( std::forward<decltype(b.values)>(b.values),
-                            std::forward<decltype(a.values)>(a.values) ),
-            a.scale * b.scale);
+Container<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, RelationMap<Idx, Keys...>&& r) {
+    return FactoryContainer<Idx, RelationMap<Idx, Keys...>>::create(std::forward<decltype(r)>(r), alpha);
 }
 
 // LIFTING FUNCTION
 template <size_t Idx, typename... Args>
-Accumulator<Idx, RelationVector<Idx, Args...>> Ulift(Args&... args) {
-    return FactoryAccumulator<Idx, RelationVector<Idx, Args...>>::create(RelationVector<Idx, Args...>(args..., 1L));
+Container<Idx, RelationVector<Idx, Args...>> Ulift(Args&... args) {
+    return FactoryContainer<Idx, RelationVector<Idx, Args...>>::create(RelationVector<Idx, Args...>(args..., 1L));
 }
 
 template <size_t Idx, typename... Keys>

@@ -29,8 +29,7 @@ class CSVAdaptor {
             std::stringstream lineStream(line);
             std::string cell;
 
-            while (std::getline(lineStream, cell, delimiter))
-            {
+            while (std::getline(lineStream, cell, delimiter)) {
                 data.push_back(cell);
             }
         }

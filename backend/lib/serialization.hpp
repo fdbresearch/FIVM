@@ -12,6 +12,8 @@
 
 #include <iostream>
 #include <iomanip>
+#include <unordered_map>
+#include <array>
 #include "types.hpp"
 
 #define DBT_SERIALIZATION_NVP_OF_ARRAY(ar, name, length)  dbtoaster::serialize_nvp_array(ar, STRING(name), name, length)
@@ -20,6 +22,27 @@
 #define ELEM_SEPARATOR "\n\t\t\t"
 
 namespace dbtoaster {
+
+    // Define a type which holds an unsigned integer value
+    template<std::size_t> struct int_{};
+
+    template <typename Archive, class Tuple, size_t Pos>
+    Archive& print_tuple(Archive& ar, const Tuple& t, int_<Pos> ) {
+      ar << std::setprecision(15) << std::get< std::tuple_size<Tuple>::value - Pos>(t) << ", ";
+      return print_tuple(ar, t, int_<Pos - 1>());
+    }
+
+    template <typename Archive, class Tuple>
+    Archive& print_tuple(Archive& ar, const Tuple& t, int_<1> ) {
+      return ar << std::get<std::tuple_size<Tuple>::value - 1>(t);
+    }
+
+    template <typename Archive, class... Args>
+    Archive& operator<<(Archive& ar, const std::tuple<Args...>& t) {
+      ar << '(';
+      print_tuple(ar, t, int_<sizeof...(Args)>());
+      return ar << ')';
+    }
 
     template <typename T, typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const T & t) {
@@ -67,6 +90,29 @@ namespace dbtoaster {
     template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const double & t) {
         ar << std::setprecision(15) << t;
+        return ar;
+    }
+
+    template <typename T, size_t N, typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const std::array<T, N>& a) {
+        ar << ELEM_SEPARATOR << "[";
+        for (size_t i = 0; i < N; i++) {
+            serialize(ar, 0, a[i]);
+            ar << ", ";
+        }
+        ar << "]";
+        return ar;
+    }
+
+    template <typename Archive, typename K, typename V, typename H>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const std::unordered_map<K,V,H>& m) {
+        ar << ELEM_SEPARATOR << "[";
+        for (auto &it : m) {
+            ar << it.first << " -> ";
+            serialize(ar, 0, it.second);
+            ar << ", ";
+        }
+        ar << "]";
         return ar;
     }
 
@@ -123,27 +169,6 @@ namespace dbtoaster {
         str[length] = 0;
         t = STRING_TYPE(str, length);
         delete[] str;
-    }
-
-    // Define a type which holds an unsigned integer value
-    template<std::size_t> struct int_{};
-
-    template <typename Archive, class Tuple, size_t Pos>
-    Archive& print_tuple(Archive& ar, const Tuple& t, int_<Pos> ) {
-      ar << std::get< std::tuple_size<Tuple>::value - Pos>(t) << ", ";
-      return print_tuple(ar, t, int_<Pos - 1>());
-    }
-
-    template <typename Archive, class Tuple>
-    Archive& print_tuple(Archive& ar, const Tuple& t, int_<1> ) {
-      return ar << std::get<std::tuple_size<Tuple>::value - 1>(t);
-    }
-
-    template <typename Archive, class... Args>
-    Archive& operator<<(Archive& ar, const std::tuple<Args...>& t) {
-      ar << '(';
-      print_tuple(ar, t, int_<sizeof...(Args)>());
-      return ar << ')';
     }
 
 }

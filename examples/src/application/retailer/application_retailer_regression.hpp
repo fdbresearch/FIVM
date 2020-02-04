@@ -124,49 +124,45 @@ struct ModelEvaluator {
         for (RetailerTuple& tuple : test_dataset) {
             diff =
                 params[0] +
-                tuple.locn * params[1] +
-                tuple.dateid * params[2] +
-                tuple.ksn * params[3] +
-                tuple.inventoryunits * params[4] +
-                tuple.subcategory * params[5] +
-                tuple.category * params[6] +
-                tuple.categoryCluster * params[7] +
-                tuple.prize * params[8] +
-                tuple.rain * params[9] +
-                tuple.snow * params[10] +
-                tuple.maxtemp * params[11] +
-                tuple.mintemp * params[12] +
-                tuple.meanwind * params[13] +
-                tuple.thunder * params[14] +
-                tuple.zip * params[15] +
-                tuple.rgn_cd * params[16] +
-                tuple.clim_zn_nbr * params[17] +
-                tuple.tot_area_sq_ft * params[18] +
-                tuple.sell_area_sq_ft * params[19] +
-                tuple.avghhi * params[20] +
-                tuple.supertargetdistance * params[21] +
-                tuple.supertargetdrivetime * params[22] +
-                tuple.targetdistance * params[23] +
-                tuple.targetdrivetime * params[24] +
-                tuple.walmartdistance * params[25] +
-                tuple.walmartdrivetime * params[26] +
-                tuple.walmartsupercenterdistance * params[27] +
-                tuple.walmartsupercenterdrivetime * params[28] +
-                tuple.population * params[29] +
-                tuple.white * params[30] +
-                tuple.asian * params[31] +
-                tuple.pacific * params[32] +
-                tuple.black * params[33] +
-                tuple.medianage * params[34] +
-                tuple.occupiedhouseunits * params[35] +
-                tuple.houseunits * params[36] +
-                tuple.families * params[37] +
-                tuple.households * params[38] +
-                tuple.husbwife * params[39] +
-                tuple.males * params[40] +
-                tuple.females * params[41] +
-                tuple.householdschildren * params[42] +
-                tuple.hispanic * params[43];
+                tuple.inventoryunits * params[1] +
+                tuple.subcategory * params[2] +
+                tuple.category * params[3] +
+                tuple.categoryCluster * params[4] +
+                tuple.prize * params[5] +
+                tuple.rain * params[6] +
+                tuple.snow * params[7] +
+                tuple.maxtemp * params[8] +
+                tuple.mintemp * params[9] +
+                tuple.meanwind * params[10] +
+                tuple.thunder * params[11] +
+                tuple.rgn_cd * params[12] +
+                tuple.clim_zn_nbr * params[13] +
+                tuple.tot_area_sq_ft * params[14] +
+                tuple.sell_area_sq_ft * params[15] +
+                tuple.avghhi * params[16] +
+                tuple.supertargetdistance * params[17] +
+                tuple.supertargetdrivetime * params[18] +
+                tuple.targetdistance * params[19] +
+                tuple.targetdrivetime * params[20] +
+                tuple.walmartdistance * params[21] +
+                tuple.walmartdrivetime * params[22] +
+                tuple.walmartsupercenterdistance * params[23] +
+                tuple.walmartsupercenterdrivetime * params[24] +
+                tuple.population * params[25] +
+                tuple.white * params[26] +
+                tuple.asian * params[27] +
+                tuple.pacific * params[28] +
+                tuple.black * params[29] +
+                tuple.medianage * params[30] +
+                tuple.occupiedhouseunits * params[31] +
+                tuple.houseunits * params[32] +
+                tuple.families * params[33] +
+                tuple.households * params[34] +
+                tuple.husbwife * params[35] +
+                tuple.males * params[36] +
+                tuple.females * params[37] +
+                tuple.householdschildren * params[38] +
+                tuple.hispanic * params[39];
 
             error += diff * diff;
         }
@@ -175,7 +171,7 @@ struct ModelEvaluator {
     }
 };
 
-BGDSolver<43, 3> bgd_solver;
+BGDSolver<39, 3> bgd_solver;
 ModelEvaluator model_evaluator;
 
 void Application::on_snapshot(dbtoaster::data_t& data) {

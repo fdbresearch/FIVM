@@ -34,7 +34,7 @@ struct BGDSolver {
 
     inline double count() { return sigma[0][0]; }
 
-    void build_sigma_matrix(const RingCofactor<double, 0, SZ> cofactor) {
+    void build_sigma_matrix(const RingCofactor<0, double, SZ> cofactor) {
         sigma[0][0] = cofactor.count;
 
         for (size_t i = 0; i < SZ; i++) {

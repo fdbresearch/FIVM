@@ -7,7 +7,7 @@
 
 using namespace dbtoaster;
 
-template <typename T, size_t IDX, size_t SZ>
+template <size_t IDX, typename T, size_t SZ>
 struct RingCofactor {
     static constexpr size_t DEG2_SZ = (SZ - 1) * SZ / 2;
 
@@ -35,6 +35,7 @@ struct RingCofactor {
         T *out2 = degree2.data();
         for (size_t i = 0; i < SZ; i++) {
             sum2[i] = sum1[i] * sum1[i];
+
             for (size_t j = i + 1; j < SZ; j++) {
                 *out2++ = sum1[i] * sum1[j];
             }
@@ -57,24 +58,24 @@ struct RingCofactor {
     }
 
     template <size_t IDX2, size_t SZ2>
-    typename std::enable_if<(IDX < IDX2), RingCofactor<T, IDX, SZ + SZ2>>::type
-    operator*(const RingCofactor<T, IDX2, SZ2>& other) const {
-        if (isZero() || other.isZero()) return RingCofactor<T, IDX, SZ + SZ2>();
+    typename std::enable_if<(IDX < IDX2), RingCofactor<IDX, T, SZ + SZ2>>::type
+    operator*(const RingCofactor<IDX2, T, SZ2>& other) const {
+        if (isZero() || other.isZero()) return RingCofactor<IDX, T, SZ + SZ2>();
         return this->multiply(other);
     }
 
     template <size_t IDX2, size_t SZ2>
-    typename std::enable_if<(IDX > IDX2), RingCofactor<T, IDX2, SZ + SZ2>>::type
-    operator*(const RingCofactor<T, IDX2, SZ2>& other) const {
-        if (isZero() || other.isZero()) return RingCofactor<T, IDX2, SZ + SZ2>();
+    typename std::enable_if<(IDX > IDX2), RingCofactor<IDX2, T, SZ + SZ2>>::type
+    operator*(const RingCofactor<IDX2, T, SZ2>& other) const {
+        if (isZero() || other.isZero()) return RingCofactor<IDX2, T, SZ + SZ2>();
         return other.multiply(*this);
     }
 
     template <size_t IDX2, size_t SZ2>
-    RingCofactor<T, IDX, SZ + SZ2> multiply(const RingCofactor<T, IDX2, SZ2>& other) const {
+    RingCofactor<IDX, T, SZ + SZ2> multiply(const RingCofactor<IDX2, T, SZ2>& other) const {
         static_assert(IDX + SZ == IDX2, "Cofactor sizes do not match");
 
-        RingCofactor<T, IDX, SZ + SZ2> r;
+        RingCofactor<IDX, T, SZ + SZ2> r;
         r.count = other.count * count;
 
         for (size_t i = 0; i < SZ; i++) {
@@ -97,7 +98,7 @@ struct RingCofactor {
                 *out2++ = sum1[i] * other.sum1[j];
             }
         }
-        for (size_t i = 0; i < RingCofactor<T, IDX2, SZ2>::DEG2_SZ; i++) {
+        for (size_t i = 0; i < RingCofactor<IDX2, T, SZ2>::DEG2_SZ; i++) {
             *out2++ = count * other.degree2[i];
         }
 
@@ -110,7 +111,7 @@ struct RingCofactor {
     }
 
     RingCofactor multiply(long alpha) const {
-        RingCofactor<T, IDX, SZ> r;
+        RingCofactor<IDX, T, SZ> r;
         if (alpha == 0L) return r;
 
         r.count = alpha * count;
@@ -146,8 +147,8 @@ struct RingCofactor {
     }
 };
 
-template <typename T, size_t IDX, size_t SZ>
-RingCofactor<T, IDX, SZ> operator*(long int alpha, const RingCofactor<T, IDX, SZ>& c) {
+template <size_t IDX, typename T, size_t SZ>
+RingCofactor<IDX, T, SZ> operator*(long int alpha, const RingCofactor<IDX, T, SZ>& c) {
     if (alpha == 1L) return c;
     return c.multiply(alpha);
 }
@@ -156,8 +157,8 @@ template <typename T>
 FORCE_INLINE DOUBLE_TYPE convert(T x) { return x; }
 
 template <size_t IDX, typename... Args>
-RingCofactor<DOUBLE_TYPE, IDX, sizeof...(Args)> Ulift(Args&&... args) {
-    return RingCofactor<DOUBLE_TYPE, IDX, sizeof...(args)>(convert(args)...);
+RingCofactor<IDX, DOUBLE_TYPE, sizeof...(Args)> Ulift(Args&&... args) {
+    return RingCofactor<IDX, DOUBLE_TYPE, sizeof...(args)>(convert(args)...);
 }
 
 #endif /* RINGCOFACTOR_HPP */

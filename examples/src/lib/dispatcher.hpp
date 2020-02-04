@@ -9,6 +9,7 @@
 
 class Dispatcher {
   public:
+    virtual ~Dispatcher() { }
     virtual bool has_next() const = 0;
     virtual void next() = 0;
 };

@@ -2,7 +2,7 @@ IMPORT DTREE FROM FILE 'retailer.txt';
 
 CREATE TYPE RingCofactor
 FROM FILE 'ring/ring_cofactor_degree1.hpp'
-WITH PARAMETER SCHEMA (static, dynamic_min, dynamic_sum);
+WITH PARAMETER SCHEMA (dynamic_min, static, dynamic_sum);
 
 CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
 FROM FILE './datasets/sears/Inventory.tbl' LINE DELIMITED CSV(delimiter := '|');
@@ -20,17 +20,26 @@ CREATE STREAM WEATHER(locn long, dateid long, rain long, snow long, maxtemp long
 FROM FILE './datasets/sears/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 SELECT SUM(
-    [lift<0>: RingCofactor<double,0,1>](locn) *
-    [lift<1>: RingCofactor<double,1,1>](dateid) *
-    [lift<2>: RingCofactor<double,2,1>](ksn) *
-    [lift<3>: RingCofactor<double,3,1>](inventoryunits) *
-    [lift<4>: RingCofactor<double,4,4>](subcategory, category, categoryCluster, prize) *
-    [lift<8>: RingCofactor<double,8,6>](rain, snow, maxtemp, mintemp, meanwind, thunder) *
-    [lift<14>: RingCofactor<double,14,1>](zip) *
-    [lift<15>: RingCofactor<double,15,13>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
-    [lift<28>: RingCofactor<double,28,15>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
+    [lift<0>: RingCofactor<0,double,1>](inventoryunits) *
+    [lift<1>: RingCofactor<1,double,4>](subcategory, category, categoryCluster, prize) *
+    [lift<5>: RingCofactor<5,double,6>](rain, snow, maxtemp, mintemp, meanwind, thunder) *
+    [lift<11>: RingCofactor<11,double,13>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
+    [lift<24>: RingCofactor<24,double,15>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
 )
 FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
+
+-- SELECT SUM(
+--     [lift<0>: RingCofactor<0,double,1>](locn) *
+--     [lift<1>: RingCofactor<1,double,1>](dateid) *
+--     [lift<2>: RingCofactor<2,double,1>](ksn) *
+--     [lift<3>: RingCofactor<3,double,1>](inventoryunits) *
+--     [lift<4>: RingCofactor<4,double,4>](subcategory, category, categoryCluster, prize) *
+--     [lift<8>: RingCofactor<8,double,6>](rain, snow, maxtemp, mintemp, meanwind, thunder) *
+--     [lift<14>: RingCofactor<14,double,1>](zip) *
+--     [lift<15>: RingCofactor<15,double,13>](rgn_cd, clim_zn_nbr, tot_area_sq_ft, sell_area_sq_ft, avghhi, supertargetdistance, supertargetdrivetime, targetdistance, targetdrivetime, walmartdistance, walmartdrivetime, walmartsupercenterdistance, walmartsupercenterdrivetime) *
+--     [lift<28>: RingCofactor<28,double,15>](population, white, asian, pacific, blackafrican, medianage, occupiedhouseunits, houseunits, families, households, husbwife, males, females, householdschildren, hispanic)
+-- )
+-- FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;
 
 -- SELECT SUM(
 --     [lift<0>: RingCofactor<double,0,1>](locn) *

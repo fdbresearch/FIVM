@@ -18,6 +18,8 @@ class IRelation {
     IRelation(string _name, string _path, char _delimiter, bool _static_table) 
         : name(_name), path(_path), delimiter(_delimiter), static_table(_static_table) { }
 
+    virtual ~IRelation() { }
+
     string get_name() { return name; }
     
     bool is_static() { return static_table; }

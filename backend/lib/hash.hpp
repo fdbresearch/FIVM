@@ -155,7 +155,14 @@ namespace hash_tuple {
       }
     };
 
-    template <typename ... TT>
+    template <>
+    struct hash<std::tuple<>> {
+        size_t operator()(std::tuple<> const& tt) const {
+            return 0;
+        }
+    };
+
+    template <typename... TT>
     struct hash<std::tuple<TT...>> {
         size_t operator()(std::tuple<TT...> const& tt) const {
             size_t seed = 0;

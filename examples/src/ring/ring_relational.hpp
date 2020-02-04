@@ -10,17 +10,27 @@
 
 using namespace dbtoaster;
 
+template <typename... Keys>
+using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>;
+
+template <typename... Keys>
+using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
+
 template <size_t Idx, typename... Keys>
 struct RingRelation;
 
 template <size_t Idx, typename... Keys>
 struct VectorRelation {
-    std::vector<std::tuple<std::tuple<Keys...>, long>> store;
+    Vector<Keys...> store;
 
     explicit VectorRelation() { }
 
-    explicit VectorRelation(const Keys&... keys)
-        : store { std::make_tuple(std::make_tuple(keys...), 1L) } { }
+    template <typename K, typename... Ks>
+    explicit VectorRelation(const K& k, const Ks&... ks)
+        : store { std::make_tuple(std::make_tuple(k, ks...), 1L) } { }
+
+    explicit VectorRelation(const std::tuple<Keys...>& keys)
+        : store { std::make_tuple(keys, 1L) } { }
 
     inline bool isZero() const { return store.empty(); }
 
@@ -97,9 +107,16 @@ VectorRelation<Idx, Keys...> operator*(long alpha, VectorRelation<Idx, Keys...>&
 
 template <size_t Idx, typename... Keys>
 struct RingRelation {
-    std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>> store;
+    Map<Keys...> store;
 
     explicit RingRelation() { }
+
+    template <typename K, typename... Ks>
+    explicit RingRelation(const K& k, const Ks&... ks)
+        : store { { std::make_tuple(k, ks...), 1L } } { }
+
+    explicit RingRelation(const std::tuple<Keys...>& keys)
+        : store { { keys, 1L } } { }
 
     inline bool isZero() const { return store.empty(); }
 
