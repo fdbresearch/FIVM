@@ -2,7 +2,7 @@ IMPORT DTREE FROM FILE 'housing.txt';
 
 CREATE TYPE RingCofactor
 FROM FILE 'ring/ring_cofactor_degree1.hpp'
-WITH PARAMETER SCHEMA (static, dynamic_min, dynamic_sum);
+WITH PARAMETER SCHEMA (dynamic_min, static, dynamic_sum);
 
 CREATE STREAM HOUSE(postcode double, livingarea double, price double, nbbedrooms double, nbbathrooms double, kitchensize double, house double, flat double, unknown double, garden double, parking double)
 FROM FILE './datasets/housing/House.tbl' LINE DELIMITED CSV(delimiter := '|');
@@ -23,13 +23,13 @@ CREATE STREAM TRANSPORT(postcode double, nbbuslines double, nbtrainstations doub
 FROM FILE './datasets/housing/Transport.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 SELECT SUM(
-    [lift<0>: RingCofactor<double,0,1>](postcode) *
-    [lift<1>: RingCofactor<double,1,10>](house, flat, unknown, parking, nbbedrooms, nbbathrooms, garden, kitchensize, livingarea, price) *
-    [lift<11>: RingCofactor<double,11,5>](sainsburys, tesco, ms, pricerangeshop, openinghoursshop) *
-    [lift<16>: RingCofactor<double,16,2>](typeeducation, sizeinstitution) *
-    [lift<18>: RingCofactor<double,18,2>](pricerangerest, openinghoursrest) *    
-    [lift<20>: RingCofactor<double,20,4>](unemployment, nbhospitals, crimesperyear, averagesalary) *
-    [lift<24>: RingCofactor<double,24,3>](nbbuslines, nbtrainstations, distancecitycentre)
+    [lift<0>: RingCofactor<0,double,1>](postcode) *
+    [lift<1>: RingCofactor<1,double,10>](house, flat, unknown, parking, nbbedrooms, nbbathrooms, garden, kitchensize, livingarea, price) *
+    [lift<11>: RingCofactor<11,double,5>](sainsburys, tesco, ms, pricerangeshop, openinghoursshop) *
+    [lift<16>: RingCofactor<16,double,2>](typeeducation, sizeinstitution) *
+    [lift<18>: RingCofactor<18,double,2>](pricerangerest, openinghoursrest) *    
+    [lift<20>: RingCofactor<20,double,4>](unemployment, nbhospitals, crimesperyear, averagesalary) *
+    [lift<24>: RingCofactor<24,double,3>](nbbuslines, nbtrainstations, distancecitycentre)
 )
 FROM HOUSE NATURAL JOIN SHOP NATURAL JOIN INSTITUTION NATURAL JOIN RESTAURANT NATURAL JOIN DEMOGRAPHICS NATURAL JOIN TRANSPORT;
 
