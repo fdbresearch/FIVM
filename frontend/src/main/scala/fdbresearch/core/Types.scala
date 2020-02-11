@@ -23,7 +23,7 @@ case object TypeByte extends Type {
     case _ => throw TypeMismatchException("Type mismatch (" + this + ", " + b + ")")
   }
 
-  override def toString = "char"
+  override def toString = "byte"
 }
 
 case object TypeShort extends Type {

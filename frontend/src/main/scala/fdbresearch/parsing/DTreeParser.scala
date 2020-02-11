@@ -23,13 +23,14 @@ class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
 
   // ------------ Types
   override lazy val tpe: Parser[Type] = (
-      "char" ^^^ TypeChar
+      "byte" ^^^ TypeByte
     | "short" ^^^ TypeShort
     | "int" ^^^ TypeInt
     | "long" ^^^ TypeLong
     | "float" ^^^ TypeFloat
     | "double" ^^^ TypeDouble
     | "date" ^^^ TypeDate
+    | "char" ^^^ TypeChar
     | "string" ^^^ TypeString
   )
 

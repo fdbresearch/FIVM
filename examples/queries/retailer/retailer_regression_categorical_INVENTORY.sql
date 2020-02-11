@@ -4,20 +4,20 @@ CREATE TYPE RingCofactorMixed
 FROM FILE 'ring/ring_cofactor_degree1_categorical.hpp'
 WITH PARAMETER SCHEMA (dynamic_min, dynamic_sum, dynamic_sum);
 
-CREATE STREAM INVENTORY(locn long, dateid long, ksn double, inventoryunits double)
-FROM FILE './datasets/sears/Inventory.tbl' LINE DELIMITED CSV(delimiter := '|');
+CREATE STREAM INVENTORY(locn int, dateid int, ksn int, inventoryunits int)
+FROM FILE './datasets/retailer/Inventory.tbl' LINE DELIMITED CSV(delimiter := '|');
 
-CREATE TABLE LOCATION(locn long, zip long, rgn_cd double, clim_zn_nbr double, tot_area_sq_ft double, sell_area_sq_ft double, avghhi double, supertargetdistance double, supertargetdrivetime double, targetdistance double, targetdrivetime double, walmartdistance double, walmartdrivetime double, walmartsupercenterdistance double, walmartsupercenterdrivetime double)
-FROM FILE './datasets/sears/Location.tbl' LINE DELIMITED CSV(delimiter := '|');
+CREATE TABLE LOCATION(locn int, zip int, rgn_cd int, clim_zn_nbr int, tot_area_sq_ft int, sell_area_sq_ft int, avghhi int, supertargetdistance double, supertargetdrivetime double, targetdistance double, targetdrivetime double, walmartdistance double, walmartdrivetime double, walmartsupercenterdistance double, walmartsupercenterdrivetime double)
+FROM FILE './datasets/retailer/Location.tbl' LINE DELIMITED CSV(delimiter := '|');
 
-CREATE TABLE CENSUS(zip long, population long, white long, asian long, pacific long, blackafrican long, medianage double, occupiedhouseunits long, houseunits long, families long, households long, husbwife long, males long, females long, householdschildren long, hispanic long)
-FROM FILE './datasets/sears/Census.tbl' LINE DELIMITED CSV(delimiter := '|');
+CREATE TABLE CENSUS(zip int, population int, white int, asian int, pacific int, blackafrican int, medianage double, occupiedhouseunits int, houseunits int, families int, households int, husbwife int, males int, females int, householdschildren int, hispanic int)
+FROM FILE './datasets/retailer/Census.tbl' LINE DELIMITED CSV(delimiter := '|');
 
-CREATE TABLE ITEM(ksn double, subcategory long, category long, categoryCluster long, prize double) 
-FROM FILE './datasets/sears/Item.tbl' LINE DELIMITED CSV(delimiter := '|');
+CREATE TABLE ITEM(ksn int, subcategory byte, category byte, categoryCluster byte, prize double) 
+FROM FILE './datasets/retailer/Item.tbl' LINE DELIMITED CSV(delimiter := '|');
 
-CREATE TABLE WEATHER(locn long, dateid long, rain long, snow long, maxtemp long, mintemp long, meanwind double, thunder long) 
-FROM FILE './datasets/sears/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
+CREATE TABLE WEATHER(locn int, dateid int, rain byte, snow byte, maxtemp int, mintemp int, meanwind double, thunder byte) 
+FROM FILE './datasets/retailer/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 SELECT SUM(
     [liftCont<0>: RingCofactorMixed<0,1,0>](inventoryunits) *
