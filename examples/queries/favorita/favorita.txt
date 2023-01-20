@@ -1,0 +1,25 @@
+18 6
+0 date int -1 {} 0
+1 store int 0 {0} 0
+2 item int 1 {0,1} 0
+3 unit_sales double 2 {0,1,2} 0
+4 onpromotion int 3 {0,1,2,3} 0
+5 oilprize double 0 {0} 0
+6 holiday_type int 0 {0} 0
+7 locale int 6 {0,6} 0
+8 locale_id int 7 {0,6,7} 0
+9 transferred int 8 {0,6,7,8} 0
+10 transactions int 1 {0,1} 0
+11 city int 1 {1} 1
+12 state int 11 {1,11} 0 
+13 store_type int 12 {1,11,12} 0
+14 cluster int 13 {1,11,12,13} 0
+15 family int 2 {2} 1
+16 itemclass int 15 {2,15} 0
+17 perishable int 16 {2,15,16} 0
+SALES 4 date,store,item,unit_sales,onpromotion
+OIL 5 date,oilprize
+HOLIDAY 9 date,holiday_type,locale,locale_id,transferred
+TRANSACTIONS 10 date,store,transactions
+STORES 14 store,city,state,store_type,cluster
+ITEMS 17 item,family,itemclass,perishable
