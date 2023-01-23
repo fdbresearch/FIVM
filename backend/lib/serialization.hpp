@@ -28,13 +28,13 @@ namespace dbtoaster {
 
     template <typename Archive, class Tuple, size_t Pos>
     Archive& print_tuple(Archive& ar, const Tuple& t, int_<Pos> ) {
-      ar << std::setprecision(15) << +std::get< std::tuple_size<Tuple>::value - Pos>(t) << ", ";
+      ar << std::setprecision(15) << std::get< std::tuple_size<Tuple>::value - Pos>(t) << ", ";
       return print_tuple(ar, t, int_<Pos - 1>());
     }
 
     template <typename Archive, class Tuple>
     Archive& print_tuple(Archive& ar, const Tuple& t, int_<1> ) {
-      return ar << +std::get<std::tuple_size<Tuple>::value - 1>(t);
+      return ar << std::get<std::tuple_size<Tuple>::value - 1>(t);
     }
 
     template <typename Archive, class... Args>
