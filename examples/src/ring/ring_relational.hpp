@@ -25,12 +25,12 @@ struct VectorRelation {
 
     explicit VectorRelation() { }
 
-    template <typename K, typename... Ks>
-    explicit VectorRelation(const K& k, const Ks&... ks)
-        : store { std::make_tuple(std::make_tuple(k, ks...), 1L) } { }
+    explicit VectorRelation(size_t n) {
+        store.reserve(n);
+    }
 
-    explicit VectorRelation(const std::tuple<Keys...>& keys)
-        : store { std::make_tuple(keys, 1L) } { }
+    explicit VectorRelation(const std::tuple<Keys...>& key)
+        : store { std::make_tuple(key, 1L) } { }
 
     inline bool isZero() const { return store.empty(); }
 
@@ -64,7 +64,7 @@ struct VectorRelation {
 
     template <size_t Idx2, typename... Keys2>
     VectorRelation<Idx, Keys..., Keys2...> multiply(const VectorRelation<Idx2, Keys2...>& other) const {
-        VectorRelation<Idx, Keys..., Keys2...> r;
+        VectorRelation<Idx, Keys..., Keys2...> r(store.size() * other.store.size());
         for (auto &t1 : store)
             for (auto &t2 : other.store)
                 r.store.push_back(
@@ -76,7 +76,7 @@ struct VectorRelation {
 
     template <size_t Idx2, typename... Keys2>
     VectorRelation<Idx, Keys..., Keys2...> multiply(const RingRelation<Idx2, Keys2...>& other) const {
-        VectorRelation<Idx, Keys..., Keys2...> r;
+        VectorRelation<Idx, Keys..., Keys2...> r(store.size() * other.store.size());
         for (auto &t2 : other.store)
             for (auto &t1 : store)
                 r.store.push_back(
@@ -92,7 +92,7 @@ struct VectorRelation {
     }
 
     VectorRelation multiply(long alpha) const {
-        VectorRelation<Idx, Keys...> r;
+        VectorRelation<Idx, Keys...> r(store.size());
         for (auto &t : store)
             r.store.push_back(std::make_tuple(std::get<0>(t), std::get<1>(t) * alpha));
         return r;
@@ -245,7 +245,7 @@ RingRelation<Idx, Keys...> operator*(long alpha, RingRelation<Idx, Keys...>&& r)
 
 template <size_t Idx, typename... Args>
 VectorRelation<Idx, typename std::remove_cv<Args>::type...> Ulift(Args&... args) {
-    return VectorRelation<Idx, typename std::remove_cv<Args>::type...>(args...);
+    return VectorRelation<Idx, typename std::remove_cv<Args>::type...>(std::make_tuple(args...));
 }
 
 #endif /* RINGRELATIONAL_HPP */

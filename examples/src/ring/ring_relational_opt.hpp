@@ -69,7 +69,24 @@ struct RelationMap {
 
     template <typename... Args>
     inline void apply(const Container<Idx, Args...>& c) {
-        apply(c, std::tuple<>(), c.scale, Int<sizeof...(Args)>());
+        // apply(c, std::tuple<>(), c.scale, Int<sizeof...(Args)>());
+        apply2(c, c.scale, Int<sizeof...(Args)>());
+    }
+
+    template <size_t N, typename... Args, typename... TupleKeys>
+    inline void apply2(const Container<Idx, Args...>& c, long value, Int<N>, TupleKeys&&... keys) {
+        for (auto &it : std::get<N-1>(c.values).store) {
+            apply2(c, std::get<1>(it) * value, Int<N-1>(), std::get<0>(it), std::forward<decltype(keys)>(keys)...);
+        }
+    }
+
+    template <typename... Args, typename... TupleKeys>
+    inline void apply2(const Container<Idx, Args...>& c, long value, Int<1>, TupleKeys&&... keys) {
+        for (auto &it : std::get<0>(c.values).store) {
+            auto t = std::tuple_cat(std::get<0>(it), std::forward<decltype(keys)>(keys)...);
+            store[t] += std::get<1>(it) * value;
+            if (store[t] == 0L) this->store.erase(t);
+        }
     }
 
     template <typename Key, size_t N, typename... Args>

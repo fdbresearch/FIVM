@@ -1,7 +1,7 @@
 #ifndef RINGFACTORIZED_HPP
 #define RINGFACTORIZED_HPP
 
-#include <vector>
+#include <array>
 #include <unordered_map>
 #include <tuple>
 #include <type_traits>
@@ -11,7 +11,7 @@
 using namespace dbtoaster;
 
 template <typename... Keys>
-using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>;
+using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, long>, 1>;
 
 template <typename... Keys>
 using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
@@ -23,16 +23,18 @@ template <size_t, typename>
 struct FactoryAccumulator;
 
 template <size_t Idx, typename... Keys>
-struct RelationVector {
-    Vector<Keys...> store;
-    long count;
+struct SingletonRelation {
+    SingletonArray<Keys...> store;
+    static long count;
 
-    explicit RelationVector(const Keys&... keys, long value)
-        : store(Vector<Keys...> { std::make_pair(std::make_tuple(keys...), value) })
-        , count(1L) { }
+    explicit SingletonRelation(const Keys&... keys, long value)
+        : store { std::make_pair(std::make_tuple(keys...), value) } { }
 
-    inline bool isZero() const { return count == 0L; }
+    inline bool isZero() const { return false; }
 };
+
+template <size_t Idx, typename... Keys>
+long SingletonRelation<Idx, Keys...>::count = 1L;
 
 template <size_t Idx, typename... Keys>
 struct RelationMap {
@@ -203,8 +205,8 @@ operator*(Accumulator<Idx, T>&& a, Accumulator<Idx2, T2>&& b) {
 
 // LIFTING FUNCTION
 template <size_t Idx, typename... Args>
-Accumulator<Idx, RelationVector<Idx, Args...>> Ulift(Args&... args) {
-    return FactoryAccumulator<Idx, RelationVector<Idx, Args...>>::create(RelationVector<Idx, Args...>(args..., 1L));
+Accumulator<Idx, SingletonRelation<Idx, Args...>> Ulift(Args&... args) {
+    return FactoryAccumulator<Idx, SingletonRelation<Idx, Args...>>::create(SingletonRelation<Idx, Args...>(args..., 1L));
 }
 
 template <size_t Idx, typename... Keys>
