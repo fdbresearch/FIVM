@@ -1,7 +1,7 @@
 #ifndef RINGRELATIONAL_OPT_HPP
 #define RINGRELATIONAL_OPT_HPP
 
-#include <vector>
+#include <array>
 #include <unordered_map>
 #include <tuple>
 #include <type_traits>
@@ -12,20 +12,25 @@
 using namespace dbtoaster;
 
 template <typename... Keys>
-using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>;
+using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, long>, 1>;
 
 template <typename... Keys>
 using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
 
 template <size_t Idx, typename... Keys>
-struct RelationVector {
-    Vector<Keys...> store;
+struct SingletonRelation {
+    SingletonArray<Keys...> store;
+    static long count;
 
-    explicit RelationVector(const Keys&... keys, long value)
-        : store(Vector<Keys...> { std::make_pair(std::make_tuple(keys...), value) }) { }
+    explicit SingletonRelation(const Keys&... keys, long value)
+        : store { std::make_pair(std::make_tuple(keys...), value) } { }
 
-    inline bool isZero() const { return store.empty(); }
+    inline bool isZero() const { return std::get<1>(store[0]) == 0L; }
 };
+
+template <size_t Idx, typename... Keys>
+long SingletonRelation<Idx, Keys...>::count = 1L;
+
 
 template <size_t Idx, typename... Keys>
 struct RelationMap {
@@ -146,8 +151,8 @@ Container<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, RelationM
 
 // LIFTING FUNCTION
 template <size_t Idx, typename... Args>
-Container<Idx, RelationVector<Idx, Args...>> Ulift(Args&... args) {
-    return FactoryContainer<Idx, RelationVector<Idx, Args...>>::create(RelationVector<Idx, Args...>(args..., 1L));
+Container<Idx, SingletonRelation<Idx, Args...>> Ulift(Args&... args) {
+    return FactoryContainer<Idx, SingletonRelation<Idx, Args...>>::create(SingletonRelation<Idx, Args...>(args..., 1L));
 }
 
 template <size_t Idx, typename... Keys>
