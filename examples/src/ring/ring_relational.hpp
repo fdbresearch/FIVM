@@ -147,6 +147,12 @@ struct RingRelation {
         return *this;
     }
 
+    template <size_t Idx2>
+    RingRelation& operator=(const RingRelation<Idx2, Keys...> & other) {
+        store = other.store;
+        return *this;
+    }
+
     RingRelation& operator=(const VectorRelation<Idx, Keys...>& other) {
         store.clear();
         for (auto &t : other.store)
