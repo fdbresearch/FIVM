@@ -108,12 +108,11 @@ void Application::process_streams_snapshot(dbtoaster::data_t& data, long snapsho
     long next_snapshot = 0;
 
     while (dynamic_multiplexer.has_next()) {
-        dynamic_multiplexer.next();
-
         if (data.tN >= next_snapshot) {
             on_snapshot(data);
             next_snapshot = data.tN + snapshot_interval;
         }
+        dynamic_multiplexer.next();
     }
 
     if (next_snapshot != data.tN + snapshot_interval) {
