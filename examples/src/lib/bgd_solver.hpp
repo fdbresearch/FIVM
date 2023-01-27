@@ -20,10 +20,15 @@ struct BGDSolver {
     double lambda;
     
     BGDSolver() {
+        reset();
+    }
+
+    void reset() {
         memset(sigma, 0, sizeof(sigma));
-        for(size_t i = 0; i < NUM_PARAMS; i++) {
-            params[i] = ((double) (rand() % 800 + 1) - 400) / 100;
-        }
+        memset(params, 0, sizeof(params));
+        // for(size_t i = 0; i < NUM_PARAMS; i++) {
+        //     params[i] = ((double) (rand() % 800 + 1) - 400) / 100;
+        // }
         params[LABEL_IDX] = -1;
         memset(grad, 0, sizeof(grad));
         memset(prev_params, 0, sizeof(prev_params));
@@ -184,10 +189,15 @@ struct BGDSolver {
                 break;
             }
 
+            if (abs(error-prev_error) < 1e-8) {
+                break;
+            }
+
             compute_gradient();
             step_size = compute_step_size(step_size);
             prev_error = error;
             num_iterations++;
+
         } while (num_iterations < 1000);
     }
 };
