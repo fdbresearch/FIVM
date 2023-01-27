@@ -174,7 +174,7 @@ struct ModelEvaluator {
 
 // ModelEvaluator model_evaluator;
 
-BGDSolver<39, 3> bgd_solver;
+BGDSolver<39, 0> bgd_solver;
 
 long total_num_training = 0L;
 long total_num_iterations = 0L;
@@ -185,8 +185,7 @@ void train(
         size_t &num_iterations /* out */, 
         double &error /* out */,
         long &train_time_ms /* out */
-    ) 
-{
+    ) {
     Stopwatch sw;
     sw.restart();
 
