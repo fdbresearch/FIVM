@@ -16,8 +16,8 @@ struct RingCofactor {
     static constexpr size_t SZ_RELATION_ARRAY_CAT_CAT = NUM_CAT * (NUM_CAT - 1) / 2;
 
     int count;
-    std::array<double, SZ_SCALAR_ARRAY> scalar_array;
-    std::array<Dictionary, SZ_RELATION_ARRAY> relation_array;
+    std::array<double, SZ_SCALAR_ARRAY> scalar_array{};
+    std::array<Dictionary, SZ_RELATION_ARRAY> relation_array{};
 
     explicit RingCofactor() : count(0) { } 
 
