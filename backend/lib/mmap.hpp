@@ -13,6 +13,7 @@
 #include <iostream>
 #include <functional>
 #include <string>
+#include <vector>
 
 #include "types.hpp"
 #include "macro.hpp"
@@ -554,6 +555,8 @@ class MultiHashMap {
   PRIMARY_INDEX* primary_index;
   SecondaryIndex<T>** secondary_indexes;
 
+  std::vector<T*> buffered_inserts;
+
   inline void insert(const T& elem, HASH_RES_t h) { // the element is not in the map
     T* curr = pool->newElement(elem);
     curr->prv = nullptr;
@@ -562,8 +565,10 @@ class MultiHashMap {
     head = curr;
 
     primary_index->insert(curr, h);
-    for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++)
-      secondary_indexes[i]->insert(curr);
+
+    buffered_inserts.push_back(curr);
+    // for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++)
+    //   secondary_indexes[i]->insert(curr);
   }
 
   void erase(T* elem, HASH_RES_t h) { // the element is already in the map
@@ -582,6 +587,13 @@ class MultiHashMap {
     primary_index->erase(elem, h);
     for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++)
       secondary_indexes[i]->erase(elem);
+
+    for (typename std::vector<T*>::iterator it = buffered_inserts.begin(); it != buffered_inserts.end(); ++it) {
+      if (elem == *it) {
+        buffered_inserts.erase(it); // inefficient but OK
+        break;
+      }
+    }
 
     pool->deleteElement(elem);
   }
@@ -632,6 +644,8 @@ class MultiHashMap {
     primary_index->clear();
     for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++)
       secondary_indexes[i]->clear();
+    buffered_inserts.clear();
+
         
     // delete all elements
     T *curr = head;
@@ -684,6 +698,14 @@ class MultiHashMap {
   }
 
   inline const LinkedNode<T>* slice(const T& k, size_t idx) {
+    if (buffered_inserts.size() > 0) {
+      for (typename std::vector<T*>::iterator it = buffered_inserts.begin(); it != buffered_inserts.end(); ++it) {
+        for (size_t i = 0; i < sizeof...(SECONDARY_INDEXES); i++) {
+          secondary_indexes[i]->insert(*it);
+        }
+      }
+      buffered_inserts.clear();
+    }
     return secondary_indexes[idx]->slice(k);
   }    
 
