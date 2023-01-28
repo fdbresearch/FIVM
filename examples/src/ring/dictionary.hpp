@@ -15,7 +15,7 @@ static_assert(sizeof(Tuple) == 16, "size of Tuple not 16 bytes");
 struct Dictionary {
     std::vector<Tuple> tuples;
 
-    explicit Dictionary() { }
+    Dictionary() { }
 
     explicit Dictionary(size_t n) {
         tuples.reserve(n);
