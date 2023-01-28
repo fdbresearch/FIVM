@@ -7,6 +7,17 @@
 #include "dispatcher.hpp"
 #include "relation.hpp"
 
+#ifdef LOG_MEMORY_INFO
+    #include "memory.hpp"
+    #define START_HEAP_PROFILE startHeapProfiler("MAIN");
+    #define STOP_HEAP_PROFILE stopHeapProfiler();
+    #define DUMP_HEAP_PROFILE dumpHeapProfile("APPLICATION");
+#else
+    #define START_HEAP_PROFILE
+    #define STOP_HEAP_PROFILE
+    #define DUMP_HEAP_PROFILE
+#endif
+
 using namespace dbtoaster;
 
 class Application {
@@ -87,20 +98,51 @@ void Application::clear_dispatchers() {
 }
 
 void Application::process_tables(dbtoaster::data_t& data) {
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory before process_tables" << std::flush;
+        DUMP_HEAP_PROFILE
+    #endif
+
     while (static_multiplexer.has_next()) {
         static_multiplexer.next();
     }
+
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory after process_tables: " << std::flush;
+        DUMP_HEAP_PROFILE
+    #endif
 }
 
 void Application::process_on_system_ready(dbtoaster::data_t& data) {
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory before on_system_ready: " << std::flush;
+        DUMP_HEAP_PROFILE
+    #endif
+
     data.on_system_ready_event();
+
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory after on_system_ready: " << std::flush;
+        DUMP_HEAP_PROFILE
+    #endif
+
 }
 
 void Application::process_streams(dbtoaster::data_t& data) {
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory before process_streams: " << std::flush;
+        DUMP_HEAP_PROFILE
+    #endif
+
     #ifdef SNAPSHOT_INTERVAL
         process_streams_snapshot(data, SNAPSHOT_INTERVAL);
     #else
         process_streams_no_snapshot(data);
+    #endif
+
+    #ifdef LOG_MEMORY_INFO
+        std::cout << "Memory after process_streams: " << std::flush;
+        DUMP_HEAP_PROFILE
     #endif
 }
 
