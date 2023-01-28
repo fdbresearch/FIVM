@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sys/time.h>
 #include "stopwatch.hpp"
 #include "dispatcher.hpp"
 #include "relation.hpp"
@@ -53,6 +54,8 @@ class Application {
     void on_end_processing(dbtoaster::data_t& data, bool print_result);
 
     void print_result(dbtoaster::data_t& data);
+
+    void print_checkpoint(dbtoaster::data_t& data);
 
   public:
     Application() { }
@@ -166,6 +169,14 @@ void Application::process_streams_no_snapshot(dbtoaster::data_t& data) {
     while (dynamic_multiplexer.has_next()) {
         dynamic_multiplexer.next();
     }
+}
+
+void Application::print_checkpoint(dbtoaster::data_t& data) {
+    struct timeval tp;
+    gettimeofday(&tp, nullptr);
+    std::cout << data.tN << " tuples processed at "
+            << tp.tv_sec * 1000 + tp.tv_usec / 1000
+            << " ms" << std::endl;
 }
 
 void Application::run(size_t num_of_runs, bool print_result) {

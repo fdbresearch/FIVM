@@ -205,30 +205,42 @@ void train(
     total_train_time_ms += train_time_ms;
 }
 
+size_t output_semaphore = 0;
+
 void Application::on_snapshot(dbtoaster::data_t& data) {
-#ifdef ON_SNAPSHOT_CHECKPOINT
-    struct timeval tp;
-    gettimeofday(&tp, nullptr);
-    std::cout << data.tN << " tuples processed at "
-              << tp.tv_sec * 1000 + tp.tv_usec / 1000
-              << " ms" << std::endl;
+    bool can_print = (output_semaphore == 0);
+
+#ifdef CHECKPOINT_SUPPRESS_FACTOR
+    if (output_semaphore == 0) {
+        output_semaphore = CHECKPOINT_SUPPRESS_FACTOR;
+    }
+    --output_semaphore;
 #endif
+
+#ifdef ON_SNAPSHOT_CHECKPOINT
+    if (can_print) {
+        print_checkpoint(data);
+    }
+#endif
+
 #ifdef ON_SNAPSHOT_TRAIN
     size_t num_iterations = 0;
     double error = 0;
     long train_time_ms;
     train(data, num_iterations, error, train_time_ms);
 
-#ifdef ON_SNAPSHOT_TRAIN_CHECKPOINT
-    std::cout << "tuples = " << data.tN
-              << "   num_iterations: " << num_iterations 
-              << "   train_time_ms = " << train_time_ms
-              << "   error: " << error               
-              << "   total_num_training = " << total_num_training
-              << "   total_num_iterations = " << total_num_iterations
-              << "   total_train_time_ms = " << total_train_time_ms
-              << std::endl;
-#endif
+    #ifdef ON_SNAPSHOT_TRAIN_CHECKPOINT
+        if (can_print) {
+            std::cout << "tuples = " << data.tN
+                    << "   num_iterations: " << num_iterations
+                    << "   train_time_ms = " << train_time_ms
+                    << "   error: " << error
+                    << "   total_num_training = " << total_num_training
+                    << "   total_num_iterations = " << total_num_iterations
+                    << "   total_train_time_ms = " << total_train_time_ms
+                    << std::endl;
+        }
+    #endif
 #endif
 }
 
@@ -237,6 +249,7 @@ void Application::on_begin_processing(dbtoaster::data_t& data) {
     total_num_training = 0L;
     total_num_iterations = 0L;
     total_train_time_ms = 0L;
+    output_semaphore = 0;
 
     // double rmse = model_evaluator.compute_rmse(bgd_solver.params);
     // std::cout << "RMSE: " << rmse << std::endl;
