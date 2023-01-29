@@ -87,6 +87,9 @@ class Parser extends StandardTokenParsers {
   lazy val genericParam: Parser[GenericParameter] =
     (  intLit ^^ { i => ConstParameter(i.toInt) }
     |  tpe ^^ { t => PrimitiveTypeParameter(t) }
+    |  "[" ~> intLit <~ "]" ^^ {
+          case p => PrioritizedParameterList(p.toInt, Nil)
+       }
     |  "[" ~> (intLit <~ ",") ~ rep1sep(genericParam, ",") <~ "]" ^^ {
           case p ~ l => PrioritizedParameterList(p.toInt, l)
        }
