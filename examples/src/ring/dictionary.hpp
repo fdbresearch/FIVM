@@ -60,12 +60,12 @@ struct Dictionary {
         return r;
     }
 
-    Dictionary operator*(long alpha) const {
-        if (alpha == 0L) return Dictionary();
+    Dictionary operator*(double alpha) const {
+        if (alpha == 0.0) return Dictionary();
         return multiply(alpha);
     }
 
-    Dictionary multiply(long alpha) const {
+    Dictionary multiply(double alpha) const {
         Dictionary r(tuples.size());
         for (size_t i = 0; i < tuples.size(); i++) {
             Tuple t = {
