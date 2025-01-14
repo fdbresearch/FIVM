@@ -17,9 +17,12 @@ import fdbresearch.util.Utils
   *
   * @author Milos Nikolic
   */
+
+case class Variable(name: String, tp: Type)
+
 case class View( name: String,
                  tp: Type,
-                 freeVars: List[DTreeVariable],
+                 freeVars: List[Variable],
                  link: Tree[DTreeNode],
                  terms: List[M3.Expr] ) {
   override def toString: String =
@@ -41,7 +44,7 @@ object ViewTree {
       (in ++ out).map(_._1).toSet
     }
 
-    def isCovered(vars: Set[DTreeVariable]): Boolean =
+    def isCovered(vars: Set[Variable]): Boolean =
       getVariables.subsetOf(vars.map(_.name))
   }
 
@@ -51,7 +54,7 @@ object ViewTree {
     val dtreeVars = dtree.getVariables
     assert(freeVars.subsetOf(dtreeVars.map(_.name).toSet))
 
-    val variableMap = dtreeVars.map(v => v.name -> v).toMap
+    val variableMap = dtreeVars.map(v => v.name -> Variable(v.name, v.tp)).toMap
 
     // Build view tree from dtree
     dtree.map2WithPostChildren[View] { (tree, children) =>
@@ -59,22 +62,25 @@ object ViewTree {
       // All available variables at current node
       val availableVars = tree.node match {
         case _: DTreeVariable => children.flatMap(_.node.freeVars).distinct
-        case r: DTreeRelation => r.keys
+        case r: DTreeRelation => r.keys.map(k => Variable(k.name, k.tp))
       }
 
       // Find where conditions at current node. Push conditions down in the tree
       val (nodeWhTerms, restWhTerms) = {
-        val childRelationKeys = children.map(_.getRelations.flatMap(_.keys).toSet)
+        val childRelationKeys = children.map(c =>
+          c.getRelations.flatMap(r =>
+            r.keys.map(k => Variable(k.name, k.tp))
+          ).toSet
+        )
         whConds.filter(w => !childRelationKeys.exists(w.isCovered))
           .partition(_.isCovered(availableVars.toSet))
       }
 
       // Find SUM functions at current node. Push functions up in the tree
       val (nodeSumTerms, restSumTerms) = {
-        val nodeDTreeVars = tree.getVariables.toSet
-        val childDTreeVars = tree.children.flatMap(_.getVariables).toSet
-        sumFuns.filter(!_.isCovered(childDTreeVars))
-          .partition(_.isCovered(nodeDTreeVars))
+        val nodeVars = tree.getVariables.map(v => Variable(v.name, v.tp)).toSet
+        val childVars = tree.children.flatMap(_.getVariables).map(v => Variable(v.name, v.tp)).toSet
+        sumFuns.filter(!_.isCovered(childVars)).partition(_.isCovered(nodeVars))
       }
 
       // Merge where conditions and sum functions
@@ -92,8 +98,8 @@ object ViewTree {
         availableVars.map(_.name).filter(nodeFreeVars.contains).map(variableMap.apply)
 
       // Construct view name
-      val relations = tree.getRelations.map(_.name.head).mkString
-      val viewName = Utils.fresh("V_" + tree.node.name + "_" + relations)
+      val suffix = tree.getRelations.map(_.name.head).mkString
+      val viewName = Utils.fresh("V_" + tree.node.name + "_" + suffix)
 
       // Determine view type
       val viewType = tree.node match {
