@@ -19,6 +19,8 @@ class Tree[A](val node: A, private var _parent: Option[Tree[A]],
 
   def parent: Option[Tree[A]] = _parent
 
+  def setParent(p: Tree[A]) = _parent = Some(p)
+
   val children: List[Tree[A]] = childrenFactory(this)
 
   def isRoot: Boolean = parent.isEmpty
