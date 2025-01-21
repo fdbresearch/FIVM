@@ -10,9 +10,10 @@
 package fdbresearch
 
 import fdbresearch.parsing.{DTreeParser, SQLParser}
-import fdbresearch.util.Logger
-import java.io.File
 import fdbresearch.tree.DTree
+import fdbresearch.util.Logger
+
+import java.io.File
 
 object Main extends App {
 
@@ -60,14 +61,13 @@ object Main extends App {
       val sql = parseSQL(sqlFile)
       Logger.instance.debug("SQL AST: " + sql.toString)
 
-      val dtreeFile = new File(sqlFile.getParentFile.getAbsolutePath, sql.dtree.file.path)
-      val dtree = parseDTree(dtreeFile)
+      //val dtreeFile = new File(sqlFile.getParentFile.getAbsolutePath, sql.dtree.file.path)
+      //val dtree = parseDTree(dtreeFile)
 
-      // Here we need to create the dtree using the sql object instead of the dtreeFile
-      val newDTree = DTree.apply(sql)
-      Logger.instance.debug("DTREE AST: " + dtree.toString)
+      val dTree = DTree.apply(sql)
+      Logger.instance.debug("DTREE AST: " + dTree.toString)
 
-      val output = new Driver().compile(sql, newDTree, config.batchUpdates)
+      val output = new Driver().compile(sql, dTree, config.batchUpdates)
       config.outputM3 match {
         case Some(file) => new java.io.PrintWriter(file) {
           write(output); close()

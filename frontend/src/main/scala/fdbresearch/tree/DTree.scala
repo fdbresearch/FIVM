@@ -50,15 +50,15 @@ object DTree {
 
   def apply(sql: SQL.System): Tree[DTreeNode] = {
 
-    // Creates list of variables as DTreeNodes
+    // Creates list of variables as DTreeNodes for all variables from the query's relations
     val variables = sql.sources.flatMap(s => s.schema.fields.map(v => DTreeVariable(v._1, v._2, Nil)))
-    // Make them all into key-value pairs and then convert them to a map
+    // Convert them to key-value pairs in a Map
     val variableMap = variables.map(v => v.name -> v).toMap
     // Creates tuples in the form (DTreeVariable, (1, -i) where i is the index of the field stored in the DTreeVariable
     val varScores = sql.sources.flatMap(s => s.schema.fields.zipWithIndex.map { case (f, i) => variableMap(f._1) -> (1, -i) })
 
     // Order variables by the number of relations in which they appear
-    // Resolve ties by preserving the order of variables in a relation todo check this resolves all ties
+    // Resolve ties by preserving the order of variables in a relation
     val varOrder = varScores.groupBy(_._1).toList.map { case (k, v) =>
       val (s1, s2) = v.map(_._2).unzip
       k -> (s1.sum, s2.min)
@@ -96,128 +96,5 @@ object DTree {
         DTreeVariable(v.name, v.tp, keys)
       case (r, _) => r
     }
-
-//    def computeKeys(tree: Tree[DTreeNode], ancestors: List[DTreeVariable]): Unit = tree.node match {
-//       case v: DTreeVariable =>
-//         val childVars = tree.getRelations.flatMap(_.keys).toSet
-//         v.keys = ancestors.filter(childVars.contains)
-//         tree.children.foreach(c => computeKeys(c, ancestors :+ v))
-//        case r: DTreeRelation =>
-//    }
-//    computeKeys(mergedTree, Nil)
-//
-//    mergedTree
   }
-
-
-  // Below is where we're going to implement creating a Tree[DTreeNode] direct from sql
-  // Basic idea:
-  // 1. Using SQL object extract info and create DTreeNodes
-  // 2. Assemble them into a tree of LinkedNodes, and then flatten these into a List[LinkedNode] like in DTreeParser
-  // 3. Build a Tree[DTreeNode] from the aforementioned list
-  private class LinkedNode(val node: DTreeNode, val children: Option[List[LinkedNode]], val relations: Set[String])
-
-  private val variableMap = collection.mutable.Map[String, (DTreeVariable, Set[String])]()
-
-  def apply2(sql: SQL.System): Tree[DTreeNode] = {
-    // 1. Go through each source and the fields to the Map as Key=fieldName, value=(variableNode, relationsSet)
-    def addSchemaToMap(schema: Schema): Unit = {
-      schema.fields.foreach(addFieldToMap)
-
-      def addFieldToMap(field: (String, Type)): Unit = {
-        val (variableNode, relations) = variableMap.getOrElse(field._1, (DTreeVariable(field._1, field._2, List.empty), Set(schema.name)))
-        variableMap.update(field._1, (variableNode, relations + schema.name))
-      }
-    }
-
-    // variablesMap: variable -> (DTreeVariable(name, tp), Set(relation names))
-
-    sql.sources.foreach { src => addSchemaToMap(src.schema) }
-
-    // 2. Create a list of DTreeRelation nodes wrapped in LinkedNodes for each relation
-    // This will be the list of subtrees which will be combined into 1 tree of linked LinkedNodes
-    val subtrees = sql.sources.map({
-      src => {
-        val keys: List[DTreeVariable] = src.schema.fields.map(
-          field => {
-            variableMap(field._1) match {
-              case (variable, _) => variable
-            }
-          }
-        )
-        val relation = DTreeRelation(src.schema.name, keys)
-        new LinkedNode(relation, None, Set(src.schema.name))
-      }
-    })
-
-    // subtrees = list of LinkedNode encapsulating DTreeRelation, one for each relation
-
-    // 3. Create a sorted list of all the key-value pairs in the Map
-    val sortedVariableList = variableMap.toList
-      .sortBy { case (_, (_, set)) => set.size }
-      .map { case (_, value) => value }
-
-    // sortedVariableList of (DTreeVariable, Set(relation names)) in ascending order
-
-
-
-    // 4. For each field in the sortedVariableList, create a LinkedNode that joins the
-    // appropriate subtrees. This will ultimately result in one root
-//    @tailrec
-    def createLinkedNodes(fields: List[(DTreeVariable, Set[String])], subtrees: List[LinkedNode]): List[LinkedNode] = {
-      fields match {
-        case (variable, relations) :: tail =>
-          // 1. Find subtrees that contain those relations and those that don't
-          val (subtreesToMerge, subtreesToKeep) = subtrees.partition(linkedNode => linkedNode.relations.intersect(relations).nonEmpty)
-          // 2. Make a new LinkNode to link those subtrees at this variable
-          val newLinkedNode = new LinkedNode(variable, Option(subtreesToMerge), relations)
-          // 3. Subtrees should now be:
-          val updatedSubTrees = subtreesToKeep :+ newLinkedNode
-          // 4. Call the method again
-          createLinkedNodes(tail, updatedSubTrees)
-        case Nil => subtrees
-      }
-    }
-
-    // TODO: Maybe assert here that creatLinkedNodes ultimately only return a list of length one
-    val root: LinkedNode = createLinkedNodes(sortedVariableList, subtrees).head
-
-    // 5. Now we have a tree of linked nodes we can obtain the keys for the variables
-    def populateKeys(currentNode: LinkedNode): Set[DTreeVariable] = {
-      currentNode.node match {
-        case variable: DTreeVariable =>
-          val childrenKeys: Set[DTreeVariable] = currentNode.children match {
-            case Some(children) => children.flatMap(child => populateKeys(child)).toSet
-            case None => Set.empty
-          }
-          val currentKeys = childrenKeys - variable
-          variable.keys = currentKeys.toList
-          currentKeys
-        case relation: DTreeRelation => relation.keys.toSet
-      }
-    }
-
-    populateKeys(root)
-
-    // 6. Flatten the 'tree' of linked nodes into a list
-    def createLinkedNodeList(currentNode: LinkedNode): List[LinkedNode] = {
-      currentNode.children match {
-        case Some(list) => list.flatMap(createLinkedNodeList) :+ currentNode
-        case None => List(currentNode)
-      }
-    }
-
-    val linkedNodeList = createLinkedNodeList(root)
-
-    // 7. Build the actual tree from the list of linked nodes
-    def createChildTrees(parent: Tree[DTreeNode]): List[Tree[DTreeNode]] = {
-      linkedNodeList.filter(_.node.equals(parent.node)).head.children match {
-        case Some(list) => list.map(n => new Tree(n.node, Some(parent), createChildTrees))
-        case None => List.empty
-      }
-    }
-
-    new Tree(root.node, None, createChildTrees)
-  }
-
 }
