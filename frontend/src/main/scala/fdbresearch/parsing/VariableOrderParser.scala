@@ -17,9 +17,9 @@ import fdbresearch.tree._
   *
   * @author Milos Nikolic
   */
-class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
+class VariableOrderParser extends Parser with (String => Tree[VariableOrderNode]) {
 
-  private class LinkedNode(val node: DTreeNode, val parent: Option[DTreeNode])
+  private class LinkedNode(val node: VariableOrderNode, val parent: Option[VariableOrderNode])
 
   // ------------ Types
   override lazy val tpe: Parser[Type] = (
@@ -34,14 +34,14 @@ class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
     | "string" ^^^ TypeString
   )
 
-  private val variableMap = collection.mutable.Map[String, Option[DTreeVariable]]().withDefaultValue(None)
+  private val variableMap = collection.mutable.Map[String, Option[VariableOrderVar]]().withDefaultValue(None)
 
   private lazy val variable: Parser[LinkedNode] =
     intLit ~ ident ~ tpe ~ intLit ~ ("{" ~> repsep(intLit, ",") <~ "}") ~ intLit ^^ {
       case id ~ name ~ tp ~ parentId ~ keyIds ~ cache =>
         val parent = variableMap(parentId)
         val keys = keyIds.map(k => variableMap(k).get)
-        val v = DTreeVariable(name, tp, keys)
+        val v = VariableOrderVar(name, tp)
         variableMap += (id -> Some(v), name -> Some(v))
         new LinkedNode(v, parent)
     }
@@ -51,19 +51,19 @@ class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
       case name ~ parentId ~ vars =>
         val parent = variableMap(parentId)
         val keys = vars.map(k => variableMap(k).get)
-        val r = DTreeRelation(name, keys)
+        val r = VariableOrderRelation(name, keys)
         new LinkedNode(r, parent)
     }
 
-  private lazy val tree: Parser[Tree[DTreeNode]] =
+  private lazy val tree: Parser[Tree[VariableOrderNode]] =
     intLit ~ intLit ~ rep1(variable) ~ rep1(relation) ^^ {
       case _ ~ _ ~ vs ~ rs => buildTree(vs ++ rs)
     }
 
-  private def buildTree(nodes: List[LinkedNode]): Tree[DTreeNode] =
+  private def buildTree(nodes: List[LinkedNode]): Tree[VariableOrderNode] =
     nodes.filter(_.parent.isEmpty) match {
       case root :: Nil =>
-        def createChildTrees(parent: Tree[DTreeNode]): List[Tree[DTreeNode]] = {
+        def createChildTrees(parent: Tree[VariableOrderNode]): List[Tree[VariableOrderNode]] = {
           val children = nodes.filter(_.parent.contains(parent.node))
           children.map(n => new Tree(n.node, Some(parent), createChildTrees))
         }
@@ -71,7 +71,7 @@ class DTreeParser extends Parser with (String => Tree[DTreeNode]) {
       case rr => sys.error("No root or multiple roots: " + rr.map(_.toString).mkString("\n"))
     }
 
-  def apply(str: String): Tree[DTreeNode] = phrase(tree)(new lexical.Scanner(str)) match {
+  def apply(str: String): Tree[VariableOrderNode] = phrase(tree)(new lexical.Scanner(str)) match {
     case Success(x, _) => x
     case e => sys.error(e.toString)
   }

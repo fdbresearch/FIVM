@@ -10,7 +10,7 @@
 package fdbresearch
 
 import fdbresearch.core._
-import fdbresearch.tree.{Tree, View, DTreeVariable, DTreeRelation}
+import fdbresearch.tree.{Tree, View, VariableOrderVar, VariableOrderRelation}
 
 class CodeGenerator(tree: Tree[View],
                     typeDefs: List[TypeDefinition],
@@ -58,11 +58,11 @@ class CodeGenerator(tree: Tree[View],
 
     def createDefExpr: M3.Expr = {
       val childJoin = tree.node.link.node match {
-        case _: DTreeVariable => tree.children match {
+        case _: VariableOrderVar => tree.children match {
           case Nil => sys.error("Variable as a leaf node")
           case cc => (cc.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul)
         }
-        case DTreeRelation(name, keys) =>
+        case VariableOrderRelation(name, keys) =>
           val ref = M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
           (ref :: tree.node.terms).reduceLeft(M3.Mul)
       }
@@ -77,7 +77,7 @@ class CodeGenerator(tree: Tree[View],
 
     def createDeltaExpr(event: M3.EventTrigger): M3.Expr = {
       val childJoin = tree.node.link.node match {
-        case _: DTreeVariable =>
+        case _: VariableOrderVar =>
           tree.children.filter(!_.isStatic(event.schema.name)) match {
             case hd :: Nil =>
               ( hd.createDeltaExpr(event) ::
@@ -86,7 +86,7 @@ class CodeGenerator(tree: Tree[View],
             case _ => sys.error("# of delta paths not 1")
           }
 
-        case DTreeRelation(name, keys) =>
+        case VariableOrderRelation(name, keys) =>
           assert(name == event.schema.name)
           event match {
             case M3.EventBatchUpdate(_) =>

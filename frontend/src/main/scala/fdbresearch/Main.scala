@@ -9,8 +9,8 @@
 //===----------------------------------------------------------------------===//
 package fdbresearch
 
-import fdbresearch.parsing.{DTreeParser, SQLParser}
-import fdbresearch.tree.DTree
+import fdbresearch.parsing.{VariableOrderParser, SQLParser}
+import fdbresearch.tree.VariableOrder
 import fdbresearch.util.Logger
 
 import java.io.File
@@ -45,14 +45,24 @@ object Main extends App {
     if (!f.exists) {
       sys.error("Input SQL file does not exist: " + f.getAbsolutePath)
     }
-    new SQLParser().apply(scala.io.Source.fromFile(f).mkString)
+    val source = scala.io.Source.fromFile(f)
+    try {
+      new SQLParser().apply(source.mkString)
+    } finally {
+      source.close()
+    }
   }
 
-  def parseDTree(f: File) = {
+  def parseVariableOrder(f: File) = {
     if (!f.exists) {
-      sys.error("Input DTree file does not exist: " + f.getAbsoluteFile)
+      sys.error("Input VariableOrder file does not exist: " + f.getAbsoluteFile)
     }
-    new DTreeParser().apply(scala.io.Source.fromFile(f).mkString)
+    val source = scala.io.Source.fromFile(f)
+    try {
+      new VariableOrderParser().apply(source.mkString)
+    } finally {
+      source.close()
+    }
   }
 
   parser.parse(args, Config()) match {
@@ -61,13 +71,17 @@ object Main extends App {
       val sql = parseSQL(sqlFile)
       Logger.instance.debug("SQL AST: " + sql.toString)
 
-      //val dtreeFile = new File(sqlFile.getParentFile.getAbsolutePath, sql.dtree.file.path)
-      //val dtree = parseDTree(dtreeFile)
+      val variableOrder = if (sql.variableOrder.isDefined) {
+        Logger.instance.debug("VariableOrder obtained from file")
+        val variableOrderFile = new File(sqlFile.getParentFile.getAbsolutePath, sql.variableOrder.get.file.path)
+        parseVariableOrder(variableOrderFile)
+      } else {
+        Logger.instance.debug("VariableOrder obtained from VariableOrder.apply()")
+        VariableOrder.apply(sql)
+      }
+      Logger.instance.debug("VariableOrder AST: " + variableOrder.toString)
 
-      val dTree = DTree.apply(sql)
-      Logger.instance.debug("DTREE AST: " + dTree.toString)
-
-      val output = new Driver().compile(sql, dTree, config.batchUpdates)
+      val output = new Driver().compile(sql, variableOrder, config.batchUpdates)
       config.outputM3 match {
         case Some(file) => new java.io.PrintWriter(file) {
           write(output); close()

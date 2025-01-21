@@ -20,11 +20,11 @@ import fdbresearch.util.Utils
 
 case class Variable(name: String, tp: Type)
 
-case class View( name: String,
-                 tp: Type,
-                 freeVars: List[Variable],
-                 link: Tree[DTreeNode],
-                 terms: List[M3.Expr] ) {
+case class View(name: String,
+                tp: Type,
+                freeVars: List[Variable],
+                link: Tree[VariableOrderNode],
+                terms: List[M3.Expr] ) {
   override def toString: String =
     name + "[" + freeVars.map(_.name).mkString(", ") + "]" +
       "(Type: " + tp + (if (terms.nonEmpty) ", Terms: " +
@@ -32,10 +32,10 @@ case class View( name: String,
 }
 
 object ViewTree {
-  import DTree._
+  import VariableOrder._
 
   implicit class ViewTreeImp(tree: Tree[View]) {
-    def getRelations: List[DTreeRelation] = tree.node.link.getRelations
+    def getRelations: List[VariableOrderRelation] = tree.node.link.getRelations
   }
 
   implicit class M3ExprImp(expr: M3.Expr) {
@@ -49,7 +49,7 @@ object ViewTree {
   }
 
   // DTree => ViewTree
-  def apply(dtree: Tree[DTreeNode], freeVars: Set[String],
+  def apply(dtree: Tree[VariableOrderNode], freeVars: Set[String],
             sumFuns: List[M3.Expr], whConds: List[M3.Expr]): Tree[View] = {
     val dtreeVars = dtree.getVariables
     assert(freeVars.subsetOf(dtreeVars.map(_.name).toSet))
@@ -61,8 +61,8 @@ object ViewTree {
 
       // All available variables at current node
       val availableVars = tree.node match {
-        case _: DTreeVariable => children.flatMap(_.node.freeVars).distinct
-        case r: DTreeRelation => r.keys.map(k => Variable(k.name, k.tp))
+        case _: VariableOrderVar => children.flatMap(_.node.freeVars).distinct
+        case r: VariableOrderRelation => r.keys.map(k => Variable(k.name, k.tp))
       }
 
       // Find where conditions at current node. Push conditions down in the tree
@@ -92,7 +92,7 @@ object ViewTree {
       val newFreeVars = freeVars.union(restTermVars)
 
       // Extend keys with free variables of children
-      val keys = tree.node.keys.map(_.name).toSet
+      val keys = tree.getKeys.map(_.name).toSet
       val nodeFreeVars = keys.union(newFreeVars.intersect(availableVars.map(_.name).toSet))
       val viewFreeVars = // preserve the order of tree variables
         availableVars.map(_.name).filter(nodeFreeVars.contains).map(variableMap.apply)
@@ -103,9 +103,9 @@ object ViewTree {
 
       // Determine view type
       val viewType = tree.node match {
-        case _: DTreeVariable =>
+        case _: VariableOrderVar =>
           (children.map(_.node.tp) ++ nodeTerms.map(_.tp)).reduce(Type.resolve)
-        case r: DTreeRelation => r.tp
+        case r: VariableOrderRelation => r.tp
       }
 
       View(viewName, viewType, viewFreeVars, tree, nodeTerms)

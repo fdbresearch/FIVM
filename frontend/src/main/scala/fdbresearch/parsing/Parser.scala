@@ -157,6 +157,7 @@ class Parser extends StandardTokenParsers {
     | "PARTITIONED" ~> "RANDOMLY" ^^^ DistRandomExp
     )
 
-  lazy val dtree: Parser[DTreeDefinition] =
-    "IMPORT" ~> "DTREE" ~> "FROM" ~> sourceIn <~ ";" ^^ { f => DTreeDefinition(f) }
+  // TODO Maybe change DTREE to VARIABLEORDER (will need to update all example files)
+  lazy val variableOrder: Parser[VariableOrderDefinition] =
+    "IMPORT" ~> "DTREE" ~> "FROM" ~> sourceIn <~ ";" ^^ { f => VariableOrderDefinition(f) }
 }
