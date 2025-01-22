@@ -231,8 +231,8 @@ class SQLParser extends Parser with (String => SQL.System) {
 
   // ------------ System definition
   lazy val system: Parser[System] =
-    dtree ~ rep(typeDef) ~ rep(source) ~ rep(select <~ opt(";")) ^^ {
-      case dt ~ td ~ ss ~ qs => System(dt, td, ss, qs)
+    opt(variableOrder) ~ rep(typeDef) ~ rep(source) ~ rep(select <~ opt(";")) ^^ {
+      case vo ~ td ~ ss ~ qs => System(vo, td, ss, qs)
     }
 
   def apply(str: String): System = phrase(system)(new lexical.Scanner(str)) match {

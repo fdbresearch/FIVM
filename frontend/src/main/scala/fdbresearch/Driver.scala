@@ -9,21 +9,21 @@
 //===----------------------------------------------------------------------===//
 package fdbresearch
 
-import fdbresearch.tree.{DTreeNode, DTreeRelation, Tree, ViewTree}
+import fdbresearch.tree.{VariableOrderNode, VariableOrderRelation, Tree, ViewTree}
 import fdbresearch.core.{SQL, SQLToM3Compiler, Source}
 import fdbresearch.parsing.M3Parser
 import fdbresearch.util.Logger
 
 class Driver {
 
-  import fdbresearch.tree.DTree._
+  import fdbresearch.tree.VariableOrder._
 
   // TODO: allow definitions of unused streams and tables
 
   /**
     * Check if all SQL sources have consistent schemas with DTree relations
     */
-  private def checkSchemas(sqlSources: List[Source], relations: List[DTreeRelation]): Unit = {
+  private def checkSchemas(sqlSources: List[Source], relations: List[VariableOrderRelation]): Unit = {
     val rm = relations.map { r =>
       r.name -> r.keys.map(v => (v.name, v.tp)).toSet
     }.toMap
@@ -47,7 +47,7 @@ class Driver {
     }.asInstanceOf[SQL.System]
   }
 
-  def compile(sql: SQL.System, dtree: Tree[DTreeNode], batchUpdates: Boolean): String = {
+  def compile(sql: SQL.System, dtree: Tree[VariableOrderNode], batchUpdates: Boolean): String = {
 
     checkSchemas(sql.sources, dtree.getRelations)
 

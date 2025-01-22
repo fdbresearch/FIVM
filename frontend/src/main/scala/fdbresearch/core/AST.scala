@@ -103,8 +103,8 @@ case class TypeDefinition(name: String, file: SourceFile,
          |WITH PARAMETER SCHEMA (${schema.mkString(", ")});""".stripMargin
 }
 
-case class DTreeDefinition(file: SourceFile) extends Tree {
-  override def toString = s"""IMPORT DTREE FROM $file;"""
+case class VariableOrderDefinition(file: SourceFile) extends Tree {
+  override def toString = s"""IMPORT VARIABLEORDER FROM $file;"""
 }
 
 // -----------------------------------------------------------------------------
@@ -658,13 +658,13 @@ object SQL {
 
 
   // ---------- System
-  case class System(dtree: DTreeDefinition,
+  case class System(variableOrder: Option[VariableOrderDefinition],
                     typeDefs: List[TypeDefinition],
                     sources: List[Source],
                     queries: List[Query]) extends SQL {
     override def toString =
       "---------------- DTREE IMPORT ---------------\n" +
-        dtree.toString + "\n\n" +
+        variableOrder.toString + "\n\n" +
         "---------------- TYPE DEFINITIONS ---------------\n" +
         typeDefs.mkString("\n\n") + "\n\n" +
         "-------------------- SOURCES --------------------\n" +
