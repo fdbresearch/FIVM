@@ -147,11 +147,10 @@ class SQLParser extends Parser with (String => SQL.System) {
       | ">" ^^^ OpGt
       | ">=" ^^^ OpGe
       | "!=" ^^^ OpNe
+      | "<" ^^^ OpLt
+      | "<=" ^^^ OpLe
       ) ~ expr ^^ {
         case l ~ op ~ r => Cmp(l, r, op)
-      }
-    | expr ~ ("<" ^^^ OpGt | "<=" ^^^ OpGe) ~ expr ^^ {
-        case l ~ op ~ r => Cmp(r, l, op)
       }
     | "(" ~> disj <~ ")"
     | failure("SQL condition")
@@ -202,7 +201,7 @@ class SQLParser extends Parser with (String => SQL.System) {
     }
 
   lazy val groupBy: Parser[GroupBy] =
-    "GROUP" ~> "BY" ~> rep1sep(field, ",") ~ opt("HAVING" ~> disj) ^^ {
+    "GROUP" ~> "BY" ~> rep1sep(atom, ",") ~ opt("HAVING" ~> disj) ^^ {
       case fs ~ ho => GroupBy(fs, ho)
     }
 

@@ -60,11 +60,11 @@ class CodeGenerator(tree: Tree[View],
       val childJoin = tree.node.link.node match {
         case _: VariableOrderVar => tree.children match {
           case Nil => sys.error("Variable as a leaf node")
-          case cc => (cc.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul)
+          case cc => (cc.map(_.createExpr) ++ tree.node.terms).reduceLeft(M3.Mul.apply)
         }
         case VariableOrderRelation(name, keys) =>
           val ref = M3.MapRefConst(name, keys.map(v => (v.name, v.tp)))
-          (ref :: tree.node.terms).reduceLeft(M3.Mul)
+          (ref :: tree.node.terms).reduceLeft(M3.Mul.apply)
       }
 
       val marginalizedVars =
@@ -82,7 +82,7 @@ class CodeGenerator(tree: Tree[View],
             case hd :: Nil =>
               ( hd.createDeltaExpr(event) ::
                 (hd.rightSiblings ++ hd.leftSiblings.reverse).map(_.createExpr) ++
-                  tree.node.terms ).reduceLeft(M3.Mul)
+                  tree.node.terms ).reduceLeft(M3.Mul.apply)
             case _ => sys.error("# of delta paths not 1")
           }
 
@@ -91,11 +91,11 @@ class CodeGenerator(tree: Tree[View],
           event match {
             case M3.EventBatchUpdate(_) =>
               val ref = M3.DeltaMapRefConst(name, keys.map(v => (v.name, v.tp)))
-              (ref :: tree.node.terms).reduceLeft(M3.Mul)
+              (ref :: tree.node.terms).reduceLeft(M3.Mul.apply)
             case M3.EventInsert(_) =>
-              (M3.Const(TypeLong, "1L") :: tree.node.terms).reduceLeft(M3.Mul)
+              (M3.Const(TypeLong, "1L") :: tree.node.terms).reduceLeft(M3.Mul.apply)
             case M3.EventDelete(_) =>
-              (M3.Const(TypeLong, "-1L") :: tree.node.terms).reduceLeft(M3.Mul)
+              (M3.Const(TypeLong, "-1L") :: tree.node.terms).reduceLeft(M3.Mul.apply)
             case M3.EventReady =>
               sys.error("No delta trigger for SystemReady")
           }

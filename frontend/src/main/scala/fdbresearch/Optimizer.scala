@@ -17,13 +17,11 @@ object Optimizer {
   object PartialEvaluator extends (M3.Expr => M3.Expr) {
 
     implicit class ConstExtensions(c1: M3.Const) {
-      val zero = M3.Const(TypeChar, "0")
-      val one = M3.Const(TypeChar, "1")
 
       def *(c2: M3.Const): M3.Const = Type.resolve(c1.tp, c2.tp) match {
-        case tp @ (TypeChar | TypeShort | TypeInt | TypeLong) =>
+        case tp @ (TypeByte | TypeShort | TypeInt | TypeLong) =>
           val v = c1.v.toLong * c2.v.toLong
-          M3.Const(tp, v.toLong.toString)
+          M3.Const(tp, v.toString)
         case tp @ (TypeFloat | TypeDouble) =>
           val v = BigDecimal(c1.v) * BigDecimal(c2.v)
           M3.Const(tp, v.toDouble.toString)
@@ -31,29 +29,29 @@ object Optimizer {
       }
 
       def +(c2: M3.Const): M3.Const = Type.resolve(c1.tp, c2.tp) match {
-        case tp @ (TypeChar | TypeShort | TypeInt | TypeLong) =>
+        case tp @ (TypeByte | TypeShort | TypeInt | TypeLong) =>
           val v = c1.v.toLong + c2.v.toLong
-          M3.Const(tp, v.toLong.toString)
+          M3.Const(tp, v.toString)
         case tp @ (TypeFloat | TypeDouble) =>
           val v = BigDecimal(c1.v) + BigDecimal(c2.v)
           M3.Const(tp, v.toDouble.toString)
         case _ => sys.error("[M3 Optimizer] Const addition failed")
       }
 
-      def isEqual(c2: M3.Const): M3.Const = if (eq(c1, c2)) one else zero
+      def isEqual(c2: M3.Const): M3.Const = if (eq(c1, c2)) M3.Const.One else M3.Const.Zero
 
-      def isNotEqual(c2: M3.Const): M3.Const = if (!eq(c1, c2)) one else zero
+      def isNotEqual(c2: M3.Const): M3.Const = if (!eq(c1, c2)) M3.Const.One else M3.Const.Zero
 
-      def >(c2: M3.Const): M3.Const = if (gt(c1, c2)) one else zero
+      def >(c2: M3.Const): M3.Const = if (gt(c1, c2)) M3.Const.One else M3.Const.Zero
 
-      def >=(c2: M3.Const): M3.Const = if (gt(c1, c2) || eq(c1, c2)) one else zero
+      def >=(c2: M3.Const): M3.Const = if (gt(c1, c2) || eq(c1, c2)) M3.Const.One else M3.Const.Zero
 
       private def eq(c1: M3.Const, c2: M3.Const) = c1 == c2
 
       private def gt(c1: M3.Const, c2: M3.Const) = Type.resolve(c1.tp, c2.tp) match {
-        case TypeChar | TypeShort | TypeInt | TypeLong | TypeDate => c1.v.toLong > c2.v.toLong
+        case TypeByte | TypeShort | TypeInt | TypeLong | TypeDate => c1.v.toLong > c2.v.toLong
         case TypeFloat | TypeDouble => BigDecimal(c1.v) > BigDecimal(c2.v)
-        case TypeString => c1.v > c2.v
+        case TypeChar | TypeString => c1.v > c2.v
         case _ => sys.error("[M3 Optimizer] Comparison failed")
       }
     }
@@ -74,6 +72,8 @@ object Optimizer {
             case OpNe => c1 isNotEqual c2
             case OpGt => c1 > c2
             case OpGe => c2 >= c2
+            case OpLt => c2 > c1
+            case OpLe => c2 >= c1
           }
         case (l2, r2) => M3.Cmp(l2, r2, op)
       }
@@ -102,8 +102,8 @@ object Optimizer {
           }
           if (covered.isEmpty) M3.Mul(M3.AggSum(ks1, e1), e2)
           else {
-            val subexp = (prodList(e1) ++ covered).reduceLeft(M3.Mul)
-            val newexp = (M3.AggSum(ks1, subexp) :: rest).reduceLeft(M3.Mul)
+            val subexp = (prodList(e1) ++ covered).reduceLeft(M3.Mul.apply)
+            val newexp = (M3.AggSum(ks1, subexp) :: rest).reduceLeft(M3.Mul.apply)
             rewrite(newexp)
           }
         case (e1, e2) => M3.Mul(e1, e2)

@@ -9,6 +9,8 @@
 //===----------------------------------------------------------------------===//
 package fdbresearch.core
 
+import fdbresearch.core.M3.Expr.{isOne, isZero}
+import fdbresearch.core.Type.{isFloat, isInteger, isNumerical}
 import fdbresearch.util.Utils.ind
 
 /**
@@ -22,6 +24,19 @@ case object OpEq extends OpCmp { override def toString = "=" }
 case object OpNe extends OpCmp { override def toString = "!=" }
 case object OpGt extends OpCmp { override def toString = ">" }
 case object OpGe extends OpCmp { override def toString = ">=" }
+case object OpLt extends OpCmp { override def toString = "<" }
+case object OpLe extends OpCmp { override def toString = "<=" }
+
+object OpCmp {
+  def invert(op: OpCmp): OpCmp = op match {
+    case OpEq => OpNe
+    case OpNe => OpEq
+    case OpGt => OpLe
+    case OpGe => OpLt
+    case OpLt => OpGe
+    case OpLe => OpGt
+  }
+}
 
 // ---------- Schema, adaptor, and source definitions
 case class Source(isStream: Boolean, schema: Schema, in: SourceIn, split: Split, adaptor: Adaptor, locality: LocalityType) extends Tree {
@@ -409,6 +424,20 @@ object M3 {
     def toDecoratedString: String
   }
 
+  object Expr {
+    def isZero(e: Expr): Boolean = e match {
+      case Const(tp, "0") if isNumerical(tp) => true
+      case Const(tp, "0.0") if isFloat(tp) => true
+      case _ => false
+    }
+
+    def isOne(e: Expr): Boolean = e match {
+      case Const(tp, "1") if isNumerical(tp) => true
+      case Const(tp, "1.0") if isFloat(tp) => true
+      case _ => false
+    }
+  }
+
   // Constants
   case class Const(tp: Type, v: String) extends Expr {
     val locality: Option[LocalityType] = None
@@ -417,6 +446,11 @@ object M3 {
       case _ => v
     }
     def toDecoratedString = toString + ": " + tp
+  }
+
+  object Const {
+    val Zero = Const(TypeByte, "0")
+    val One = M3.Const(TypeByte, "1")
   }
 
   // Variables
@@ -499,6 +533,16 @@ object M3 {
     def toDecoratedString = "(" + l.toDecoratedString + " * " + r.toDecoratedString + ")"
   }
 
+  object Mul {
+    def apply(lhs: Expr, rhs: Expr): Expr = (lhs, rhs) match {
+      case (l, r) if isZero(l) && r.ovars.isEmpty => Const.Zero
+      case (l, r) if isZero(r) && l.ovars.isEmpty => Const.Zero
+      case (l, r) if isOne(l) => r
+      case (l, r) if isOne(r) => l
+      case _ => new Mul(lhs, rhs)
+    }
+  }
+
   // Union operator
   case class Add(l: Expr, r: Expr) extends Expr {
     val tp: Type = Type.resolve(l.tp, r.tp)
@@ -514,6 +558,13 @@ object M3 {
     }
     override def toString = "(" + l + " + " + r + ")"
     def toDecoratedString = "(" + l.toDecoratedString + " + " + r.toDecoratedString + ")"
+  }
+
+  object Add {
+    def apply(lhs: Expr, rhs: Expr): Expr =
+      if (isZero(lhs)) rhs
+      else if (isZero(rhs)) lhs
+      else new Add(lhs, rhs)
   }
 
   // Exists operator - returns 0 or 1 (checks if there is at least one tuple)
@@ -699,7 +750,7 @@ object SQL {
         ob.map("\n" + _).getOrElse("")
   }
 
-  case class GroupBy(fs: List[Field], cond: Option[Cond]) extends SQL {
+  case class GroupBy(fs: List[Expr], cond: Option[Cond]) extends SQL {
     override def toString =
       "GROUP BY " + fs.mkString(", ") +
         cond.map(" HAVING " + _).getOrElse("")
@@ -825,6 +876,18 @@ object SQL {
   // ---------- Conditions
   sealed abstract class Cond extends SQL
 
+  object Cond {
+    def pushdownNots(c: SQL.Cond): SQL.Cond = c match {
+      case SQL.Not(SQL.Not(c1)) => pushdownNots(c1)
+      case SQL.Not(SQL.Cmp(l, r, op)) => SQL.Cmp(l, r, OpCmp.invert(op))
+      case SQL.Not(SQL.And(l,r)) => pushdownNots(SQL.Or(SQL.Not(l), SQL.Not(r)))
+      case SQL.Not(SQL.Or(l,r)) => pushdownNots(SQL.And(SQL.Not(l), SQL.Not(r)))
+      case SQL.And(l, r) => SQL.And(pushdownNots(l), pushdownNots(r))
+      case SQL.Or(l, r) => SQL.Or(pushdownNots(l), pushdownNots(r))
+      case _ => c
+    }
+  }
+
   case class And(l: Cond, r: Cond) extends Cond {
     override def toString = "(" + l + " AND " + r + ")"
   }
@@ -856,4 +919,5 @@ object SQL {
   case class Cmp(l: Expr, r: Expr, op: OpCmp) extends Cond {
     override def toString = l + " " + op + " " + r
   }
+
 }

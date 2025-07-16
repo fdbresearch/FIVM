@@ -9,6 +9,9 @@
 //===----------------------------------------------------------------------===//
 package fdbresearch.core
 
+import fdbresearch.core.SQL.Cond.pushdownNots
+import fdbresearch.util.Utils
+
 /**
   * Supported SQL format:
   * ----------------------
@@ -47,11 +50,27 @@ object SQLToM3Compiler {
     case SQL.Mul(l, r) => M3.Mul(compile(l), compile(r))
     case SQL.Div(l, r) => M3.Apply("div", typeOf(e), List(compile(l), compile(r)))
     case SQL.Mod(l, r) => M3.Apply("mod", typeOf(e), List(compile(l), compile(r)))
+    case SQL.Case(hd :: tl, d) =>
+      M3.Add(
+        M3.Mul(compile(hd._1), compile(hd._2)),
+        M3.Mul(compile(SQL.Not(hd._1)), compile(SQL.Case(tl, d)))
+      )
+    case SQL.Case(Nil, d) => compile(d)
     case _ => throw UnsupportedSQLException("[SQL] Not supported expression: " + e)
   }
 
-  private def compile(c: SQL.Cond): M3.Expr = c match {
+  private def compile(c: SQL.Cond): M3.Expr = SQL.Cond.pushdownNots(c) match {
     case SQL.And(l, r) => M3.Mul(compile(l), compile(r))
+    case SQL.Or(l, r) =>
+      val name = Utils.fresh("or_lift")
+      val lift = M3.Lift(name, M3.Add(compile(l), compile(r)))
+      val cmp = M3.Cmp(M3.Ref(lift.name, lift.tp), M3.Const.Zero, OpGt)
+      M3.AggSum(Nil, M3.Mul(lift, cmp))
+    case SQL.Not(c1) =>
+      val name = Utils.fresh("not_lift")
+      val lift = M3.Lift(name, compile(c1))
+      val cmp = M3.Cmp(M3.Ref(lift.name, lift.tp), M3.Const.Zero, OpEq)
+      M3.AggSum(Nil, M3.Mul(lift, cmp))
     case SQL.Cmp(l, r, op) => M3.Cmp(compile(l), compile(r), op)
     case SQL.InList(e, l) => M3.CmpOrList(compile(e), l.map(compile))
     case _ => throw UnsupportedSQLException("[SQL] Not supported condition: " + c)
@@ -79,7 +98,7 @@ object SQLToM3Compiler {
   }
 
   private def extractGroupByVars(gb: SQL.GroupBy): List[String] = gb match {
-    case SQL.GroupBy(fs, None) => fs.map(_.n)
+    case SQL.GroupBy(fs, None) => fs.map(_.asInstanceOf[SQL.Field].n)
     case _ => throw UnsupportedSQLException("[SQL] Not supported group by statement")
   }
 
