@@ -36,6 +36,8 @@ object ViewTree {
 
   implicit class ViewTreeImp(tree: Tree[View]) {
     def getRelations: List[VariableOrderRelation] = tree.node.link.getRelations
+
+    def getTerms: List[M3.Expr] = tree.collect { case v: View => v.terms }.flatten.toList
   }
 
   implicit class M3ExprImp(expr: M3.Expr) {
@@ -44,9 +46,19 @@ object ViewTree {
       (in ++ out).map(_._1).toSet
     }
 
+    def getInputVariables: Set[String] =
+      expr.schema._1.map(_._1).toSet
+
     def isCovered(vars: Set[Variable]): Boolean =
-      getVariables.subsetOf(vars.map(_.name))
+      getInputVariables.subsetOf(vars.map(_.name))
   }
+
+//  def construct(dtree: Tree[VariableOrderNode], freeVars: Set[String],
+//                sumFuns: List[M3.Expr], whConds: List[M3.Expr]): Tree[View] = {
+//    dtree.node match {
+//
+//    }
+//  }
 
   // DTree => ViewTree
   def apply(dtree: Tree[VariableOrderNode], freeVars: Set[String],
@@ -80,7 +92,10 @@ object ViewTree {
       val (nodeSumTerms, restSumTerms) = {
         val nodeVars = tree.getVariables.map(v => Variable(v.name, v.tp)).toSet
         val childVars = tree.children.flatMap(_.getVariables).map(v => Variable(v.name, v.tp)).toSet
-        sumFuns.filter(!_.isCovered(childVars)).partition(_.isCovered(nodeVars))
+        sumFuns.filter(f =>
+          !f.isCovered(childVars) ||
+            (tree.parent.isEmpty && !children.exists(_.getTerms.contains(f)))
+        ).partition(_.isCovered(nodeVars))
       }
 
       // Merge where conditions and sum functions
@@ -90,6 +105,14 @@ object ViewTree {
       val restTerms = restWhTerms ++ restSumTerms
       val restTermVars = restTerms.flatMap(_.getVariables).toSet
       val newFreeVars = freeVars.union(restTermVars)
+
+      if (tree.parent.isEmpty) {
+        // Sanity checks
+        assert(restTerms.isEmpty)
+        val usedTerms = nodeTerms ++ children.flatMap(_.getTerms)
+        assert(sumFuns.forall(e => usedTerms.contains(e)))
+        assert(whConds.forall(e => usedTerms.contains(e)))
+      }
 
       // Extend keys with free variables of children
       val keys = tree.getKeys.map(_.name).toSet
