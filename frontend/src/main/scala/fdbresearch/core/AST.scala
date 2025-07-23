@@ -682,7 +682,7 @@ sealed abstract class SQL {
       case SQL.Cmp(l, r, op) => SQL.Cmp(l.replace(f).asInstanceOf[SQL.Expr],
         r.replace(f).asInstanceOf[SQL.Expr], op)
 
-      case SQL.GroupBy(fs, cond) => SQL.GroupBy(fs.map(_.replace(f).asInstanceOf[SQL.Field]),
+      case SQL.GroupBy(fs, cond) => SQL.GroupBy(fs.map(_.replace(f).asInstanceOf[SQL.Expr]),
         cond.map(_.replace(f).asInstanceOf[SQL.Cond]))
       case SQL.OrderBy(cs) => SQL.OrderBy(cs.map(c => (c._1.replace(f).asInstanceOf[SQL.Field], c._2)))
 

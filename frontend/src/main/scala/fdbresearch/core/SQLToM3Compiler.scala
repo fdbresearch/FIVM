@@ -56,6 +56,7 @@ object SQLToM3Compiler {
         M3.Mul(compile(SQL.Not(hd._1)), compile(SQL.Case(tl, d)))
       )
     case SQL.Case(Nil, d) => compile(d)
+    case SQL.Alias(e1, n) => M3.Lift(n, compile(e1))
     case _ => throw UnsupportedSQLException("[SQL] Not supported expression: " + e)
   }
 
@@ -73,17 +74,31 @@ object SQLToM3Compiler {
       M3.AggSum(Nil, M3.Mul(lift, cmp))
     case SQL.Cmp(l, r, op) => M3.Cmp(compile(l), compile(r), op)
     case SQL.InList(e, l) => M3.CmpOrList(compile(e), l.map(compile))
+    case SQL.Like(e, l) =>
+      val matchStr = l.replace("%", ".*")
+      val matchConst = M3.Const(TypeString, s"^${matchStr}$$")
+      M3.Cmp(
+        M3.Apply("regexp_match", TypeInt, List(matchConst, compile(e))),
+        M3.Const.Zero,
+        OpNe
+      )
     case _ => throw UnsupportedSQLException("[SQL] Not supported condition: " + c)
   }
 
-  private def extractSumAggFn(cs: List[SQL.Expr]): M3.Expr =
+  private def extractSumAggFn(cs: List[SQL.Expr]): M3.Expr = {
+    val aggs = cs.collect { case a: SQL.Agg => a }
+    require(aggs match {
+      case Seq(SQL.Agg(_, SQL.OpSum)) => true
+      case _ => false
+    }, "[SQL] Number of SUM aggregates must be 1")
+
     cs.flatMap {
       case SQL.Agg(e, SQL.OpSum) => List(compile(e))
-      case e => compile(e); Nil   // compile and discard other fields
-    } match {
-      case hd :: Nil => hd
-      case _ => throw UnsupportedSQLException("[SQL] Number of SUM aggregates must be 1")
-    }
+      case e: SQL.Alias => List(compile(e))
+      case e: SQL.Field if e.n != "*" => compile(e); Nil   // compile and discard
+      case e => List(M3.Lift(Utils.fresh("col"), compile(e)))
+    }.reduce(M3.Mul.apply)
+  }
 
   private def extractTableNames(t: SQL.Table): List[String] = t match {
     case SQL.TableJoin(t1, t2, SQL.JoinInner, None) =>
@@ -97,8 +112,11 @@ object SQLToM3Compiler {
     case _ => throw UnsupportedSQLException("[SQL] Only natural joins are supported")
   }
 
-  private def extractGroupByVars(gb: SQL.GroupBy): List[String] = gb match {
-    case SQL.GroupBy(fs, None) => fs.map(_.asInstanceOf[SQL.Field].n)
+  private def extractGroupByVars(gb: SQL.GroupBy, colMapping: Map[M3.Expr, String]): List[String] = gb match {
+    case SQL.GroupBy(fs, None) => fs.map {
+        case f: SQL.Field => f.n
+        case e => colMapping(compile(e))
+      }
     case _ => throw UnsupportedSQLException("[SQL] Not supported group by statement")
   }
 
@@ -110,12 +128,12 @@ object SQLToM3Compiler {
   def compile(sys: SQL.System): (List[M3.Expr], List[String], List[M3.Expr], List[String]) =
     sys.queries match {
       case SQL.Select(false, cs, ts, wh, gb, None) :: Nil =>
-        val sumFn = extractSumAggFn(cs)
+        val sumFn = toList(extractSumAggFn(cs))
+        val colMapping = sumFn.collect { case l: M3.Lift => l.e -> l.name }.toMap
         val tables = extractTableNames(ts)
-        val whCond = wh.map(compile)
-        val gbVars = gb.map(extractGroupByVars).getOrElse(Nil)
-
-        (toList(sumFn), tables, whCond.map(toList).getOrElse(Nil), gbVars)
+        val whCond = wh.map(compile).map(toList).getOrElse(Nil)
+        val gbVars = gb.map(g => extractGroupByVars(g, colMapping)).getOrElse(Nil)
+        (sumFn, tables, whCond, gbVars)
       case _ => throw UnsupportedSQLException("[SQL] Not supported SQL query")
     }
 }

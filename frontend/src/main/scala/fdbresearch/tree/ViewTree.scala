@@ -53,20 +53,24 @@ object ViewTree {
       getInputVariables.subsetOf(vars.map(_.name))
   }
 
-//  def construct(dtree: Tree[VariableOrderNode], freeVars: Set[String],
-//                sumFuns: List[M3.Expr], whConds: List[M3.Expr]): Tree[View] = {
-//    dtree.node match {
-//
-//    }
-//  }
-
   // DTree => ViewTree
   def apply(dtree: Tree[VariableOrderNode], freeVars: Set[String],
             sumFuns: List[M3.Expr], whConds: List[M3.Expr]): Tree[View] = {
-    val dtreeVars = dtree.getVariables
-    assert(freeVars.subsetOf(dtreeVars.map(_.name).toSet))
+    val dtreeVars = dtree.getVariables.map(v => Variable(v.name, v.tp))
+    val liftVars = sumFuns.collect { case l: M3.Lift => Variable(l.name, l.e.tp) }
 
-    val variableMap = dtreeVars.map(v => v.name -> Variable(v.name, v.tp)).toMap
+    require({
+      val dtreeVarNames = dtreeVars.map(_.name)
+      val liftVarNames = liftVars.map(_.name)
+      dtreeVarNames.intersect(liftVarNames).isEmpty
+    }, "Duplicate column names found in both schema and aliases")
+
+    val allVars = dtreeVars ++ liftVars
+    require(
+      freeVars.subsetOf(allVars.map(_.name).toSet),
+      "Output column names not found"
+    )
+    val variableMap = allVars.map(v => v.name -> v).toMap
 
     // Build view tree from dtree
     dtree.map2WithPostChildren[View] { (tree, children) =>
@@ -98,6 +102,9 @@ object ViewTree {
         ).partition(_.isCovered(nodeVars))
       }
 
+      val liftVars = nodeSumTerms.collect { case l: M3.Lift => Variable(l.name, l.e.tp) }
+      val availableVars2 = availableVars ++ liftVars
+
       // Merge where conditions and sum functions
       val nodeTerms = nodeWhTerms ++ nodeSumTerms
 
@@ -116,9 +123,9 @@ object ViewTree {
 
       // Extend keys with free variables of children
       val keys = tree.getKeys.map(_.name).toSet
-      val nodeFreeVars = keys.union(newFreeVars.intersect(availableVars.map(_.name).toSet))
+      val nodeFreeVars = keys.union(newFreeVars.intersect(availableVars2.map(_.name).toSet))
       val viewFreeVars = // preserve the order of tree variables
-        availableVars.map(_.name).filter(nodeFreeVars.contains).map(variableMap.apply)
+        availableVars2.map(_.name).filter(nodeFreeVars.contains).map(variableMap.apply)
 
       // Construct view name
       val suffix = tree.getRelations.map(_.name.head).mkString
