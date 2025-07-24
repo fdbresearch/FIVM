@@ -1,7 +1,7 @@
 IMPORT DTREE FROM FILE 'tpch_query12.txt';
 
-CREATE TYPE RingPair
-FROM FILE 'ring/ring_pair.hpp';
+CREATE TYPE TPCH12Payload
+FROM FILE 'ring/ring_tpch_query12.hpp';
 
 CREATE STREAM LINEITEM (
         orderkey         INT,
@@ -24,6 +24,7 @@ CREATE STREAM LINEITEM (
   FROM FILE './datasets/tpch/lineitem.csv'
   LINE DELIMITED CSV (delimiter := '|');
 
+
 CREATE STREAM ORDERS (
         orderkey         INT,
         o_custkey        INT,
@@ -38,12 +39,7 @@ CREATE STREAM ORDERS (
   FROM FILE './datasets/tpch/orders.csv'
   LINE DELIMITED CSV (delimiter := '|');
 
-
-SELECT l_shipmode,
-       SUM([lift: RingPair](
-          CASE WHEN ((o_orderpriority = '1-URGENT') OR (o_orderpriority = '2-HIGH')) THEN 1 ELSE 0 END,
-          CASE WHEN ((o_orderpriority <> '1-URGENT') AND (o_orderpriority <> '2-HIGH')) THEN 1 ELSE 0 END
-       ))
+SELECT l_shipmode, SUM([lift: TPCH12Payload](o_orderpriority))
 FROM   lineitem NATURAL JOIN orders
 WHERE  l_shipmode INLIST ('MAIL', 'SHIP')
   AND  l_commitdate < l_receiptdate
