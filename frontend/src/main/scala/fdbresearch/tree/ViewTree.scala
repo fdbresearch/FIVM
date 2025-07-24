@@ -41,16 +41,13 @@ object ViewTree {
   }
 
   implicit class M3ExprImp(expr: M3.Expr) {
-    def getVariables: Set[String] = {
-      val (in, out) = expr.schema
-      (in ++ out).map(_._1).toSet
-    }
-
     def getInputVariables: Set[String] =
       expr.schema._1.map(_._1).toSet
 
-    def isCovered(vars: Set[Variable]): Boolean =
-      getInputVariables.subsetOf(vars.map(_.name))
+    def getOutputVariables: Set[String] =
+      expr.schema._2.map(_._1).toSet
+
+    def isCovered(vars: Set[String]): Boolean = getInputVariables.subsetOf(vars)
   }
 
   // DTree => ViewTree
@@ -76,56 +73,56 @@ object ViewTree {
     dtree.map2WithPostChildren[View] { (tree, children) =>
 
       // All available variables at current node
-      val availableVars = tree.node match {
-        case _: VariableOrderVar => children.flatMap(_.node.freeVars).distinct
-        case r: VariableOrderRelation => r.keys.map(k => Variable(k.name, k.tp))
+      val availableVarList = tree.node match {
+        case _: VariableOrderVar => children.flatMap(_.node.freeVars.map(_.name)).distinct
+        case r: VariableOrderRelation => r.keys.map(_.name)
       }
+      val availableVars = availableVarList.toSet
 
-      // Find where conditions at current node. Push conditions down in the tree
-      val (nodeWhTerms, restWhTerms) = {
-        val childRelationKeys = children.map(c =>
-          c.getRelations.flatMap(r =>
-            r.keys.map(k => Variable(k.name, k.tp))
-          ).toSet
-        )
-        whConds.filter(w => !childRelationKeys.exists(w.isCovered))
-          .partition(_.isCovered(availableVars.toSet))
-      }
+      // Node's dependency set
+      val nodeKeys = tree.getKeys.map(_.name).toSet
 
-      // Find SUM functions at current node. Push functions up in the tree
+      // Drop used terms
+      val usedTerms = children.flatMap(_.getTerms)
+      val remainingSumTerms = sumFuns.diff(usedTerms)
+      val remainingWhTerms = whConds.diff(usedTerms)
+
+      // Find SUM terms at current node. Push functions up in the tree
       val (nodeSumTerms, restSumTerms) = {
-        val nodeVars = tree.getVariables.map(v => Variable(v.name, v.tp)).toSet
-        val childVars = tree.children.flatMap(_.getVariables).map(v => Variable(v.name, v.tp)).toSet
-        sumFuns.filter(f =>
-          !f.isCovered(childVars) ||
-            (tree.parent.isEmpty && !children.exists(_.getTerms.contains(f)))
-        ).partition(_.isCovered(nodeVars))
+        val nodeFreeVars = nodeKeys.union(freeVars).intersect(availableVars)
+        remainingSumTerms.partition(t =>
+          // candidate term must be covered by available vars
+          t.isCovered(availableVars) &&
+            // delay until either root is reached or
+            // all term's variables are marginalised at once
+            (tree.isRoot || t.getInputVariables.intersect(nodeFreeVars).isEmpty)
+        )
       }
-
-      val liftVars = nodeSumTerms.collect { case l: M3.Lift => Variable(l.name, l.e.tp) }
-      val availableVars2 = availableVars ++ liftVars
+      // Find where conditions at current node. Push conditions down in the tree
+      val (nodeWhTerms, restWhTerms) =
+        remainingWhTerms.partition(_.isCovered(availableVars))
 
       // Merge where conditions and sum functions
-      val nodeTerms = nodeWhTerms ++ nodeSumTerms
-
+      val nodeTerms = nodeSumTerms ++ nodeWhTerms
       // Terms can introduce new free variables
-      val restTerms = restWhTerms ++ restSumTerms
-      val restTermVars = restTerms.flatMap(_.getVariables).toSet
+      val restTerms = restSumTerms ++ restWhTerms
+
+      // Sanity checks
+      if (tree.parent.isEmpty) assert(restTerms.isEmpty)
+
+      // Extend available variables with lift variables
+      val liftVarList = nodeSumTerms.flatMap(_.getOutputVariables)
+      val newAvailableVarList = availableVarList ++ liftVarList
+      val newAvailableVars = newAvailableVarList.toSet
+
+      // Rest terms can introduce new free variables
+      val restTermVars = restTerms.flatMap(_.getInputVariables).toSet
       val newFreeVars = freeVars.union(restTermVars)
+      val nodeFreeVars = nodeKeys.union(newFreeVars).intersect(newAvailableVars)
 
-      if (tree.parent.isEmpty) {
-        // Sanity checks
-        assert(restTerms.isEmpty)
-        val usedTerms = nodeTerms ++ children.flatMap(_.getTerms)
-        assert(sumFuns.forall(e => usedTerms.contains(e)))
-        assert(whConds.forall(e => usedTerms.contains(e)))
-      }
-
-      // Extend keys with free variables of children
-      val keys = tree.getKeys.map(_.name).toSet
-      val nodeFreeVars = keys.union(newFreeVars.intersect(availableVars2.map(_.name).toSet))
+      // Compute view free variables
       val viewFreeVars = // preserve the order of tree variables
-        availableVars2.map(_.name).filter(nodeFreeVars.contains).map(variableMap.apply)
+        newAvailableVarList.filter(nodeFreeVars.contains).map(variableMap.apply)
 
       // Construct view name
       val suffix = tree.getRelations.map(_.name.head).mkString
