@@ -108,7 +108,8 @@ class SQLParser extends Parser with (String => SQL.System) {
       }
     | ( ("DATE_PART" ~> "(" ~> stringLit) ~ ("," ~> expr <~ ")")
       | ("EXTRACT" ~> "(" ~> ident) ~ ("FROM" ~> expr <~ ")")
-      ) ^^ { case p ~ e => Apply(p.toLowerCase, TypeInt, List(e)) }
+      ) ^^ { case p ~ e => Apply("date_" + p.toLowerCase, TypeInt, List(e))
+      }
     | field
     | "(" ~> expr <~ ")"
     | "(" ~> query <~ ")" ^^ Nested
