@@ -3,7 +3,7 @@
 
 #include "../application.hpp"
 
-const string dataPath = "data/tpch0.01";
+const string dataPath = "data/tpch0.5";
 
 void Application::init_relations() {
     clear_relations();
@@ -234,6 +234,39 @@ void Application::init_relations() {
                 [](dbtoaster::data_t& data) {
                     return [&](NATION_entry& t) {
                         data.on_insert_NATION(t);
+                    };
+                }
+        )));
+    #endif
+
+    #if defined(RELATION_NATION2_STATIC)
+        relations.push_back(std::unique_ptr<IRelation>(
+            new EventDispatchableRelation<NATION2_entry>(
+                "Nation2", dataPath + "/nation.csv", '|', true,
+                [](dbtoaster::data_t& data) {
+                    return [&](NATION2_entry& t) {
+                        data.on_insert_NATION2(t);
+                    };
+                }
+        )));
+    #elif defined(RELATION_NATION2_DYNAMIC) && defined(BATCH_SIZE)
+        typedef const std::vector<DELTA_NATION2_entry>::iterator CIteratorNation;
+        relations.push_back(std::unique_ptr<IRelation>(
+            new BatchDispatchableRelation<DELTA_NATION2_entry>(
+                "Nation2", dataPath + "/nation.csv", '|', false,
+                [](dbtoaster::data_t& data) {
+                    return [&](CIteratorNation& begin, CIteratorNation& end) {
+                        data.on_batch_update_NATION2(begin, end);
+                    };
+                }
+        )));
+    #elif defined(RELATION_NATION2_DYNAMIC)
+        relations.push_back(std::unique_ptr<IRelation>(
+            new EventDispatchableRelation<NATION2_entry>(
+                "Nation2", dataPath + "/nation.csv", '|', false,
+                [](dbtoaster::data_t& data) {
+                    return [&](NATION2_entry& t) {
+                        data.on_insert_NATION2(t);
                     };
                 }
         )));
