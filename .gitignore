@@ -1,7 +1,11 @@
 .DS_Store
 .idea/
+.bsp/
+.metals/
+.vscode/
+.bloop/
 frontend/project
 frontend/target
 examples/bin/
 examples/generated/
-
+examples/data

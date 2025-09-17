@@ -1,0 +1,11 @@
+9 1
+0 A float -1 {} 0
+1 B float 0 {0} 0
+2 C float 1 {0,1} 0
+3 D float 2 {0,1,2} 0
+4 E float 3 {0,1,2,3} 0
+5 FF float 4 {0,1,2,3,4} 0
+6 G float 5 {0,1,2,3,4,5} 0
+7 H float 6 {0,1,2,3,4,5,6} 0
+8 J float 7 {0,1,2,3,4,5,6,7} 0
+R 8 A,B,C,D,E,FF,G,H,J
