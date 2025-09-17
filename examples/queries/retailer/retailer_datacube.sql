@@ -20,9 +20,11 @@ CREATE STREAM WEATHER(locn int, dateid int, rain byte, snow byte, maxtemp int, m
 FROM FILE './datasets/retailer/Weather.tbl' LINE DELIMITED CSV(delimiter := '|');
 
 SELECT SUM(
-    [liftgroupby<0>: DataCube<[0,int]>](locn) *
-    [liftgroupby<1>: DataCube<[1,int]>](subcategory) *
-    [liftgroupby<2>: DataCube<[2,int]>](category)
-    -- * [liftgroupby<2>: DataCube<[2,int]>](categoryCluster)
+    [liftgroupby<0>: DataCube<[0,int]>](locn) 
+    -- Currently, all lifted variables need to be of the same type
+    -- To include variables of other types, cast them first to a common type
+    -- [liftgroupby<1>: DataCube<[1,int]>](subcategory) * 
+    -- [liftgroupby<2>: DataCube<[2,int]>](category) * 
+    -- [liftgroupby<3>: DataCube<[3,int]>](categoryCluster)
 )
 FROM INVENTORY NATURAL JOIN LOCATION NATURAL JOIN CENSUS NATURAL JOIN ITEM NATURAL JOIN WEATHER;

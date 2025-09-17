@@ -4,8 +4,10 @@
 .metals/
 .vscode/
 .bloop/
-frontend/project
 frontend/target
+frontend/project/metals.sbt
+frontend/project/project
+frontend/project/target
 examples/bin/
 examples/generated/
 examples/data

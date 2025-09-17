@@ -35,6 +35,11 @@ endif
 M3_FILES_BATCH := $(patsubst $(SQL_DIR)/%.sql, $(M3_OUT_DIR)/%_BATCH.m3, $(SQL_FILES))
 M3_FILES_SINGLE := $(patsubst $(SQL_DIR)/%.sql, $(M3_OUT_DIR)/%_SINGLE.m3, $(SQL_FILES))
 
+SKIP_M3_FILES := generated/m3/tpch/tpch_query08_SINGLE.m3
+
+M3_FILES_BATCH := $(filter-out $(SKIP_M3_FILES), $(M3_FILES_BATCH))
+M3_FILES_SINGLE := $(filter-out $(SKIP_M3_FILES), $(M3_FILES_SINGLE))
+
 # M3 to CPP compilation
 CPP_FILES_BATCH := $(patsubst $(M3_OUT_DIR)/%.m3, $(CPP_OUT_DIR)/%.hpp, $(M3_FILES_BATCH))
 CPP_FILES_SINGLE := $(patsubst $(M3_OUT_DIR)/%.m3, $(CPP_OUT_DIR)/%.hpp, $(M3_FILES_SINGLE))

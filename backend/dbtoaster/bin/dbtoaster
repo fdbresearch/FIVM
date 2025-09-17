@@ -12,7 +12,7 @@ in_list() {
 
 # Helper function for producing JVM flags based on SCALA_LIBS
 function get_jvm_exec_flags() {
-   echo "-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -XX:+CMSClassUnloadingEnabled -classpath \"$SCALA_LIBS\""
+   echo "-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -classpath \"$SCALA_LIBS\""
 }
 
 
@@ -67,8 +67,8 @@ cpp_compile_flags="-std=c++11"
 cpp_opt_flag="-O3"
 cpp_libs="-ldbtoaster -lpthread"
 
-lms_codegen_flags="-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -XX:+CMSClassUnloadingEnabled -classpath \"$SCALA_LIBS\""
-scala_codegen_flags="-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -XX:+CMSClassUnloadingEnabled -classpath \"$SCALA_LIBS\""
+lms_codegen_flags="-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -classpath \"$SCALA_LIBS\""
+scala_codegen_flags="-Xms256m -Xmx2g -XX:-DontCompileHugeMethods -classpath \"$SCALA_LIBS\""
 jvm_exec_flags=$scala_codegen_flags
 scala_compile_flags="-deprecation -unchecked -feature -classpath \"$SCALA_LIBS\""
 scala_opt_flag="-optimise"

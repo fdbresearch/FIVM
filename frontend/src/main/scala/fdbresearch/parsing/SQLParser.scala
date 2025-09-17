@@ -34,7 +34,7 @@ class SQLParser extends Parser with (String => SQL.System) {
   lazy val expr: Parser[Expr] =
     prod ~ rep(("+" | "-") ~ prod) ^^ {
       case a ~ l =>
-        (a /: l) {
+        l.foldLeft(a) {
           case (l, o ~ r) => o match {
             case "+" => Add(l, r)
             case "-" => Sub(l, r)
@@ -45,7 +45,7 @@ class SQLParser extends Parser with (String => SQL.System) {
   lazy val prod: Parser[Expr] =
     atom ~ rep(("*" | "/" | "%") ~ atom) ^^ {
       case a ~ l =>
-        (a /: l) {
+        l.foldLeft(a) {
           case (l, o ~ r) => o match {
             case "*" => Mul(l, r)
             case "/" => Div(l, r)
@@ -119,10 +119,10 @@ class SQLParser extends Parser with (String => SQL.System) {
 
   // ------------ Conditions
   def disj: Parser[Cond] =
-    rep1sep(conj, "OR") ^^ { cs => (cs.head /: cs.tail) ((x, y) => Or(x, y)) }
+    rep1sep(conj, "OR") ^^ { cs => cs.tail.foldLeft(cs.head)((x, y) => Or(x, y)) }
 
   def conj: Parser[Cond] =
-    rep1sep(cond, "AND") ^^ { cs => (cs.head /: cs.tail) ((x, y) => And(x, y)) }
+    rep1sep(cond, "AND") ^^ { cs => cs.tail.foldLeft(cs.head)((x, y) => And(x, y)) }
 
   lazy val cond: Parser[Cond] =
     ( "EXISTS" ~> "(" ~> query <~ ")" ^^ Exists
@@ -188,7 +188,7 @@ class SQLParser extends Parser with (String => SQL.System) {
             case j ~ t ~ c => (t, j.getOrElse(JoinInner), Some(c))
           }
       ) ^^ {
-        case t ~ js => (t /: js) {
+        case t ~ js => js.foldLeft(t) {
           case (t1, (t2, j, c)) => TableJoin(t1, t2, j, c)
         }
       }

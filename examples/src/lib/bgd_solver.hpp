@@ -39,43 +39,43 @@ struct BGDSolver {
 
     inline double count() { return sigma[0][0]; }
 
-    // void build_sigma_matrix(const RingCofactor<0, double, SZ> cofactor) {
-    //     sigma[0][0] = cofactor.count;
-
-    //     for (size_t i = 0; i < SZ; i++) {
-    //         sigma[0][i + 1] = cofactor.sum1[i];
-    //         sigma[i + 1][0] = cofactor.sum1[i];
-    //     }
-
-    //     size_t idx = 0;
-    //     for (size_t i = 0; i < SZ; i++) {
-    //         sigma[i + 1][i + 1] = cofactor.sum2[i];
-
-    //         for (size_t j = i + 1; j < SZ; j++) {
-    //             sigma[i + 1][j + 1] = cofactor.degree2[idx];
-    //             sigma[j + 1][i + 1] = cofactor.degree2[idx];
-    //             idx++;
-    //         }
-    //     }
-    // }
-
-    void build_sigma_matrix(const RingCofactor<0, SZ, 0> cofactor) {
+    void build_sigma_matrix(const RingCofactor<0, double, SZ> cofactor) {
         sigma[0][0] = cofactor.count;
 
         for (size_t i = 0; i < SZ; i++) {
-            sigma[0][i + 1] = cofactor.scalar_array[i];
-            sigma[i + 1][0] = cofactor.scalar_array[i];
+            sigma[0][i + 1] = cofactor.sum1[i];
+            sigma[i + 1][0] = cofactor.sum1[i];
         }
 
-        const double *sum2_scalar_array_iter = cofactor.scalar_array.data() + SZ;
+        size_t idx = 0;
         for (size_t i = 0; i < SZ; i++) {
-            for (size_t j = i; j < SZ; j++) {
-                sigma[i + 1][j + 1] = *sum2_scalar_array_iter;
-                sigma[j + 1][i + 1] = *sum2_scalar_array_iter;
-                sum2_scalar_array_iter++;
+            sigma[i + 1][i + 1] = cofactor.sum2[i];
+
+            for (size_t j = i + 1; j < SZ; j++) {
+                sigma[i + 1][j + 1] = cofactor.degree2[idx];
+                sigma[j + 1][i + 1] = cofactor.degree2[idx];
+                idx++;
             }
         }
     }
+
+    // void build_sigma_matrix(const RingCofactor<0, SZ, 0> cofactor) {
+    //     sigma[0][0] = cofactor.count;
+
+    //     for (size_t i = 0; i < SZ; i++) {
+    //         sigma[0][i + 1] = cofactor.scalar_array[i];
+    //         sigma[i + 1][0] = cofactor.scalar_array[i];
+    //     }
+
+    //     const double *sum2_scalar_array_iter = cofactor.scalar_array.data() + SZ;
+    //     for (size_t i = 0; i < SZ; i++) {
+    //         for (size_t j = i; j < SZ; j++) {
+    //             sigma[i + 1][j + 1] = *sum2_scalar_array_iter;
+    //             sigma[j + 1][i + 1] = *sum2_scalar_array_iter;
+    //             sum2_scalar_array_iter++;
+    //         }
+    //     }
+    // }
 
     void compute_gradient() {
         /* Compute Sigma * Theta */
