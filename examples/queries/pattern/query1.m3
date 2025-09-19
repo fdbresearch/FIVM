@@ -32,7 +32,7 @@ DECLARE MAP V_D(long)[][A: int] :=
   AggSum([A], V_R3(long)[][A, D]<Local>);
 
 DECLARE MAP QUERY1(long)[][A: int] :=
-  V_BC(long)[][A]<Local> * V_D(long)[][A]<Local>;
+  V_D(long)[][A]<Local> * (V_B(long)[][A]<Local> + V_C(long)[][A]<Local>);
 
 DECLARE MAP TMP_V_B(long)[][A: int] :=
   AggSum([A], (DELTA R1)(A, B));
