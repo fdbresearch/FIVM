@@ -2,7 +2,7 @@
 
 # Compilers
 FRONTEND_BIN = ../bin/run_frontend.sh
-BACKEND_BIN = ../bin/run_backend.sh
+# BACKEND_BIN = ../bin/run_backend.sh
 CC = g++
 CFLAGS = -O3 -DNDEBUG -Wall -Wno-unused-variable -std=c++17 -pedantic
 
@@ -54,19 +54,19 @@ all: exe
 
 $(M3_FILES_BATCH): $(M3_OUT_DIR)/%_BATCH.m3: $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(FRONTEND_BIN) --batch -o $@ $<
+	$(FRONTEND_BIN) -l m3 --batch -o $@ $<
 
 $(M3_FILES_SINGLE): $(M3_OUT_DIR)/%_SINGLE.m3: $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(FRONTEND_BIN) --single -o $@ $<
+	$(FRONTEND_BIN) -l m3 --single -o $@ $<
 
-$(CPP_FILES_BATCH): $(CPP_OUT_DIR)/%.hpp : $(M3_OUT_DIR)/%.m3
+$(CPP_FILES_BATCH): $(CPP_OUT_DIR)/%_BATCH.hpp : $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(BACKEND_BIN) --batch -o $@ $<
+	$(FRONTEND_BIN) -l cpp --batch -o $@ $<
 
-$(CPP_FILES_SINGLE): $(CPP_OUT_DIR)/%.hpp : $(M3_OUT_DIR)/%.m3
+$(CPP_FILES_SINGLE): $(CPP_OUT_DIR)/%_SINGLE.hpp : $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(BACKEND_BIN) -o $@ $<
+	$(FRONTEND_BIN) -l cpp --single -o $@ $<
 
 $(EXE_FILES_BATCH): $(EXE_OUT_DIR)/%_$(BATCH_SIZE) : $(CPP_OUT_DIR)/%.hpp $(SRC_DIR)/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)

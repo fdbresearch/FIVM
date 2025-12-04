@@ -10,9 +10,10 @@
 package fdbresearch
 
 import fdbresearch.tree.{VariableOrderNode, VariableOrderRelation, Tree, ViewTree}
-import fdbresearch.core.{SQL, SQLToM3Compiler, Source}
+import fdbresearch.core.{SQL, SQLToM3Compiler, M3, Source, TypeCheck, Optimizer}
 import fdbresearch.parsing.M3Parser
 import fdbresearch.util.Logger
+import fdbresearch.codegen.M3CodeGen
 
 class Driver {
 
@@ -47,7 +48,7 @@ class Driver {
     }.asInstanceOf[SQL.System]
   }
 
-  def compile(sql: SQL.System, dtree: Tree[VariableOrderNode], batchUpdates: Boolean): String = {
+  def compile(sql: SQL.System, dtree: Tree[VariableOrderNode], batchUpdates: Boolean): M3.System = {
 
     checkSchemas(sql.sources, dtree.getRelations)
 
@@ -62,17 +63,19 @@ class Driver {
 
     Logger.instance.debug("\n\nVIEW TREE:\n" + viewtree)
 
-    val cg = new CodeGenerator(viewtree, sql.typeDefs, sql.sources, batchUpdates)
+    val cg = new M3CodeGen(viewtree, sql.typeDefs, sql.sources, batchUpdates)
     val m3 = cg.generateM3
     Logger.instance.debug("\n\nORIGINAL M3\n" + m3)
 
     val optM3 = Optimizer.optimize(m3)
     Logger.instance.debug("\n\nOPTIMIZED M3\n" + optM3)
 
-    // test that the output can be parsed by the M3 parser
-    val checkedM3 = new M3Parser().apply(optM3.toString)
-    Logger.instance.debug("M3 SYNTAX CHECKED")
+    // // test that the output can be parsed by the M3 parser
+    // val checkedM3 = new M3Parser().apply(optM3.toString)
+    // Logger.instance.debug("M3 SYNTAX CHECKED")
 
-    checkedM3.toString
+    val typecheckedM3 = TypeCheck(optM3)
+
+    typecheckedM3
   }
 }

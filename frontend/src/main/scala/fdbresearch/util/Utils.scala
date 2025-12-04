@@ -27,4 +27,9 @@ object Utils {
     val i = "  " * n
     i + s.replaceAll("\n? *$", "").replaceAll("\n", "\n" + i)
   }
+
+  def stringIf(flag: Boolean, t: => String, e: => String = "") = if (flag) t else e
+
+  def delta(name: String) = "DELTA_" + name
+
 }

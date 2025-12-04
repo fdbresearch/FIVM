@@ -7,7 +7,7 @@
 // Copyright (c) 2018-2019, FDB Research Group, University of Oxford
 // 
 //===----------------------------------------------------------------------===//
-package fdbresearch
+package fdbresearch.core
 
 import fdbresearch.core._
 import fdbresearch.util.{Logger, Utils}
@@ -163,7 +163,7 @@ object Optimizer {
     def replace(ss: List[M3.Statement], src: M3.Expr, dst: M3.MapRef): List[M3.Statement] = {
       def replaceInExpr(e: M3.Expr): M3.Expr = e.replace {
         case a: M3.AggSum => src.cmp(a) match {
-          case Some(mapping) => M3.MapRef(dst.name, dst.tp, dst.keys.map(mapping), isTemp = true)
+          case Some(mapping) => M3.MapRef(dst.name, dst.tp, dst.keys.map(mapping), isTemp = false)
           case None => M3.AggSum(a.keys, replaceInExpr(a.e))
         }
       }
@@ -219,7 +219,7 @@ object Optimizer {
     ranked match {
       case (a, occurrences) :: _ if occurrences > 1 =>
         val tmpMapDef = M3.MapDef(Utils.fresh("TMP_SUM"), a.tp, a.keys, optimizeExpr(a))
-        val tmpMapRef = M3.MapRef(tmpMapDef.name, tmpMapDef.tp, tmpMapDef.keys, isTemp = true)
+        val tmpMapRef = M3.MapRef(tmpMapDef.name, tmpMapDef.tp, tmpMapDef.keys, isTemp = false)
 
         // Replace expression 'a' by tmpMapRef
         val replacedStmts = replace(ss, a, tmpMapRef)

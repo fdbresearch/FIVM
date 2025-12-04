@@ -7,15 +7,15 @@
 // Copyright (c) 2018-2019, FDB Research Group, University of Oxford
 // 
 //===----------------------------------------------------------------------===//
-package fdbresearch
+package fdbresearch.codegen
 
 import fdbresearch.core._
 import fdbresearch.tree.{Tree, View, VariableOrderVar, VariableOrderRelation}
 
-class CodeGenerator(tree: Tree[View],
-                    typeDefs: List[TypeDefinition],
-                    sources: List[Source],
-                    batchUpdates: Boolean) {
+class M3CodeGen(tree: Tree[View],
+                typeDefs: List[TypeDefinition],
+                sources: List[Source],
+                batchUpdates: Boolean) {
 
   import fdbresearch.tree.ViewTree._
 
