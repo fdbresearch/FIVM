@@ -21,7 +21,7 @@ CREATE STREAM LINEITEM (
         l_shipmode       CHAR(10),
         l_comment        VARCHAR(44)
     )
-  FROM FILE '../../experiments/data/tpch/standard/lineitem.csv'
+  FROM FILE './datasets/tpch/lineitem.csv'
   LINE DELIMITED CSV (delimiter := '|');
 
 CREATE STREAM ORDERS (
@@ -35,7 +35,7 @@ CREATE STREAM ORDERS (
         o_shippriority   INT,
         o_comment        VARCHAR(79)
     )
-  FROM FILE '../../experiments/data/tpch/standard/orders.csv'
+  FROM FILE './datasets/tpch/orders.csv'
   LINE DELIMITED CSV (delimiter := '|');
 
 CREATE STREAM PART (

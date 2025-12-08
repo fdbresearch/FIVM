@@ -1,7 +1,7 @@
 #ifndef APPLICATION_RETAILER_LISTING_JOIN_HPP
 #define APPLICATION_RETAILER_LISTING_JOIN_HPP
 
-#include "application_retailer_base.hpp"
+#include "../application.hpp"
 
 void Application::on_snapshot(dbtoaster::data_t& data) {
     on_end_processing(data, false);

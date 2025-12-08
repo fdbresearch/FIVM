@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iomanip>
 #include <sys/time.h>
-#include "application_retailer_base.hpp"
+#include "../application.hpp"
 #include "bgd_solver.hpp"
 #include "csvreader.hpp"
 

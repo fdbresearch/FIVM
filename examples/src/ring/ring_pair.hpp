@@ -8,14 +8,14 @@ using namespace dbtoaster;
 
 struct RingPair {
     long count;
-    DOUBLE_TYPE v1;
-    DOUBLE_TYPE v2;
+    double v1;
+    double v2;
 
     static RingPair zero;
 
     explicit RingPair() : count(0), v1(0.0), v2(0.0) { }
 
-    explicit RingPair(long c, DOUBLE_TYPE a, DOUBLE_TYPE b) : count(c), v1(a), v2(b) { }
+    explicit RingPair(long c, double a, double b) : count(c), v1(a), v2(b) { }
 
     inline bool isZero() const { return count == 0; }
 
@@ -47,7 +47,7 @@ RingPair operator*(long alpha, const RingPair &r) {
     return RingPair(alpha * r.count, alpha * r.v1, alpha * r.v2);
 }
 
-RingPair Ulift(DOUBLE_TYPE v1, DOUBLE_TYPE v2) {
+RingPair Ulift(double v1, double v2) {
     return RingPair(1, v1, v2);
 }
 

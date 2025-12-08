@@ -229,11 +229,11 @@ RingCofactor<T, IDX, SZ> operator*(long int alpha, const RingCofactor<T, IDX, SZ
 }
 
 template <typename T>
-FORCE_INLINE DOUBLE_TYPE convert(T x) { return x; }
+FORCE_INLINE double convert(T x) { return x; }
 
 template <size_t IDX, typename... Args>
-RingCofactor<DOUBLE_TYPE, IDX, sizeof...(Args)> Ulift(Args&&... args) {
-    return RingCofactor<DOUBLE_TYPE, IDX, sizeof...(args)>(convert(args)...);
+RingCofactor<double, IDX, sizeof...(Args)> Ulift(Args&&... args) {
+    return RingCofactor<double, IDX, sizeof...(args)>(convert(args)...);
 }
 
 #endif /* RINGCOFACTOR_DEGREE2_HPP */

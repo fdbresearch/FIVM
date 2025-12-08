@@ -1,7 +1,7 @@
 #ifndef APPLICATION_TPCH_FQ4_FACTORIZED_JOIN_HPP
 #define APPLICATION_TPCH_FQ4_FACTORIZED_JOIN_HPP
 
-#include "application_tpch_base.hpp"
+#include "../application.hpp"
 
 void Application::on_snapshot(dbtoaster::data_t& data) {
     on_end_processing(data, false);

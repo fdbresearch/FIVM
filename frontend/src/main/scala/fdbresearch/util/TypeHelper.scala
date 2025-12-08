@@ -20,18 +20,31 @@ object TypeHelper {
   object Cpp {
 
     def typeToString(t: Type): String = t match {
-      case TypeByte   => "signed char"
-      case TypeShort  => "short"
-      case TypeInt    => "int"
-      case TypeLong   => "long"      
+      case TypeByte   => "int8_t"
+      case TypeShort  => "int16_t"
+      case TypeInt    => "int32_t"
+      case TypeLong   => "int64_t"
       case TypeFloat  => "float"
-      case TypeDouble => "DOUBLE_TYPE"
-      case TypeDate   => "date"
+      case TypeDouble => "double"
+      case TypeDate   => "DATE_TYPE"
       case TypeChar   => "char"
       case TypeString => "STRING_TYPE"
       case TypeCustom(d, ps) =>
         if (ps.isEmpty) d.name
         else d.name + "<" + ps.map(paramToString).mkString(", ") + ">"
+    }
+
+    def typeToPrimitiveType(t: Type): String = t match {
+      case TypeByte   => "PrimitiveType::INT8"
+      case TypeShort  => "PrimitiveType::INT16"
+      case TypeInt    => "PrimitiveType::INT32"
+      case TypeLong   => "PrimitiveType::INT64"
+      case TypeFloat  => "PrimitiveType::FLOAT"
+      case TypeDouble => "PrimitiveType::DOUBLE"
+      case TypeDate   => "PrimitiveType::DATE"
+      case TypeChar   => "PrimitiveType::CHAR"
+      case TypeString => "PrimitiveType::STRING"
+      case TypeCustom(d, ps) => sys.error("No matching primitive type")
     }
 
     private def paramToString(p: GenericParameter): String = p match {
@@ -42,13 +55,13 @@ object TypeHelper {
     }
 
     def refTypeToString(t: Type): String = t match {
-      case TypeByte   => "signed char"
-      case TypeShort  => "short"
-      case TypeInt    => "int"
-      case TypeLong   => "long"
+      case TypeByte   => "int8_t"
+      case TypeShort  => "int16_t"
+      case TypeInt    => "int32_t"
+      case TypeLong   => "int64_t"
       case TypeFloat  => "float"
-      case TypeDouble => "DOUBLE_TYPE"
-      case TypeDate   => "date"
+      case TypeDouble => "double"
+      case TypeDate   => "DATE_TYPE"
       case TypeChar   => "char"
       case TypeString => "STRING_TYPE&"
       case TypeCustom(_, _) => typeToString(t) + "&"

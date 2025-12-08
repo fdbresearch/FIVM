@@ -76,6 +76,12 @@ namespace dbtoaster {
     }
 
     template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const long long & t) {
+        ar << t;
+        return ar;
+    }
+
+    template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const STRING_TYPE & t) {
         ar << t.c_str();
         return ar;

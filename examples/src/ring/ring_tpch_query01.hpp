@@ -8,14 +8,14 @@ using namespace dbtoaster;
 
 struct TPCH1Payload {
   long count_order;
-  DOUBLE_TYPE sum_qty;
-  DOUBLE_TYPE sum_base_price;
-  DOUBLE_TYPE sum_disc_price;
-  DOUBLE_TYPE sum_charge;
-  DOUBLE_TYPE sum_discount;
-  DOUBLE_TYPE avg_qty;
-  DOUBLE_TYPE avg_price;
-  DOUBLE_TYPE avg_disc;
+  double sum_qty;
+  double sum_base_price;
+  double sum_disc_price;
+  double sum_charge;
+  double sum_discount;
+  double avg_qty;
+  double avg_price;
+  double avg_disc;
 
   explicit TPCH1Payload() : count_order(0),
                             sum_qty(0.0),
@@ -27,9 +27,9 @@ struct TPCH1Payload {
                             avg_price(0.0),
                             avg_disc(0.0) { }
 
-  explicit TPCH1Payload(int _count_order, DOUBLE_TYPE _sum_qty,
-                        DOUBLE_TYPE _sum_base_price, DOUBLE_TYPE _sum_disc_price,
-                        DOUBLE_TYPE _sum_charge, DOUBLE_TYPE _sum_discount)
+  explicit TPCH1Payload(int _count_order, double _sum_qty,
+                        double _sum_base_price, double _sum_disc_price,
+                        double _sum_charge, double _sum_discount)
     : count_order(_count_order),
       sum_qty(_sum_qty),
       sum_base_price(_sum_base_price),
@@ -131,9 +131,9 @@ TPCH1Payload operator*(long int alpha, const TPCH1Payload& p) {
     return p.multiply(alpha);
 }
 
-TPCH1Payload Ulift(DOUBLE_TYPE sum_qty, DOUBLE_TYPE sum_base_price,
-                   DOUBLE_TYPE sum_disc_price, DOUBLE_TYPE sum_charge,
-                   DOUBLE_TYPE sum_disc) {
+TPCH1Payload Ulift(double sum_qty, double sum_base_price,
+                   double sum_disc_price, double sum_charge,
+                   double sum_disc) {
     return TPCH1Payload(1, sum_qty, sum_base_price, sum_disc_price, sum_charge, sum_disc);
 }
 

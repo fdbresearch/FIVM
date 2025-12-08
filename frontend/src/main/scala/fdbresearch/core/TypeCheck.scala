@@ -253,7 +253,7 @@ object TypeCheck extends (M3.System => M3.System) {
 
     def resolveType(tp1: Type, tp2: Type) =
       try { tp1.resolve(tp2) } catch { case _: Throwable => tp2.resolve(tp1) }
-7
+
     // Change type of Const from String to Char when comparing strings and chars
     // Consequence of using quotes for both strings and chars in SQL/M3
     def demoteString2Char(l: Expr, r: Expr): (Expr, Expr) = (l, r) match {

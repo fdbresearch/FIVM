@@ -23,14 +23,14 @@ struct TPCH14Payload {
   static const TPCH14Regex regex;
 
   long count;
-  DOUBLE_TYPE promo_revenue;
-  DOUBLE_TYPE total_revenue;
-  DOUBLE_TYPE percent_revenue;
+  double promo_revenue;
+  double total_revenue;
+  double percent_revenue;
 
   explicit TPCH14Payload()
       : count(0), promo_revenue(0.0), total_revenue(0.0), percent_revenue(0.0) { }
 
-  explicit TPCH14Payload(long c, DOUBLE_TYPE p, DOUBLE_TYPE t)
+  explicit TPCH14Payload(long c, double p, double t)
       : count(c), promo_revenue(p), total_revenue(t) {
     percent_revenue = (total_revenue != 0.0 ? 100.0 * promo_revenue / total_revenue : 0.0);
   }
@@ -100,7 +100,7 @@ TPCH14Payload Uliftpart(const STRING_TYPE& p_type) {
     return TPCH14Payload(1, Upreg_match(TPCH14Payload::regex.preg1, p_type) != 0, 1.0);
 }
 
-TPCH14Payload Uliftlineitem(DOUBLE_TYPE revenue) {
+TPCH14Payload Uliftlineitem(double revenue) {
     return TPCH14Payload(1, revenue, revenue);
 }
 

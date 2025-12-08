@@ -96,19 +96,22 @@ m3_batch: $(M3_FILES_BATCH)
 
 m3_single: $(M3_FILES_SINGLE)
 
-m3: m3_batch m3_single 
+# m3: m3_batch m3_single 
+m3: m3_batch
 
 cpp_batch: $(CPP_FILES_BATCH) 
 
 cpp_single: $(CPP_FILES_SINGLE)
 
-cpp: cpp_batch cpp_single
+# cpp: cpp_batch cpp_single
+cpp: cpp_batch
 
 exe_batch: $(EXE_FILES_BATCH) 
 
 exe_single: $(EXE_FILES_SINGLE)
 
-exe: exe_batch exe_single
+# exe: exe_batch exe_single
+exe: exe_batch 
 
 clean: 
 	rm -fr $(M3_OUT_DIR) $(CPP_OUT_DIR) $(EXE_OUT_DIR)

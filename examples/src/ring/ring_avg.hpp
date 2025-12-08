@@ -8,13 +8,13 @@ using namespace dbtoaster;
 
 struct RingAvg {
     int count;
-    DOUBLE_TYPE sum;
+    double sum;
 
     static RingAvg zero;
 
     explicit RingAvg() : count(0), sum(0.0) { }
 
-    explicit RingAvg(int c, DOUBLE_TYPE s) : count(c), sum(s) { }
+    explicit RingAvg(int c, double s) : count(c), sum(s) { }
 
     inline bool isZero() const { return count == 0; }
 
@@ -41,7 +41,7 @@ RingAvg operator*(int alpha, const RingAvg &r) {
     return RingAvg(alpha * r.count, alpha * r.sum);
 }
 
-RingAvg Ulift(DOUBLE_TYPE a) {
+RingAvg Ulift(double a) {
     return RingAvg(1, a);
 }
 

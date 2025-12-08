@@ -131,7 +131,7 @@ trait ICppCodeGen extends CodeGen {
           |  static bool equals(const ${name} &x, const ${name} &y) {
           |    return (${sEqualFnBody});
           |  }
-          |  static long hash(const ${name} &e) {
+          |  static HASH_TYPE hash(const ${name} &e) {
           |    size_t h = 0;
           |${ind(sHashFnBody, 2)}
           |    return h;
@@ -328,13 +328,21 @@ trait ICppCodeGen extends CodeGen {
             |if (tT > ${cgOpts.timeoutMilli}) { tS = batchSize; return; }
             |""".stripMargin)
         if (cgOpts.useExperimentalRuntimeLibrary) {
-        s"""|void on_batch_update_${s.name}(const std::vector<${delta(s.name)}_entry>::iterator &begin, const std::vector<${delta(s.name)}_entry>::iterator &end) {
-            |  long batchSize = std::distance(begin, end);
-            |${ind(sTimeout)}
-            |  tN += batchSize;
-            |${ind(body)}
-            |}
-            |""".stripMargin
+          s"""|void on_batch_update_${s.name}(const DataChunk& chunk) {
+              |  long batchSize = chunk.row_count;
+              |${ind(sTimeout)}
+              |  tN += batchSize;
+              |${ind(body)}
+              |}
+              |""".stripMargin
+
+        // s"""|void on_batch_update_${s.name}(const std::vector<${delta(s.name)}_entry>::iterator &begin, const std::vector<${delta(s.name)}_entry>::iterator &end) {
+        //     |  long batchSize = std::distance(begin, end);
+        //     |${ind(sTimeout)}
+        //     |  tN += batchSize;
+        //     |${ind(body)}
+        //     |}
+        //     |""".stripMargin
       }
       else {
         s"""|void on_batch_update_${s.name}(${delta(s.name)}_map &${delta(s.name)}) {
@@ -411,9 +419,24 @@ trait ICppCodeGen extends CodeGen {
       //
       // TODO: perhaps enable in all cases
       (if (cgOpts.useExperimentalRuntimeLibrary) {
+        val payload = fresh("payload")
+        val body =
+          fields.zipWithIndex.map { case ((n, t), i) =>
+            s"const auto& $n = static_cast<Column<${typeToString(t)}>*>(chunk.cols[$i].get())->data[i];\n" 
+          }.mkString +
+          s"const auto& $VALUE_NAME = chunk.payload[i];\n"
+
          s"""|void on_insert_${name}(${name}_entry &e) {
-             |  e.${VALUE_NAME} = 1;
+             |  e.$VALUE_NAME = 1;
              |  ${name}.addOrDelOnZero(e, 1);
+             |}
+             |
+             |void on_batch_update_${name}(const DataChunk& chunk) {
+             |  for (auto i = 0; i < chunk.row_count; ++i) {
+             |${ind(body, 2)}
+             |    ${name}_entry $entry($args, $VALUE_NAME);
+             |    ${name}.addOrDelOnZero($entry, $VALUE_NAME);
+             |  }
              |}
              |""".stripMargin
       }
@@ -1173,16 +1196,16 @@ trait ICppCodeGen extends CodeGen {
       } 
       else {
         val (v0, e0) = (fresh("v"), fresh("e"))
-
         ctx.add(ks.filter(x => !ctx.contains(x._1)).map(x => (x._1, (x._2, x._1))).toMap)
 
         if (!isTemp) { // slice or foreach
-          val body = 
+          val assignments = 
             ki.map { case ((k, ktp), i) => 
               typeToString(ktp) + " " + rn(k) + " = " + e0 + "->" + mapDefs(mapName).keys(i)._1 + ";\n"
             }.mkString + 
-            refTypeToString(tp) + " " + v0 + " = " + e0 + "->" + VALUE_NAME + ";\n" +
-            co(v0)
+            refTypeToString(tp) + " " + v0 + " = " + e0 + "->" + VALUE_NAME + ";\n"
+          val restBody = co(v0)
+          val body = assignments + restBody
 
           if (ko.nonEmpty) { //slice
             if (cgOpts.useExperimentalRuntimeLibrary && deltaRelationNames.contains(mapName)) {
@@ -1225,7 +1248,7 @@ trait ICppCodeGen extends CodeGen {
               val idxName = "HashIndex_" + mapType + "_" + getIndexId(mapName, is)
               val idxFn = mapType + "key" + getIndexId(mapName, is) + "_idxfn"
               s"""|{ //slice
-                  |  const HASH_RES_t ${h0} = ${idxFn}::hash(${localEntry}.modify${getIndexId(mapName,is)}(${sKeys}));
+                  |  const HASH_TYPE ${h0} = ${idxFn}::hash(${localEntry}.modify${getIndexId(mapName,is)}(${sKeys}));
                   |  const ${idxName}* ${idx0} = static_cast<${idxName}*>(${mapName}.index[${idxIndex}]);
                   |  ${idxName}::IdxNode* ${n0} = &(${idx0}->buckets_[${h0} & ${idx0}->mask_]);
                   |  ${mapEntryType}* ${e0};
@@ -1235,15 +1258,29 @@ trait ICppCodeGen extends CodeGen {
                   |}
                   |""".stripMargin
             }
-          } 
+          }
           else { //foreach
             if (cgOpts.useExperimentalRuntimeLibrary && deltaRelationNames.contains(mapName)) {
+              val body =
+                ki.map { case ((k, ktp), i) =>
+                  s"const auto& ${rn(k)} = static_cast<Column<${typeToString(ktp)}>*>(chunk.cols[${i}].get())->data[i];\n"
+                }.mkString +
+                s"const auto& ${v0} = chunk.payload[i];\n" +
+                restBody
+
               s"""|{ //foreach
-                  |  for (std::vector<${mapEntryType}>::iterator ${e0} = begin; ${e0} != end; ${e0}++) {
+                  |  for (auto i = 0; i < chunk.row_count; ++i) {
                   |${ind(body, 2)}
                   |  }
                   |}
-                  |""".stripMargin                
+                  |""".stripMargin
+
+              // s"""|{ //foreach
+              //     |  for (std::vector<${mapEntryType}>::iterator ${e0} = begin; ${e0} != end; ${e0}++) {
+              //     |${ind(body, 2)}
+              //     |  }
+              //     |}
+              //     |""".stripMargin
             }
             else {
               s"""|{ //foreach
@@ -1466,6 +1503,8 @@ trait ICppCodeGen extends CodeGen {
         |
         |${ind(emitMainClass(s0))}
         |
+        |${ind(emitDataSourcesConfig(s0))}
+        |
         |}""".stripMargin    
   }
 
@@ -1482,6 +1521,7 @@ trait ICppCodeGen extends CodeGen {
           |#include "hash.hpp"
           |#include "mmap.hpp"
           |#include "serialization.hpp"
+          |#include "common.hpp"
           |""".stripMargin,
       s"""|#include "program_base.hpp"
           |#include "hpds/KDouble.hpp"
@@ -1490,4 +1530,39 @@ trait ICppCodeGen extends CodeGen {
           |#include "hpds/pstring.hpp"
           |#include "hpds/pstringops.hpp"
           |""".stripMargin)
+
+  protected def emitDataSourcesConfig(s0: System) =
+    s"""|namespace Config {
+        |  static const std::vector<DataSourceConfig> DataSources = {
+        |${ind(s0.sources.map(emitDataSourceConfig).mkString(",\n"))}
+        |  };
+        |}""".stripMargin
+
+  private def emitDataSourceConfig(s: Source) = {
+    val adaptorType = s.adaptor.name.toUpperCase match {
+      case "CSV" => "DataSourceType::CSV"
+      case _ => sys.error("Unknown adaptor")
+    }
+    val adaptorOptions = s.adaptor.options.map {
+      case (k, v) => "{\"" + k.toLowerCase + "\", \"" + v.toLowerCase + "\"}"
+    }.mkString(", ")
+    val fields = s.schema.fields.map {
+      case (n, t) => "{\"" + n + "\", " + typeToPrimitiveType(t) + "}"
+    }.mkString(", ")
+    s"""|{
+        |  "${s.schema.name}",
+        |  ${s.isStream},
+        |  ${adaptorType},
+        |  "${s.in.asInstanceOf[SourceFile].path}",
+        |  // schema
+        |  {$fields},
+        |  // options
+        |  {$adaptorOptions},
+        |  [](void* ctx, const DataChunk& chunk) {
+        |    data_t* d = static_cast<data_t*>(ctx);
+        |    d->on_batch_update_${s.schema.name}(chunk);
+        |  }
+        |}""".stripMargin
+  }
+
 }

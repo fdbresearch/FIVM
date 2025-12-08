@@ -9,14 +9,14 @@ using namespace dbtoaster;
 template<int SCALE = 1>
 struct RingRatio {
     long count;
-    DOUBLE_TYPE v1;
-    DOUBLE_TYPE v2;
+    double v1;
+    double v2;
 
     static RingRatio zero;
 
     explicit RingRatio() : count(0), v1(0.0), v2(0.0) { }
 
-    explicit RingRatio(long c, DOUBLE_TYPE a, DOUBLE_TYPE b) : count(c), v1(a), v2(b) { }
+    explicit RingRatio(long c, double a, double b) : count(c), v1(a), v2(b) { }
 
     inline bool isZero() const { return count == 0; }
 
@@ -37,12 +37,12 @@ struct RingRatio {
 
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version) const {
-        DOUBLE_TYPE ratio = getResult();
+        double ratio = getResult();
         ar << ELEM_SEPARATOR;
         DBT_SERIALIZATION_NVP(ar, ratio);
     }
 
-    DOUBLE_TYPE getResult() const {
+    double getResult() const {
         return (v2 != 0.0) ? SCALE * (v1 / v2) : 0.0;
     }
 };
@@ -53,7 +53,7 @@ RingRatio<SCALE> operator*(long alpha, const RingRatio<SCALE> &r) {
 }
 
 template <int SCALE>
-RingRatio<SCALE> Ulift(DOUBLE_TYPE v1, DOUBLE_TYPE v2) {
+RingRatio<SCALE> Ulift(double v1, double v2) {
     return RingRatio<SCALE>(1, v1, v2);
 }
 
