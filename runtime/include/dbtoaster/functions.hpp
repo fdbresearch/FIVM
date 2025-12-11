@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <regex.h>
 #include "macro.hpp"
+#include "types.hpp"
 
 using namespace std;
 

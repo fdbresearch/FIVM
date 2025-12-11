@@ -1,43 +1,27 @@
-#ifndef APPLICATION_DATA_SOURCE_HPP
-#define APPLICATION_DATA_SOURCE_HPP
+#ifndef RUNTIME_CSV_READER_HPP
+#define RUNTIME_CSV_READER_HPP
 
 #include <fstream>
 #include <sstream>
 
-#include "common.hpp"
+#include "data_source.hpp"
 
 // ---------------------------------------------------------------------------
-class IDataReader {
- public:
-  const DataSourceConfig cfg;
-  IDataReader(const DataSourceConfig& c) : cfg(c) {}
-  virtual ~IDataReader() {}
-  virtual bool has_next() = 0;
-  virtual std::unique_ptr<DataChunk> next_chunk() = 0;
-};
-
-// ---------------------------------------------------------------------------
-class CsvReader : public IDataReader {
+class CsvReader : public IDataChunkReader {
  public:
   CsvReader(const DataSourceConfig& c, size_t batch_sz)
-      : IDataReader(c),
-        ifs(c.uri),
-        delimiter(parseDelimiter(c)),
-        batch_size(batch_sz) {
-    // Check if file opened successfully
+      : cfg(c), ifs(c.uri), delimiter(parseDelimiter(c)), batch_size(batch_sz) {
     if (!ifs.is_open()) {
       throw std::runtime_error("Cannot open CSV file: " + c.uri);
     }
-    // Avoid skipping whitespace in fields (important for CSV)
+    // Avoid skipping whitespace
     ifs >> std::noskipws;
   }
 
-  bool has_next() override { return ifs && !ifs.eof(); }
-
-  std::unique_ptr<DataChunk> next_chunk() override {
+  std::shared_ptr<DataChunk> next() override {
     if (!has_next()) return nullptr;
 
-    auto chunk = std::make_unique<DataChunk>(cfg);
+    auto chunk = std::make_shared<DataChunk>(cfg);
     std::string line;
     size_t count = 0;
 
@@ -53,7 +37,18 @@ class CsvReader : public IDataReader {
     return (count != 0) ? std::move(chunk) : nullptr;
   }
 
+  bool has_next() override { return ifs.good(); }
+
+  void reset() override {
+    ifs.clear();   // Clear eof/fail bits
+    ifs.seekg(0);  // Go back to start
+
+    // Avoid skipping whitespace
+    ifs >> std::noskipws;
+  }
+
  private:
+  const DataSourceConfig cfg;
   std::ifstream ifs;
   char delimiter;
   size_t batch_size;
@@ -82,4 +77,4 @@ class CsvReader : public IDataReader {
   }
 };
 
-#endif /* APPLICATION_DATA_SOURCE_HPP */
+#endif /* RUNTIME_CSV_READER_HPP */

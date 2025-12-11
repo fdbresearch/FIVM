@@ -58,13 +58,25 @@ namespace dbtoaster {
     }
 
     template <typename Archive>
-    inline Archive & serialize(Archive & ar, const unsigned int version, const int & t) {
+    inline Archive & serialize(Archive & ar, const unsigned int version, const int16_t & t) {
         ar << t;
         return ar;
     }
 
     template <typename Archive>
-    inline Archive & serialize(Archive & ar, const unsigned int version, const size_t & t) {
+    inline Archive & serialize(Archive & ar, const unsigned int version, const int32_t & t) {
+        ar << t;
+        return ar;
+    }
+
+    template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const int64_t & t) {
+        ar << t;
+        return ar;
+    }
+
+    template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const unsigned long & t) {
         ar << t;
         return ar;
     }
@@ -72,18 +84,6 @@ namespace dbtoaster {
     template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const long & t) {
         ar << t;
-        return ar;
-    }
-
-    template <typename Archive>
-    inline Archive & serialize(Archive & ar, const unsigned int version, const long long & t) {
-        ar << t;
-        return ar;
-    }
-
-    template <typename Archive>
-    inline Archive & serialize(Archive & ar, const unsigned int version, const STRING_TYPE & t) {
-        ar << t.c_str();
         return ar;
     }
 
@@ -102,6 +102,12 @@ namespace dbtoaster {
     template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const char & t) {
         ar << t;
+        return ar;
+    }
+
+    template <typename Archive>
+    inline Archive & serialize(Archive & ar, const unsigned int version, const STRING_TYPE & t) {
+        ar << t.c_str();
         return ar;
     }
 

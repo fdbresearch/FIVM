@@ -1,11 +1,14 @@
-#ifndef APPLICATION_COMMON_HPP
-#define APPLICATION_COMMON_HPP
+#ifndef FIVM_COMMON_HPP
+#define FIVM_COMMON_HPP
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
 struct DataChunk;
+
+using DataChunkPtr = std::shared_ptr<DataChunk>;
 
 using DispatchFn = void (*)(void* ctx, const DataChunk& chunk);
 
@@ -159,4 +162,4 @@ struct DataChunk {
   }
 };
 
-#endif /* APPLICATION_COMMON_HPP */
+#endif /* FIVM_COMMON_HPP */

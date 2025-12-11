@@ -329,7 +329,7 @@ trait ICppCodeGen extends CodeGen {
             |""".stripMargin)
         if (cgOpts.useExperimentalRuntimeLibrary) {
           s"""|void on_batch_update_${s.name}(const DataChunk& chunk) {
-              |  long batchSize = chunk.row_count;
+              |  size_t batchSize = chunk.row_count;
               |${ind(sTimeout)}
               |  tN += batchSize;
               |${ind(body)}
@@ -346,7 +346,7 @@ trait ICppCodeGen extends CodeGen {
       }
       else {
         s"""|void on_batch_update_${s.name}(${delta(s.name)}_map &${delta(s.name)}) {
-            |  long batchSize = ${delta(s.name)}.count();
+            |  size_t batchSize = ${delta(s.name)}.count();
             |${ind(sTimeout)}
             |  tN += batchSize;
             |${ind(body)}
@@ -432,7 +432,7 @@ trait ICppCodeGen extends CodeGen {
              |}
              |
              |void on_batch_update_${name}(const DataChunk& chunk) {
-             |  for (auto i = 0; i < chunk.row_count; ++i) {
+             |  for (size_t i = 0; i < chunk.row_count; ++i) {
              |${ind(body, 2)}
              |    ${name}_entry $entry($args, $VALUE_NAME);
              |    ${name}.addOrDelOnZero($entry, $VALUE_NAME);
@@ -769,7 +769,9 @@ trait ICppCodeGen extends CodeGen {
 
     s"""|/* Defines top-level materialized views */
         |struct tlq_t {
-        |  struct timeval t0, t; long tT, tN, tS;
+        |  struct timeval t0, t; 
+        |  size_t tT, tN, tS;
+        |
         |  tlq_t(): tN(0), tS(0) ${sTLQMapInitializer} { 
         |    gettimeofday(&t0, NULL); 
         |  }
@@ -1269,7 +1271,7 @@ trait ICppCodeGen extends CodeGen {
                 restBody
 
               s"""|{ //foreach
-                  |  for (auto i = 0; i < chunk.row_count; ++i) {
+                  |  for (size_t i = 0; i < chunk.row_count; ++i) {
                   |${ind(body, 2)}
                   |  }
                   |}
@@ -1515,12 +1517,12 @@ trait ICppCodeGen extends CodeGen {
     stringIf(cgOpts.useExperimentalRuntimeLibrary,
       s"""|#include <sys/time.h>
           |#include <vector>
-          |#include "macro.hpp"
-          |#include "types.hpp"
-          |#include "functions.hpp"
-          |#include "hash.hpp"
-          |#include "mmap.hpp"
-          |#include "serialization.hpp"
+          |#include "dbtoaster/functions.hpp"
+          |#include "dbtoaster/hash.hpp"
+          |#include "dbtoaster/macro.hpp"
+          |#include "dbtoaster/mmap.hpp"
+          |#include "dbtoaster/serialization.hpp"
+          |#include "dbtoaster/types.hpp"
           |#include "common.hpp"
           |""".stripMargin,
       s"""|#include "program_base.hpp"
