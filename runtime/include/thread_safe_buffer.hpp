@@ -33,7 +33,6 @@ class ThreadSafeBuffer : public IDataSource<T> {
   void reset() override {
     std::lock_guard<std::mutex> lock(mtx_);
     read_pos_ = 0;
-    closed_ = false;
     cv_.notify_all();
   }
 

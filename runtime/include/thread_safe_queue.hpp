@@ -1,5 +1,5 @@
-#ifndef RUNTIME_THREAD_SAFE_BUFFER_HPP
-#define RUNTIME_THREAD_SAFE_BUFFER_HPP
+#ifndef RUNTIME_THREAD_SAFE_QUEUE_HPP
+#define RUNTIME_THREAD_SAFE_QUEUE_HPP
 
 #include <condition_variable>
 #include <mutex>
@@ -30,11 +30,7 @@ class ThreadSafeQueue : public IDataSource<T> {
     return !queue_.empty();
   }
 
-  void reset() override {
-    std::lock_guard<std::mutex> lock(mtx_);
-    closed_ = false;
-    cv_.notify_all();
-  }
+  void reset() override {}
 
   void push(T item) override {
     std::lock_guard<std::mutex> lock(mtx_);
@@ -56,4 +52,4 @@ class ThreadSafeQueue : public IDataSource<T> {
   bool closed_ = false;
 };
 
-#endif /* RUNTIME_THREAD_SAFE_BUFFER_HPP */
+#endif /* RUNTIME_THREAD_SAFE_QUEUE_HPP */

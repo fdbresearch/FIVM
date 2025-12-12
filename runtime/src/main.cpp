@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "application.hpp"
+class Application;
+std::unique_ptr<Application> createApplication();
 
 int main(int argc, char** argv) {
   int opt_num_runs = 1;
@@ -24,8 +25,8 @@ int main(int argc, char** argv) {
   sched_setaffinity(0, sizeof(mask), &mask);
 #endif
 
-  Application app;
-  app.run(opt_num_runs, opt_print_result, opt_batch_size);
+  std::unique_ptr<Application> app = createApplication();
+  app->run(opt_num_runs, opt_print_result, opt_batch_size);
 
   return 0;
 }
