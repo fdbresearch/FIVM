@@ -5,22 +5,22 @@ FROM FILE 'ring/ring_cofactor_general.hpp'
 WITH PARAMETER SCHEMA (dynamic_min, dynamic_sum, dynamic_sum);
 
 CREATE STREAM SALES(date int, store int, item int, unit_sales double, onpromotion int)
-FROM FILE './datasets/favorita/Sales.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Sales.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 CREATE STREAM OIL(date int, oilprize double)
-FROM FILE './datasets/favorita/Oil.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Oil.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 CREATE STREAM HOLIDAY(date int, holiday_type int, locale int, locale_id int, transferred int)
-FROM FILE './datasets/favorita/Holidays.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Holiday.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 CREATE STREAM TRANSACTIONS(date int, store int, transactions int) 
-FROM FILE './datasets/favorita/Transactions.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Transactions.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 CREATE STREAM STORES(store int, city int, state int, store_type int, cluster int) 
-FROM FILE './datasets/favorita/Stores.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Stores.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 CREATE STREAM ITEMS(item int, family int, itemclass int, perishable int) 
-FROM FILE './datasets/favorita/Stores.csv' LINE DELIMITED CSV(delimiter := ',');
+FROM FILE './datasets/favorita/Stores.tbl' LINE DELIMITED CSV(delimiter := ',');
 
 SELECT SUM(
     [liftCont<0>: RingCofactorGeneral<0,2,0>](unit_sales, onpromotion) *

@@ -10,4 +10,4 @@ compiler/project/project
 compiler/project/target
 examples/bin/
 examples/generated/
-examples/data
+examples/datasets

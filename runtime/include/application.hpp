@@ -88,7 +88,7 @@ std::unique_ptr<IDataChunkReader> createReader(const DataSourceConfig& cfg,
 // -----------------------------------------------------------------------------
 // Producer thread
 // -----------------------------------------------------------------------------
-static void dataProducer(DataChunkSource& src, size_t batch_size) {
+void dataProducer(DataChunkSource& src, size_t batch_size) {
   auto reader = createReader(src.cfg, batch_size);
   size_t total_rows = 0;
 
@@ -105,8 +105,8 @@ static void dataProducer(DataChunkSource& src, size_t batch_size) {
 // -----------------------------------------------------------------------------
 // Round-robin consumer
 // -----------------------------------------------------------------------------
-static void roundRobinConsumer(std::vector<DataChunkSource>& sources,
-                               dbtoaster::data_t& data) {
+void roundRobinConsumer(std::vector<DataChunkSource>& sources,
+                        dbtoaster::data_t& data) {
   bool active = true;
 
   while (active) {
@@ -121,10 +121,9 @@ static void roundRobinConsumer(std::vector<DataChunkSource>& sources,
   }
 }
 
-static void roundRobinConsumerSnapshot(std::vector<DataChunkSource>& sources,
-                                       dbtoaster::data_t& data,
-                                       long snapshot_interval,
-                                       SnapshotFn snapshotFn) {
+void roundRobinConsumerSnapshot(std::vector<DataChunkSource>& sources,
+                                dbtoaster::data_t& data, long snapshot_interval,
+                                SnapshotFn snapshotFn) {
   long next_snapshot = 0;
   bool any_active = true;
 
