@@ -25,12 +25,12 @@ object Main extends App {
   val parser = new scopt.OptionParser[Config]("sbt run") {
     override def showUsageOnError = true
 
-    head("F-IVM", "1.0")
+    head("F-IVM", "1.1")
 
     arg[String]("<SQL file>").required().action((x, c) =>
       c.copy(inputSQL = x)).text("Input SQL file")
 
-    opt[String]('o', "output").valueName("<output file>").action((x, c) =>
+    opt[String]('o', "output").valueName("<file>").action((x, c) =>
       c.copy(outputFile = Some(x))).text("Output file")
 
     opt[String]('l', "lang").optional().valueName("<cpp|m3>").validate {
@@ -39,11 +39,11 @@ object Main extends App {
       }.action((x, c) => 
         c.copy(language = x)).text("Specify output language: cpp or m3 (default: cpp)")
 
-    opt[Unit]("batch").action((_, c) =>
-      c.copy(batchUpdates = true)).text("Generate batch update triggers")
+    // opt[Unit]("batch").action((_, c) =>
+    //   c.copy(batchUpdates = true)).text("Generate batch update triggers")
 
-    opt[Unit]("single").action((_, c) =>
-      c.copy(batchUpdates = false)).text("Generate single-tuple update triggers")
+    // opt[Unit]("single").action((_, c) =>
+    //   c.copy(batchUpdates = false)).text("Generate single-tuple update triggers")
 
     help("help").text("prints this usage text")
   }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FIVM_VERSION=1.0
+FIVM_VERSION=1.1
 SCALA_VERSION=2.12
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
