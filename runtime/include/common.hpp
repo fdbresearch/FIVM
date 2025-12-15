@@ -12,6 +12,8 @@ using DataChunkPtr = std::shared_ptr<DataChunk>;
 
 using DispatchFn = void (*)(void* ctx, const DataChunk& chunk);
 
+using payload_t = int32_t;
+
 // ---------------------------------------------------------------------------
 enum class PrimitiveType : uint8_t {
   INT8,
@@ -122,7 +124,7 @@ struct Column : public ColumnBase {
 // ---------------------------------------------------------------------------
 struct DataChunk {
   std::vector<std::unique_ptr<ColumnBase>> cols;
-  std::vector<int32_t> payload;
+  std::vector<payload_t> payload;
   size_t row_count = 0;
 
   DataChunk(const DataSourceConfig& cfg, size_t sz = 0) {

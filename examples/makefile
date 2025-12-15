@@ -28,11 +28,11 @@ all: exe
 
 $(M3_FILES): $(M3_OUT_DIR)/%.m3: $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(CODEGEN_BIN) -l m3 --batch -o $@ $<
+	$(CODEGEN_BIN) -l m3 -o $@ $<
 
 $(CPP_FILES): $(CPP_OUT_DIR)/%.hpp : $(SQL_DIR)/%.sql
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(CODEGEN_BIN) -l cpp --batch -o $@ $<
+	$(CODEGEN_BIN) -l cpp -o $@ $<
 
 $(EXE_FILES): $(EXE_OUT_DIR)/% : $(CPP_OUT_DIR)/%.hpp ../runtime/src/main.cpp
 	@test -d $(dir $@) || mkdir -p $(dir $@)

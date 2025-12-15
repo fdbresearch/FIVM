@@ -29,7 +29,6 @@ class CsvReader : public IDataChunkReader {
       if (line.empty()) continue;
 
       parse_line_into_chunk(line, *chunk);
-      chunk->payload.push_back(1);
       ++count;
     }
     chunk->row_count = count;
@@ -74,6 +73,10 @@ class CsvReader : public IDataChunkReader {
       }
       chunk.cols[i]->append_from_string(field);
     }
+
+    payload_t payload =
+        getline(ss, field, delimiter) ? parse<payload_t>(field) : 1;
+    chunk.payload.push_back(payload);
   }
 };
 
