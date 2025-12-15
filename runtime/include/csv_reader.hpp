@@ -28,12 +28,13 @@ class CsvReader : public IDataChunkReader {
     while (count < batch_size && std::getline(ifs, line)) {
       if (line.empty()) continue;
 
-      parse_line_into_chunk(line, *chunk);
+      std::stringstream ss(line);
+      parse_line_into_chunk(ss, *chunk);
       ++count;
     }
     chunk->row_count = count;
 
-    return (count != 0) ? std::move(chunk) : nullptr;
+    return (count > 0) ? std::move(chunk) : nullptr;
   }
 
   bool has_next() override { return ifs.good(); }
@@ -46,7 +47,7 @@ class CsvReader : public IDataChunkReader {
     ifs >> std::noskipws;
   }
 
- private:
+ protected:
   const DataSourceConfig cfg;
   std::ifstream ifs;
   char delimiter;
@@ -62,9 +63,8 @@ class CsvReader : public IDataChunkReader {
     return del[0];
   }
 
-  void parse_line_into_chunk(const std::string& line, DataChunk& chunk) {
+  void parse_line_into_chunk(std::stringstream& ss, DataChunk& chunk) {
     // Stream the line as CSV fields
-    std::stringstream ss(line);
     std::string field;
 
     for (size_t i = 0; i < cfg.schema.size(); ++i) {
@@ -77,6 +77,56 @@ class CsvReader : public IDataChunkReader {
     payload_t payload =
         getline(ss, field, delimiter) ? parse<payload_t>(field) : 1;
     chunk.payload.push_back(payload);
+  }
+};
+
+class CsvReaderPredefinedBatches : public CsvReader {
+ public:
+  CsvReaderPredefinedBatches(const DataSourceConfig& c, size_t batch_sz)
+      : CsvReader(c, batch_sz) {}
+
+  std::shared_ptr<DataChunk> next() override {
+    if (!has_next()) return nullptr;
+
+    auto chunk = std::make_shared<DataChunk>(cfg);
+    std::string line;
+    size_t count = 0;
+    int32_t currBatchId = -1;
+
+    while (count < batch_size) {
+      // Save current position
+      std::streampos pos = ifs.tellg();
+
+      if (!std::getline(ifs, line)) break;
+
+      if (line.empty()) continue;
+
+      std::stringstream ss(line);
+      int32_t batchId = get_batch_id(ss);
+
+      if (currBatchId == -1) {
+        currBatchId = batchId;
+      }
+
+      if (currBatchId == batchId) {
+        parse_line_into_chunk(ss, *chunk);
+        ++count;
+      } else {
+        // Restore the stream to the beginning of this line
+        ifs.clear();
+        ifs.seekg(pos);
+        break;
+      }
+    }
+    chunk->row_count = count;
+
+    return (count > 0) ? std::move(chunk) : nullptr;
+  }
+
+ protected:
+  int32_t get_batch_id(std::stringstream& ss) {
+    std::string field;
+    return getline(ss, field, delimiter) ? parse<int32_t>(field) : -1;
   }
 };
 

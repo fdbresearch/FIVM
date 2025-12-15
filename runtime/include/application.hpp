@@ -74,9 +74,13 @@ class Application {
 std::unique_ptr<IDataChunkReader> createReader(const DataSourceConfig& cfg,
                                                size_t batch_size) {
   switch (cfg.type) {
-    case DataSourceType::CSV:
-      return std::make_unique<CsvReader>(cfg, batch_size);
-
+    case DataSourceType::CSV: {
+      bool predefined_batches = cfg.options.count("predefined_batches") &&
+                                cfg.options.at("predefined_batches") == "true";
+      return predefined_batches
+                 ? std::make_unique<CsvReaderPredefinedBatches>(cfg, batch_size)
+                 : std::make_unique<CsvReader>(cfg, batch_size);
+    }
     case DataSourceType::PARQUET:
       // TODO: implement parquet reader
       break;
