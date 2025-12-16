@@ -126,9 +126,10 @@ void roundRobinConsumer(std::vector<DataChunkSource>& sources,
 }
 
 void roundRobinConsumerSnapshot(std::vector<DataChunkSource>& sources,
-                                dbtoaster::data_t& data, long snapshot_interval,
+                                dbtoaster::data_t& data,
+                                size_t snapshot_interval,
                                 SnapshotFn snapshotFn) {
-  long next_snapshot = 0;
+  size_t next_snapshot = 0;
   bool any_active = true;
 
   while (any_active) {
