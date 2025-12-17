@@ -421,22 +421,28 @@ struct PooledRefCountedString {
     return *this;
   }
 
-  uint64_t size() const noexcept { return size_; }
+  inline uint64_t size() const noexcept { return size_; }
 
-  const char* c_str() const noexcept { return data_ ? data_ : ""; }
+  inline const char* c_str() const noexcept { return data_ ? data_ : ""; }
 
-  bool operator==(const char* other) const { return strcmp(data_, other) == 0; }
+  inline bool operator==(const char* other) const {
+    if (!other) return size_ == 0;
+    if (size_ == 0) return *other == 0;
+    return data_[0] == other[0] && strcmp(data_, other) == 0;
+  }
 
-  bool operator==(const PooledRefCountedString& other) const {
+  inline bool operator==(const PooledRefCountedString& other) const {
     return (size_ == other.size_ &&
             (size_ == 0 || (data_[0] == other.data_[0] &&
                             memcmp(data_, other.data_, size_) == 0)));
   }
 
-  bool operator!=(const char* other) const { return !(*this == other); }
+  inline bool operator!=(const char* other) const {
+    return !(this->operator==(other));
+  }
 
-  bool operator!=(const PooledRefCountedString& other) const {
-    return !(*this == other);
+  inline bool operator!=(const PooledRefCountedString& other) const {
+    return !(this->operator==(other));
   }
 
   PooledRefCountedString substr(uint64_t pos, uint64_t len) const {
