@@ -14,6 +14,8 @@
 #include <iomanip>
 #include <unordered_map>
 #include <array>
+#include <type_traits>
+
 #include "types.hpp"
 
 #define DBT_SERIALIZATION_NVP_OF_ARRAY(ar, name, length)  dbtoaster::serialize_nvp_array(ar, STRING(name), name, length)
@@ -77,12 +79,6 @@ namespace dbtoaster {
 
     template <typename Archive>
     inline Archive & serialize(Archive & ar, const unsigned int version, const unsigned long & t) {
-        ar << t;
-        return ar;
-    }
-
-    template <typename Archive>
-    inline Archive & serialize(Archive & ar, const unsigned int version, const long & t) {
         ar << t;
         return ar;
     }

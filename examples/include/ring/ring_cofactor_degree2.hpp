@@ -13,7 +13,7 @@ struct RingCofactor {
     static constexpr size_t DEG3_SZ = (SZ - 1) * SZ;
     static constexpr size_t DEG4_SZ = 3 * (SZ - 1) * SZ / 2;
 
-    int count;
+    int64_t count;
     std::array<T, SZ> sum1;
     std::array<T, SZ> sum2;
     std::array<T, SZ> sum3;

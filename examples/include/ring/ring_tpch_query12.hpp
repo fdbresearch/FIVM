@@ -10,13 +10,13 @@ const STRING_TYPE c1 = STRING_TYPE("1-URGENT");
 const STRING_TYPE c2 = STRING_TYPE("2-HIGH");
 
 struct TPCH12Payload {
-  long count;
-  long high_line_count;
-  long low_line_count;
+  int64_t count;
+  int64_t high_line_count;
+  int64_t low_line_count;
 
   explicit TPCH12Payload() : count(0), high_line_count(0), low_line_count(0) { }
 
-  explicit TPCH12Payload(long c, const STRING_TYPE& order_priority) : count(c) {
+  explicit TPCH12Payload(int64_t c, const STRING_TYPE& order_priority) : count(c) {
     high_line_count = ((order_priority == c1) || (order_priority == c2));
     low_line_count = !((order_priority == c1) || (order_priority == c2));
   }
@@ -55,9 +55,9 @@ struct TPCH12Payload {
   }
 
   FORCE_INLINE void clear() {
-    count = 0L;
-    high_line_count = 0L;
-    low_line_count = 0L;
+    count = 0;
+    high_line_count = 0;
+    low_line_count = 0;
   }
 
   template<class Archive>

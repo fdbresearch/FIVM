@@ -11,7 +11,7 @@ template <size_t IDX, typename T, size_t SZ>
 struct RingCofactor {
     static constexpr size_t DEG2_SZ = (SZ - 1) * SZ / 2;
 
-    int count;
+    int64_t count;
     std::array<T, SZ> sum1;
     std::array<T, SZ> sum2;
     std::array<T, DEG2_SZ> degree2;

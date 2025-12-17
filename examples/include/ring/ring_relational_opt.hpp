@@ -12,24 +12,24 @@
 using namespace dbtoaster;
 
 template <typename... Keys>
-using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, long>, 1>;
+using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, int64_t>, 1>;
 
 template <typename... Keys>
-using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
+using Map = std::unordered_map<std::tuple<Keys...>, int64_t, hash_tuple::hash<std::tuple<Keys...>>>;
 
 template <size_t Idx, typename... Keys>
 struct SingletonRelation {
     SingletonArray<Keys...> store;
-    static long count;
+    static int64_t count;
 
-    explicit SingletonRelation(const Keys&... keys, long value)
+    explicit SingletonRelation(const Keys&... keys, int64_t value)
         : store { std::make_pair(std::make_tuple(keys...), value) } { }
 
-    inline bool isZero() const { return std::get<1>(store[0]) == 0L; }
+    inline bool isZero() const { return std::get<1>(store[0]) == 0; }
 };
 
 template <size_t Idx, typename... Keys>
-long SingletonRelation<Idx, Keys...>::count = 1L;
+int64_t SingletonRelation<Idx, Keys...>::count = 1;
 
 
 template <size_t Idx, typename... Keys>
@@ -79,14 +79,14 @@ struct RelationMap {
     }
 
     template <size_t N, typename... Args, typename... TupleKeys>
-    inline void apply2(const Container<Idx, Args...>& c, long value, Int<N>, TupleKeys&&... keys) {
+    inline void apply2(const Container<Idx, Args...>& c, int64_t value, Int<N>, TupleKeys&&... keys) {
         for (auto &it : std::get<N-1>(c.values).store) {
             apply2(c, std::get<1>(it) * value, Int<N-1>(), std::get<0>(it), std::forward<decltype(keys)>(keys)...);
         }
     }
 
     template <typename... Args, typename... TupleKeys>
-    inline void apply2(const Container<Idx, Args...>& c, long value, Int<1>, TupleKeys&&... keys) {
+    inline void apply2(const Container<Idx, Args...>& c, int64_t value, Int<1>, TupleKeys&&... keys) {
         for (auto &it : std::get<0>(c.values).store) {
             auto t = std::tuple_cat(std::get<0>(it), std::forward<decltype(keys)>(keys)...);
             store[t] += std::get<1>(it) * value;
@@ -95,14 +95,14 @@ struct RelationMap {
     }
 
     template <typename Key, size_t N, typename... Args>
-    inline void apply(const Container<Idx, Args...>& c, Key&& key, long value, Int<N>) {
+    inline void apply(const Container<Idx, Args...>& c, Key&& key, int64_t value, Int<N>) {
         for (auto &it : std::get<N-1>(c.values).store) {
             apply(c, tuple_cat(std::get<0>(it), std::forward<decltype(key)>(key)), std::get<1>(it) * value, Int<N-1>());
         }
     }
 
     template <typename Key, typename... Args>
-    inline void apply(const Container<Idx, Args...>& c, Key&& key, long value, Int<1>) {
+    inline void apply(const Container<Idx, Args...>& c, Key&& key, int64_t value, Int<1>) {
         for (auto &it : std::get<0>(c.values).store) {
             auto t = std::tuple_cat(std::get<0>(it), key);
             store[t] += std::get<1>(it) * value;

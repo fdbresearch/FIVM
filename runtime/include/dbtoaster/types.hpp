@@ -23,9 +23,9 @@ namespace dbtoaster {
 
     typedef size_t HASH_TYPE;
 
-    typedef std::string STRING_TYPE;
+    // typedef std::string STRING_TYPE;
 
-    // typedef PooledRefCountedString STRING_TYPE;
+    typedef PooledRefCountedString STRING_TYPE;
 
     //typedef RefCountedString STRING_TYPE;
 

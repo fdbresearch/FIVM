@@ -22,7 +22,7 @@ struct TPCH14Regex {
 struct TPCH14Payload {
   static const TPCH14Regex regex;
 
-  long count;
+  int64_t count;
   double promo_revenue;
   double total_revenue;
   double percent_revenue;
@@ -30,7 +30,7 @@ struct TPCH14Payload {
   explicit TPCH14Payload()
       : count(0), promo_revenue(0.0), total_revenue(0.0), percent_revenue(0.0) { }
 
-  explicit TPCH14Payload(long c, double p, double t)
+  explicit TPCH14Payload(int64_t c, double p, double t)
       : count(c), promo_revenue(p), total_revenue(t) {
     percent_revenue = (total_revenue != 0.0 ? 100.0 * promo_revenue / total_revenue : 0.0);
   }
@@ -72,7 +72,7 @@ struct TPCH14Payload {
   }
 
   FORCE_INLINE void clear() {
-    count = 0L;
+    count = 0;
     promo_revenue = 0.0;
     total_revenue = 0.0;
     percent_revenue = 0.0;

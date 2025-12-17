@@ -7,7 +7,7 @@
 using namespace dbtoaster;
 
 struct RingPair {
-    long count;
+    int64_t count;
     double v1;
     double v2;
 
@@ -15,7 +15,7 @@ struct RingPair {
 
     explicit RingPair() : count(0), v1(0.0), v2(0.0) { }
 
-    explicit RingPair(long c, double a, double b) : count(c), v1(a), v2(b) { }
+    explicit RingPair(int64_t c, double a, double b) : count(c), v1(a), v2(b) { }
 
     inline bool isZero() const { return count == 0; }
 

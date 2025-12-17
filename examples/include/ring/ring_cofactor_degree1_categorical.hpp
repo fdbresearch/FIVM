@@ -18,9 +18,9 @@ void operator+=(std::unordered_map<K, V, H>& m1, const std::unordered_map<K, V, 
 }
 
 template <typename K1, typename K2, typename V>
-std::unordered_map<std::tuple<K1, K2>, V, hash_tuple::hash<std::tuple<long, long>>> 
+std::unordered_map<std::tuple<K1, K2>, V, hash_tuple::hash<std::tuple<int64_t, int64_t>>> 
 operator*(const std::unordered_map<K1, V>& m1, const std::unordered_map<K2, V>& m2) {
-    std::unordered_map<std::tuple<K1, K2>, V, hash_tuple::hash<std::tuple<long, long>>> r;
+    std::unordered_map<std::tuple<K1, K2>, V, hash_tuple::hash<std::tuple<int64_t, int64_t>>> r;
     if (m1.empty() || m2.empty()) return r;
 
     for (auto &it1 : m1) {
@@ -46,17 +46,17 @@ struct RingCofactor {
     static constexpr size_t CAT_DEG2_SZ = (CAT_SZ - 1) * CAT_SZ / 2;
     static constexpr size_t CONT_CAT_DEG2_SZ = CONT_SZ * CAT_SZ;
 
-    long count;
+    int64_t count;
     // Aggregates over continuous variables
     std::array<double, CONT_SZ> cont_sum1;
     std::array<double, CONT_SZ> cont_sum2;
     std::array<double, CONT_DEG2_SZ> cont_degree2;
     // Aggregates over categorical variables
-    std::array<std::unordered_map<long, double>, CAT_SZ> cat_sum1;
-    std::array<std::unordered_map<long, double>, CAT_SZ> cat_sum2;
-    std::array<std::unordered_map<std::tuple<long, long>, double, hash_tuple::hash<std::tuple<long, long>>>, CAT_DEG2_SZ> cat_degree2;
+    std::array<std::unordered_map<int64_t, double>, CAT_SZ> cat_sum1;
+    std::array<std::unordered_map<int64_t, double>, CAT_SZ> cat_sum2;
+    std::array<std::unordered_map<std::tuple<int64_t, int64_t>, double, hash_tuple::hash<std::tuple<int64_t, int64_t>>>, CAT_DEG2_SZ> cat_degree2;
     // Aggregates over continuous and categorical variables
-    std::array<std::unordered_map<long, double>, CONT_CAT_DEG2_SZ> cont_cat_degree2;
+    std::array<std::unordered_map<int64_t, double>, CONT_CAT_DEG2_SZ> cont_cat_degree2;
     
     explicit RingCofactor() : count(0) { }
 
@@ -75,7 +75,7 @@ struct RingCofactor {
     }
 
     template <typename... Args>
-    explicit RingCofactor(bool, Args&&... args) : count(1), cat_sum1 { std::unordered_map<long, double>{{ args, 1.0 }}... } {
+    explicit RingCofactor(bool, Args&&... args) : count(1), cat_sum1 { std::unordered_map<int64_t, double>{{ args, 1.0 }}... } {
         static_assert(CAT_SZ == sizeof...(args) && CONT_SZ == 0, "Incompatible array sizes");
 
         auto *cat_out2 = cat_degree2.data();

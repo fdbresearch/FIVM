@@ -8,7 +8,7 @@ using namespace dbtoaster;
 
 template<int SCALE = 1>
 struct RingRatio {
-    long count;
+    int64_t count;
     double v1;
     double v2;
 
@@ -16,7 +16,7 @@ struct RingRatio {
 
     explicit RingRatio() : count(0), v1(0.0), v2(0.0) { }
 
-    explicit RingRatio(long c, double a, double b) : count(c), v1(a), v2(b) { }
+    explicit RingRatio(int64_t c, double a, double b) : count(c), v1(a), v2(b) { }
 
     inline bool isZero() const { return count == 0; }
 

@@ -11,10 +11,10 @@
 using namespace dbtoaster;
 
 template <typename... Keys>
-using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, long>, 1>;
+using SingletonArray = std::array<std::tuple<std::tuple<Keys...>, int64_t>, 1>;
 
 template <typename... Keys>
-using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
+using Map = std::unordered_map<std::tuple<Keys...>, int64_t, hash_tuple::hash<std::tuple<Keys...>>>;
 
 template <size_t, typename>
 struct Accumulator;
@@ -25,27 +25,27 @@ struct FactoryAccumulator;
 template <size_t Idx, typename... Keys>
 struct SingletonRelation {
     SingletonArray<Keys...> store;
-    static long count;
+    static int64_t count;
 
-    explicit SingletonRelation(const Keys&... keys, long value)
+    explicit SingletonRelation(const Keys&... keys, int64_t value)
         : store { std::make_pair(std::make_tuple(keys...), value) } { }
 
     inline bool isZero() const { return false; }
 };
 
 template <size_t Idx, typename... Keys>
-long SingletonRelation<Idx, Keys...>::count = 1L;
+int64_t SingletonRelation<Idx, Keys...>::count = 1;
 
 template <size_t Idx, typename... Keys>
 struct RelationMap {
     Map<Keys...> store;
-    long count;
+    int64_t count;
 
-    explicit RelationMap() : count(0L) { }
+    explicit RelationMap() : count(0) { }
 
-    RelationMap(Map<Keys...>&& s, long c) : store(std::forward<decltype(s)>(s)), count(c) { }
+    RelationMap(Map<Keys...>&& s, int64_t c) : store(std::forward<decltype(s)>(s)), count(c) { }
 
-    inline bool isZero() const { return count == 0L; }
+    inline bool isZero() const { return count == 0; }
 
     RelationMap& operator+=(const RelationMap& other) {
         count += other.count;
@@ -120,44 +120,44 @@ Accumulator<Idx, const RelationMap<Idx, Keys...>&> operator*(long alpha, Relatio
 template <size_t Idx, typename T>
 struct Accumulator {
     T value;
-    long scale;
+    int64_t scale;
 
-    Accumulator(T&& t, long s) : value(std::forward<T>(t)), scale(s) { }
+    Accumulator(T&& t, int64_t s) : value(std::forward<T>(t)), scale(s) { }
 
     template <typename Target>
     inline void apply(Target& target) const {
-        if (scale == 0L) return;
+        if (scale == 0) return;
         for (auto &it : value.store) {
             target.count += std::get<1>(it) * scale;
             target.store[std::get<0>(it)] += std::get<1>(it) * scale;
         }
     }
 
-    inline bool isZero() const { return scale == 0L; }
+    inline bool isZero() const { return scale == 0; }
 };
 
 template <size_t Idx, typename T>
 struct FactoryAccumulator {
 
-    static Accumulator<Idx, T> create(T&& t, long scale = 1L) {
+    static Accumulator<Idx, T> create(T&& t, int64_t scale = 1) {
         return Accumulator<Idx, T>(std::forward<T>(t), t.count > 0 ? scale : 0L);
     }
 
-    static Accumulator<Idx, const T&> create(const T& t, long scale = 1L) {
-        return Accumulator<Idx, const T&>(t, t.count > 0 ? scale : 0L);
+    static Accumulator<Idx, const T&> create(const T& t, int64_t scale = 1) {
+        return Accumulator<Idx, const T&>(t, t.count > 0 ? scale : 0);
     }
 };
 
 // ACCUMULATOR v LONG
 template <size_t Idx, typename T>
-Accumulator<Idx, T> operator*(long a, Accumulator<Idx, T>&& b) {
-    if (a == 1L) return std::move(b);
+Accumulator<Idx, T> operator*(int64_t a, Accumulator<Idx, T>&& b) {
+    if (a == 1) return std::move(b);
     return Accumulator<Idx, T>(std::forward<decltype(b.value)>(b.value), b.scale * a);
 }
 
 template <size_t Idx, typename T>
-Accumulator<Idx, T> operator*(Accumulator<Idx, T>&& a, long b) {
-    if (b == 1L) return std::move(a);
+Accumulator<Idx, T> operator*(Accumulator<Idx, T>&& a, int64_t b) {
+    if (b == 1) return std::move(a);
     return Accumulator<Idx, T>(std::forward<decltype(a.value)>(a.value), a.scale * b);
 }
 

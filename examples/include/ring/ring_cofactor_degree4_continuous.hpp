@@ -25,7 +25,7 @@ struct RingCofactor {
 
     static constexpr size_t ARRAY_SZ = array_size(SZ, 8) - 1;
 
-    int count;
+    int64_t count;
     std::array<T, ARRAY_SZ> arr;
 
     explicit RingCofactor() : count(0) {

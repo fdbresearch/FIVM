@@ -12,13 +12,13 @@ struct DataCubeVector { };
 
 template <size_t Idx>
 struct DataCubeVector<Idx> {
-    long count;
+    int64_t count;
     double sum1;      // empty keys
 
-    explicit DataCubeVector() : count(0L), sum1(0.0) { }
+    explicit DataCubeVector() : count(0), sum1(0.0) { }
 
     explicit DataCubeVector(double value) 
-        : count(1L), sum1(value) { }
+        : count(1), sum1(value) { }
 
     inline bool isZero() const { return count == 0; }
 
@@ -189,14 +189,14 @@ struct DataCubeVector<Idx> {
 
 template <size_t Idx, typename K1>
 struct DataCubeVector<Idx, K1> {
-    long count;
+    int64_t count;
     double sum1;      // empty keys
     std::tuple<RingRelation<Idx, K1>> relations;
 
-    explicit DataCubeVector() : count(0L), sum1(0.0) { }
+    explicit DataCubeVector() : count(0), sum1(0.0) { }
 
-    explicit DataCubeVector(long key) 
-        : count(1L), sum1(1.0), relations { RingRelation<Idx, K1>(key) } { }
+    explicit DataCubeVector(int64_t key) 
+        : count(1), sum1(1.0), relations { RingRelation<Idx, K1>(key) } { }
 
     inline bool isZero() const { return count == 0; }
 
@@ -349,13 +349,13 @@ struct DataCubeVector<Idx, K1> {
 
 template <size_t Idx, typename K1, typename K2>
 struct DataCubeVector<Idx, K1, K2> {
-    long count;
+    int64_t count;
     double sum1;
     std::tuple<RingRelation<Idx, K1>, RingRelation<Idx, K2>, RingRelation<Idx, K1, K2>> relations;
     
-    explicit DataCubeVector() : count(0L), sum1(0.0) { }
+    explicit DataCubeVector() : count(0), sum1(0.0) { }
     
-    inline bool isZero() const { return count == 0L; }
+    inline bool isZero() const { return count == 0; }
 
     DataCubeVector& operator+=(const DataCubeVector& other) {
         if (other.isZero()) return *this;
@@ -492,7 +492,7 @@ struct DataCubeVector<Idx, K1, K2> {
 
 template <size_t Idx, typename K1, typename K2, typename K3>
 struct DataCubeVector<Idx, K1, K2, K3> {
-    long count;
+    int64_t count;
     double sum1;
     std::tuple<
         RingRelation<Idx, K1>, RingRelation<Idx, K2>, RingRelation<Idx, K3>, 
@@ -500,9 +500,9 @@ struct DataCubeVector<Idx, K1, K2, K3> {
         RingRelation<Idx, K1, K2, K3>
     > relations;
     
-    explicit DataCubeVector() : count(0L), sum1(0.0) { }
+    explicit DataCubeVector() : count(0), sum1(0.0) { }
     
-    inline bool isZero() const { return count == 0L; }
+    inline bool isZero() const { return count == 0; }
 
     DataCubeVector& operator+=(const DataCubeVector& other) {
         if (other.isZero()) return *this;
@@ -630,7 +630,7 @@ struct DataCubeVector<Idx, K1, K2, K3> {
 
 template <size_t Idx, typename K1, typename K2, typename K3, typename K4>
 struct DataCubeVector<Idx, K1, K2, K3, K4> {
-    long count;
+    int64_t count;
     double sum1;
     std::tuple<
         RingRelation<Idx, K1>, RingRelation<Idx, K2>, RingRelation<Idx, K3>, RingRelation<Idx, K4>, 
@@ -640,9 +640,9 @@ struct DataCubeVector<Idx, K1, K2, K3, K4> {
         RingRelation<Idx, K1, K2, K3, K4>
     > relations;
     
-    explicit DataCubeVector() : count(0L), sum1(0.0) { }
+    explicit DataCubeVector() : count(0), sum1(0.0) { }
     
-    inline bool isZero() const { return count == 0L; }
+    inline bool isZero() const { return count == 0; }
 
     DataCubeVector& operator+=(const DataCubeVector& other) {
         if (other.isZero()) return *this;

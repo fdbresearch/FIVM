@@ -7,14 +7,14 @@
 using namespace dbtoaster;
 
 struct RingAvg {
-    int count;
+    int64_t count;
     double sum;
 
     static RingAvg zero;
 
     explicit RingAvg() : count(0), sum(0.0) { }
 
-    explicit RingAvg(int c, double s) : count(c), sum(s) { }
+    explicit RingAvg(int64_t c, double s) : count(c), sum(s) { }
 
     inline bool isZero() const { return count == 0; }
 

@@ -11,10 +11,10 @@
 using namespace dbtoaster;
 
 template <typename... Keys>
-using Vector = std::vector<std::tuple<std::tuple<Keys...>, long>>;
+using Vector = std::vector<std::tuple<std::tuple<Keys...>, int64_t>>;
 
 template <typename... Keys>
-using Map = std::unordered_map<std::tuple<Keys...>, long, hash_tuple::hash<std::tuple<Keys...>>>;
+using Map = std::unordered_map<std::tuple<Keys...>, int64_t, hash_tuple::hash<std::tuple<Keys...>>>;
 
 template <size_t Idx, typename... Keys>
 struct RingRelation;
