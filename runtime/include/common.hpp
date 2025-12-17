@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "dbtoaster/functions.hpp"
 #include "dbtoaster/types.hpp"
 
 struct DataChunk;
@@ -15,7 +16,13 @@ using DataChunkPtr = std::shared_ptr<DataChunk>;
 using DispatchFn = void (*)(void* ctx, const DataChunk& chunk);
 
 using payload_t = int32_t;
+
 using string_t = dbtoaster::STRING_TYPE;
+
+struct date_t {
+  dbtoaster::DATE_TYPE value;
+};
+static_assert(sizeof(date_t) == sizeof(dbtoaster::DATE_TYPE));
 
 // ---------------------------------------------------------------------------
 enum class PrimitiveType : uint8_t {
@@ -58,7 +65,7 @@ struct ColumnBase {
   virtual void append_from_string(const std::string&) = 0;
   virtual size_t size() const = 0;
 
- private:
+ protected:
   PrimitiveType type_;
 };
 
@@ -108,6 +115,11 @@ inline char parse<char>(const std::string& s) {
 template <>
 inline string_t parse<string_t>(const std::string& s) {
   return string_t(s);
+}
+
+template <>
+inline date_t parse<date_t>(const std::string& s) {
+  return date_t{dbtoaster::str2date(s.c_str())};
 }
 
 // ---------------------------------------------------------------------------
@@ -160,7 +172,7 @@ struct DataChunk {
       case PrimitiveType::STRING:
         return std::make_unique<Column<string_t>>(type, sz);
       case PrimitiveType::DATE:
-        return std::make_unique<Column<int32_t>>(type, sz);
+        return std::make_unique<Column<date_t>>(type, sz);
     }
 
     throw std::runtime_error("Unknown PrimitiveType");
