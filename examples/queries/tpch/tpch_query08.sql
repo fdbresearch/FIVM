@@ -93,7 +93,7 @@ CREATE TABLE NATION2 (
         n_regionkey2  INT,
         n_comment2    VARCHAR(152)
     )
-  FROM FILE './datasets/tpch/nation2.csv'
+  FROM FILE './datasets/tpch/nation.csv'
   LINE DELIMITED CSV (delimiter := '|');
 
 CREATE TABLE REGION (

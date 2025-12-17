@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "dbtoaster/types.hpp"
+
 struct DataChunk;
 
 using DataChunkPtr = std::shared_ptr<DataChunk>;
@@ -13,6 +15,7 @@ using DataChunkPtr = std::shared_ptr<DataChunk>;
 using DispatchFn = void (*)(void* ctx, const DataChunk& chunk);
 
 using payload_t = int32_t;
+using string_t = dbtoaster::STRING_TYPE;
 
 // ---------------------------------------------------------------------------
 enum class PrimitiveType : uint8_t {
@@ -103,8 +106,8 @@ inline char parse<char>(const std::string& s) {
 }
 
 template <>
-inline std::string parse<std::string>(const std::string& s) {
-  return s;
+inline string_t parse<string_t>(const std::string& s) {
+  return string_t(s);
 }
 
 // ---------------------------------------------------------------------------
@@ -155,7 +158,7 @@ struct DataChunk {
       case PrimitiveType::CHAR:
         return std::make_unique<Column<char>>(type, sz);
       case PrimitiveType::STRING:
-        return std::make_unique<Column<std::string>>(type, sz);
+        return std::make_unique<Column<string_t>>(type, sz);
       case PrimitiveType::DATE:
         return std::make_unique<Column<int32_t>>(type, sz);
     }
